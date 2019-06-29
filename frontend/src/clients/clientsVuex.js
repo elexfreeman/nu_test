@@ -4,14 +4,18 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 const store = {
+
     state: {
         onLoad: false,
         clients: [],
         providers: [],
         showNewClientDialog: false,
-        showEditClientDialog: false
+        showEditClientDialog: false,
+     
+        clientEdit: null
 
     },
+
     mutations: {
 
         setShowNewClientDialog(state, payload) {            
@@ -26,6 +30,10 @@ const store = {
         },
         setProviders(state, payload) {
             state.providers = payload;
+        },
+
+        setClientEdit(state, payload) {
+            state.clientEdit = payload;
         },
         
     }

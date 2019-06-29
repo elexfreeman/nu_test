@@ -60,7 +60,7 @@
 <script>
 import providerEditor from "./providerEditor.vue";
 
-import ClientDialogController from "../ClientDialogController";
+import ClientDialogController from "../client/ClientDialogController";
 
 export default {
   name: "newClientDialog",

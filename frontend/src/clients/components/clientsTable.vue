@@ -18,7 +18,13 @@
     }"
     >
       <div slot="emptystate">...</div>
-      <template slot="table-row" slot-scope="props">{{props.formattedRow[props.column.field]}}</template>
+      <template slot="table-row" slot-scope="props">
+        <div v-if="props.column.field!='id'">{{props.formattedRow[props.column.field]}}</div>
+
+        <div class="text-center" v-if="props.column.field=='id'">
+          <span v-on:click="onShowEditDialog" :client_id="props.formattedRow['id']" class="edit_client_link">Edit</span>
+        </div>
+      </template>
     </vue-good-table>
   </div>
 </template>
@@ -26,15 +32,17 @@
 <script>
 import { VueGoodTable } from "vue-good-table";
 
+import ClientDialogController from '../client/clientDialogController';
+
 export default {
   name: "clientsTable",
   data() {
     return {};
   },
   methods: {
-    /*     onRemoveFromFavorite() {
-      this.$store.commit("removeFromFavorite", { test: "test" });
-    } */
+    onShowEditDialog(event) {
+      ClientDialogController.showEditClientDialog(event.target.getAttribute('client_id'));      
+    }
   },
   computed: {
     onLoad() {
@@ -60,11 +68,11 @@ export default {
 
         {
           label: "Providers",
-          field: "providers"
+          field: "providersString"
         },
         {
           label: "",
-          field: "edit"
+          field: "id"
         }
       ];
     }
@@ -78,8 +86,4 @@ export default {
 
 <style lang="scss">
 @import "vue-good-table/src/styles/style.scss";
-
-.clients_table {
-  padding-top: 1rem;
-}
 </style>

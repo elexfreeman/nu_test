@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import ProviderController from "../ProviderController";
+import ProviderController from "../provider/ProviderController";
 
 export default {
   name: "providerEditor",

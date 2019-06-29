@@ -15,7 +15,7 @@ import clientsTable from "./clientsTable.vue";
 import editClientDialog from "./editClientDialog.vue";
 import newClientDialog from "./newClientDialog.vue";
 
-import ClientsController from "../clientsController";
+import ClientsController from "../client/clientsController";
 import ClientDialogController from "../client/clientDialogController";
 
 export default {
@@ -23,12 +23,17 @@ export default {
   data() {
     return {};
   },
+
+  mounted() {
+    ClientsController.list(0, 20, "");
+  },
+
   methods: {
     onRemoveFromFavorite() {
       ClientsController.newClientDialog(true);
     },
 
-    showNewClientDialog(event) {      
+    showNewClientDialog(event) {
       ClientDialogController.showNewClientDialog();
     }
   },
@@ -50,4 +55,25 @@ export default {
 <style lang="scss">
 @import "node_modules/spectre.css/src/spectre";
 @import "node_modules/spectre.css/src/spectre-icons";
+
+.clients-app {
+  
+  padding-top:2rem;
+
+  .modal-header {
+    border-bottom: 1px solid #ddd;
+  }
+
+  .clients_table {
+    padding-top: 1rem;
+
+    .edit_client_link {
+      cursor: pointer;
+      text-decoration: underline;
+      color: $primary-color;
+    }
+
+  }
+
+} /* clients-app */
 </style>
