@@ -13,7 +13,7 @@ export default class ClientDB extends BaseDB {
 
         let res;
 
-        let sql = 'SELECT * FROM clients c WHERE c.`name` LIKE :search LIMIT :offset, :limit;';
+        let sql = 'SELECT * FROM clients c WHERE c.`name` LIKE :search order by c.`name` LIMIT :offset, :limit;';
         try {
             res = (await this.db.raw(sql, {
                 offset: offset,

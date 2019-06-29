@@ -10,9 +10,7 @@ async function run() {
 
         it('Test constructor', async () => {
 
-            let clientDB = new ClientDB();
-
-            let data = await clientDB.list(0, 10, '');           
+            let clientDB = new ClientDB();                
             assert(clientDB);
 
         });
