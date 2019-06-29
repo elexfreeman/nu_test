@@ -10,9 +10,9 @@ var _default = config = {
     "client": "mysql",
     "connection": {
       "host": "localhost",
-      "user": "root",
-      "password": "",
-      "database": "spwww"
+      "user": "myuser",
+      "password": "mypass",
+      "database": "mydb"
     },
     "pool": {
       "min": 0,

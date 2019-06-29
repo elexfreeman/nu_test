@@ -7,13 +7,15 @@
     "dev": "npm run build && nodemon dist/index.js",
     "start": "npm run build && node dist/index.js",
     "build": "babel app -d dist",
-    "install": "npm run build && node install.js"
+    "install_app": "npm run build && node install.js",
+    "test": "./node_modules/.bin/mocha --require @babel/polyfill --require @babel/register"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@babel/runtime": "^7.4.5",
     "body-parser": "^1.19.0",
+    "chai": "^4.2.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "knex": "^0.18.0",
@@ -28,6 +30,10 @@
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
-    "nodemon": "^1.19.1"
+    "nodemon": "^1.19.1",
+    "@types/chai": "^4.1.7",
+    "@types/expect": "^1.20.3",
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^10.12.18"
   }
 }

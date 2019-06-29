@@ -1,4 +1,4 @@
-const config = require('./app/config').default;
+const config = require('./app/config');
 
 var knex = require('knex')(config.mysql);
 

@@ -1,5 +1,6 @@
-import config from '../config'
-const coreDBSys = require('knex')(config.mysql);
+import {mysql} from '../config'
+
+const coreDBSys = require('knex')(mysql);
 
 /**
  * base DB access class

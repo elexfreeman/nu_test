@@ -9,9 +9,9 @@ exports["default"] = void 0;
 
 var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
 
-var _config = _interopRequireDefault(require("../config"));
+var _config = require("../config");
 
-var coreDBSys = require('knex')(_config["default"].mysql);
+var coreDBSys = require('knex')(_config.mysql);
 /**
  * base DB access class
  */

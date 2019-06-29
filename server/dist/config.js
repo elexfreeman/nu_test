@@ -1,6 +1,6 @@
 "use strict";
 
-exports["default"] = {
+module.exports = {
   mysql: {
     "client": "mysql",
     "connection": {
@@ -13,7 +13,10 @@ exports["default"] = {
       "min": 0,
       "max": 7
     },
-    "migrations": {},
+    "migrations": {
+      "tableName": "knex_migrations",
+      "directory": "./src/Infrastructure/SQL/Migrations"
+    },
     "acquireConnectionTimeout": 60000
   }
 };
