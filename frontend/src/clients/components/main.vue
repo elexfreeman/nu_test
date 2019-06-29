@@ -15,7 +15,7 @@ import clientsTable from "./clientsTable.vue";
 import editClientDialog from "./editClientDialog.vue";
 import newClientDialog from "./newClientDialog.vue";
 
-import ClientsController from "../client/clientsController";
+
 import ClientController from "../client/clientController";
 
 export default {
@@ -25,7 +25,7 @@ export default {
   },
 
   mounted() {
-    ClientsController.list(0, 20, "");
+    ClientController.list(0, 20, "");
   },
 
   methods: {

@@ -13,7 +13,7 @@ module.exports = {
     mode: "development", 
     entry: entry,
     output: {
-        path: path.join(__dirname, 'build/'), 
+        path: path.join(__dirname, '../server/public/'), 
         filename: "js/[name].js"
     },
 
