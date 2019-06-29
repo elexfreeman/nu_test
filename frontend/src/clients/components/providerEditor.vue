@@ -1,25 +1,25 @@
 <template>
-  <div>
+  <div v-if="client">
     <div class="form-group">
       <div class="col-3 col-sm-12">
         <label class="form-label">Providers:</label>
       </div>
       <div class="col-9 col-sm-12">
         <div class="input-group">
-          <input class="form-input input-lg" type="text" />
-          <button class="btn btn-primary input-group-btn btn-lg">Add provider</button>
+          <input v-model="providerName" class="form-input input-lg" type="text" />
+          <button type="button" v-on:click="add" class="btn btn-primary input-group-btn btn-lg">Add provider</button>
         </div>
       </div>
     </div>
 
-    <div class="provider_row form-group">
+    <div v-bind:key="key" v-for="(item, key) in client.providerEditorListData" class="provider_row form-group">
       <div class="col-3 col-sm-12"></div>
       <div class="col-9 col-sm-12">
         <div class="columns">
           <div class="column col-6">
             <label class="form-checkbox">
-              <input type="checkbox" />
-              <i class="form-icon"></i> Provider 1
+              <input type="checkbox" v-model="item.check" />
+              <i class="form-icon"></i> {{item.name}}
             </label>
           </div>
           <div class="column col-1">
@@ -47,10 +47,16 @@ export default {
   name: "providerEditor",
 
   data() {
-    return {};
+    return {
+      providerName: ''
+    };
   },
 
-  methods: {},
+  methods: {
+    add(event){
+      ProviderController.add(this.providerName)
+    }
+  },
 
   computed: {
     onLoad() {

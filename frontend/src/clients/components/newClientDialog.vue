@@ -9,7 +9,6 @@
       <div class="modal-body">
         <div class="content">
           <form class="form-horizontal">
-
             <div class="form-group">
               <div class="col-3 col-sm-12">
                 <label class="form-label">Name:</label>
@@ -45,8 +44,7 @@
       </div>
       <div class="modal-footer">
         <div class="columns">
-          <div class="column col-6 text-left">           
-          </div>
+          <div class="column col-6 text-left"></div>
           <div class="column col-6 text-right">
             <button v-on:click="closeDialog" class="btn">Cancel</button>
             <button v-on:click="saveClient" class="btn btn-success">Add Client</button>
@@ -70,6 +68,9 @@ export default {
   methods: {
     closeDialog(event) {
       ClientController.hideNewClientDialog();
+    },
+    saveClient(event) {
+      ClientController.saveClient();
     }
   },
   computed: {

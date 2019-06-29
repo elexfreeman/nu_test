@@ -19,4 +19,8 @@ export default class ProviderDB {
         ]
     }
 
+    static async add(provider) {
+        return true;
+    }
+
 }

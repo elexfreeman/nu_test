@@ -15,18 +15,18 @@ export default class ClientController {
 
         try {
             /* get providers */
-            providers = await ProviderDB.list();
+            let providers = await ProviderDB.list();
 
-            if (clientData) {
-                /* construct client */
-                client = new Client({
-                    id: null,
-                    name: '',
-                    email: '',
-                    phone: '',
-                    providers: []
-                }, providers);
-            }
+
+            /* construct client */
+            client = new Client({
+                id: null,
+                name: '',
+                email: '',
+                phone: '',
+                providers: []
+            }, providers);
+
 
         } catch (e) {
             console.log(e);

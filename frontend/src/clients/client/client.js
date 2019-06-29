@@ -2,6 +2,8 @@ export default class Client {
 
     constructor(client, providerList) {
 
+        this.prepareProvider = this.prepareProvider.bind(this);
+
         this.id = null;
         this.name = '';
         this.email = '';
@@ -9,14 +11,13 @@ export default class Client {
         this.providers = [];
         this.providersString = '';
 
-         /* i thinck providerList is array =) */
-         this.providerList = [];
+        /* i thinck providerList is array =) */
+        this.providerList = [];
 
-        this.prepareProvider = this.prepareProvider.bind(this);
-
+        /* data for provider editor check list */
         this.providerEditorListData = [];
 
-       
+
         if (providerList) {
             this.providerList = providerList;
         }
@@ -44,22 +45,33 @@ export default class Client {
      * Create provider string like 'Provider 1, Provider 2'
      */
     prepareProvider() {
-       
+
         this.providersString = '';
+        this.providerEditorListData = [];
 
         let tmp = [];
 
         /* fast cycle, not lodash  */
-        for (let k = 0; k < this.providers.length; k++) {
-            for (let i = 0; i < this.providerList.length; i++) {
+
+        for (let i = 0; i < this.providerList.length; i++) {
+            let check = false;
+            for (let k = 0; k < this.providers.length; k++) {
 
                 if (this.providerList[i].id == this.providers[k].id) {
-                    tmp.push(this.providerList[i].name);                    
+                    tmp.push(this.providerList[i].name);
+                    check = true;
                 }
-                
-            } // i++
 
-        } // k++          
+            } // k++        
+
+            /* for provider_Editor component */
+            this.providerEditorListData.push({
+                id: this.providerList[i].id,
+                name: this.providerList[i].name,
+                check: check
+            });
+
+        }   // i++ 
 
         this.providersString = tmp.join(', ');
     }

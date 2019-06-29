@@ -55,6 +55,14 @@ export default class ClientDB {
         };
     }
 
+    static async save(client) {
+
+    }
+
+    static async delete(client) {
+
+    }
+
     static async listTest() {
         return [
             {
