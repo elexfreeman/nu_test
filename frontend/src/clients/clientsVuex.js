@@ -7,6 +7,7 @@ const store = {
     state: {
         onLoad: false,
         clients: [],
+        providers: [],
         showNewClientDialog: false,
         showEditClientDialog: false
 
@@ -18,7 +19,14 @@ const store = {
         },
         setShowEditClientDialog(state, payload) {
             state.showEditClientDialog = payload;
-        }
+        },
+
+        setClients(state, payload) {
+            state.clients = payload;
+        },
+        setProviders(state, payload) {
+            state.providers = payload;
+        },
         
     }
 };

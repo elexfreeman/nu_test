@@ -1,5 +1,3 @@
 {
-    "presets": [
-        "@vue/babel-preset-app" 
-      ]
+  "presets": ["@babel/env"]
 }
