@@ -1,40 +1,92 @@
 <template>
-  <div class="container grid-lg">
-    <h1>Clients</h1>
-    <div class="new_client text-right">
-       <button class="btn">New client</button> 
-       <clientsTable></clientsTable>
+  <div v-bind:class="{ active: show }" class="modal">
+    <a v-on:click="closeDialog" class="modal-overlay"></a>
+    <div class="modal-container">
+      <div class="modal-header">
+        <button v-on:click="closeDialog" class="btn btn-clear float-right"></button>
+        <div class="modal-title h5">New Client</div>
+      </div>
+      <div class="modal-body">
+        <div class="content">
+          <form class="form-horizontal">
+            <div class="form-group">
+              <div class="col-3 col-sm-12">
+                <label class="form-label">Name:</label>
+              </div>
+              <div class="col-9 col-sm-12">
+                <input class="form-input" type="text" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-3 col-sm-12">
+                <label class="form-label">Email:</label>
+              </div>
+              <div class="col-9 col-sm-12">
+                <input class="form-input" type="text" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-3 col-sm-12">
+                <label class="form-label">Phone:</label>
+              </div>
+              <div class="col-9 col-sm-12">
+                <input class="form-input" type="text" />
+              </div>
+            </div>
+
+            <providerEditor></providerEditor>
+
+            <!-- form structure -->
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="columns">
+          <div class="column col-6 text-left">
+            <button class="btn btn-error">Delete Client</button>
+          </div>
+          <div class="column col-6 text-right">
+            <button v-on:click="closeDialog" class="btn">Cancel</button>
+            <button class="btn btn-success">Save Client</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import providerEditor from "./providerEditor.vue";
 
-import clientsTable from "./clients_table.vue";
+import ClientDialogController from "../ClientDialogController";
 
 export default {
-  name: "main",
+  name: "newClientDialog",
   data() {
     return {};
   },
   methods: {
-    /*     onRemoveFromFavorite() {
-      this.$store.commit("removeFromFavorite", { test: "test" });
-    } */
+    closeDialog(event) {
+      ClientDialogController.hideNewClientDialog();
+    }
   },
   computed: {
     onLoad() {
-      /*признак отправи сообщения на сервер*/
       return this.$store.state.onLoad;
+    },
+
+    show() {
+      return this.$store.state.showNewClientDialog;
     }
   },
   components: {
-      clientsTable
+    providerEditor
   }
 };
 </script>
 
 
 <style lang="scss">
-@import "node_modules/spectre.css/src/spectre";
 </style>

@@ -7,13 +7,19 @@ const store = {
     state: {
         onLoad: false,
         clients: [],
-        showNewClientDialog: false
+        showNewClientDialog: false,
+        showEditClientDialog: false
 
     },
     mutations: {
-        setShowNewClientDialog(state, payload) {
-            state.showNewClientDialog = payload.showNewClientDialog;
+
+        setShowNewClientDialog(state, payload) {            
+            state.showNewClientDialog = payload;
+        },
+        setShowEditClientDialog(state, payload) {
+            state.showEditClientDialog = payload;
         }
+        
     }
 };
 

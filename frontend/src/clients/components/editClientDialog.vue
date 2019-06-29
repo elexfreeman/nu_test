@@ -1,5 +1,5 @@
 <template>
-  <div class="modal active">
+  <div class="modal">
     <a class="modal-overlay"></a>
     <div class="modal-container">
       <div class="modal-header">
@@ -8,7 +8,48 @@
       </div>
       <div class="modal-body">
         <div class="content">
-          <!-- content here -->
+          <form class="form-horizontal">
+            <div class="form-group">
+              <div class="col-3 col-sm-12">
+                <label class="form-label">Name:</label>
+              </div>
+              <div class="col-9 col-sm-12">
+                <input class="form-input" type="text" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-3 col-sm-12">
+                <label class="form-label">Email:</label>
+              </div>
+              <div class="col-9 col-sm-12">
+                <input class="form-input" type="text" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-3 col-sm-12">
+                <label class="form-label">Phone:</label>
+              </div>
+              <div class="col-9 col-sm-12">
+                <input class="form-input" type="text" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-3 col-sm-12">
+                <label class="form-label">Providers:</label>
+              </div>
+              <div class="col-9 col-sm-12">
+               <div class="input-group">
+                  <input class="form-input input-lg" type="text">
+                  <button class="btn btn-primary input-group-btn btn-lg">Add provider</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- form structure -->
+          </form>
         </div>
       </div>
       <div class="modal-footer">
