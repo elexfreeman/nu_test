@@ -16,7 +16,7 @@ import editClientDialog from "./editClientDialog.vue";
 import newClientDialog from "./newClientDialog.vue";
 
 import ClientsController from "../client/clientsController";
-import ClientDialogController from "../client/clientDialogController";
+import ClientController from "../client/clientController";
 
 export default {
   name: "main",
@@ -34,7 +34,7 @@ export default {
     },
 
     showNewClientDialog(event) {
-      ClientDialogController.showNewClientDialog();
+      ClientController.showNewClientDialog();
     }
   },
   computed: {

@@ -9,6 +9,7 @@
       <div class="modal-body">
         <div class="content">
           <form class="form-horizontal">
+
             <div class="form-group">
               <div class="col-3 col-sm-12">
                 <label class="form-label">Name:</label>
@@ -45,7 +46,7 @@
       <div class="modal-footer">
         <div class="columns">
           <div class="column col-6 text-left">
-            <button class="btn btn-error">Delete Client</button>
+            <button v-on:click="deleteClient" class="btn btn-error">Delete Client</button>
           </div>
           <div class="column col-6 text-right">
             <button v-on:click="closeDialog" class="btn">Cancel</button>
@@ -58,35 +59,46 @@
 </template>
 
 <script>
+
 import providerEditor from "./providerEditor.vue";
 
-import ClientDialogController from "../client/ClientDialogController";
+import ClientController from "../client/ClientController";
 
 export default {
   name: "editClientDialog",
+
   data() {
     return {};
   },
+
   methods: {
     closeDialog(event) {
-      ClientDialogController.hideEditClientDialog();
+      ClientController.hideEditClientDialog();
     },
     saveClient(event) {
-      ClientDialogController.saveClient();
+      ClientController.saveClient();
+    },
+    deleteClient(event) {
+      ClientController.deleteClient();
     }
   },
+
   computed: {
     onLoad() {
       /*признак отправи сообщения на сервер*/
       return this.$store.state.onLoad;
     },
+
     show() {
       return this.$store.state.showEditClientDialog;
     },
+
     client() {
-      return this.$store.state.clientEdit;
+      return this.$store.state.client;
     }
+    
   },
+
   components: {
     providerEditor
   }

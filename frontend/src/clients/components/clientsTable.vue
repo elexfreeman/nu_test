@@ -32,7 +32,7 @@
 <script>
 import { VueGoodTable } from "vue-good-table";
 
-import ClientDialogController from '../client/clientDialogController';
+import ClientController from '../client/clientController';
 
 export default {
   name: "clientsTable",
@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     onShowEditDialog(event) {
-      ClientDialogController.showEditClientDialog(event.target.getAttribute('client_id'));      
+      ClientController.showEditClientDialog(event.target.getAttribute('client_id'));      
     }
   },
   computed: {

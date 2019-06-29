@@ -45,15 +45,22 @@ import ProviderController from "../provider/ProviderController";
 
 export default {
   name: "providerEditor",
+
   data() {
     return {};
   },
+
   methods: {},
+
   computed: {
     onLoad() {
       return this.$store.state.onLoad;
+    },
+    client() {
+      return this.$store.state.client;
     }
   },
+
   components: {}
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div v-bind:class="{ active: show }" class="modal">
     <a v-on:click="closeDialog" class="modal-overlay"></a>
-    <div class="modal-container">
+    <div v-if="client" class="modal-container">
       <div class="modal-header">
         <button v-on:click="closeDialog" class="btn btn-clear float-right"></button>
         <div class="modal-title h5">New Client</div>
@@ -9,12 +9,13 @@
       <div class="modal-body">
         <div class="content">
           <form class="form-horizontal">
+
             <div class="form-group">
               <div class="col-3 col-sm-12">
                 <label class="form-label">Name:</label>
               </div>
               <div class="col-9 col-sm-12">
-                <input class="form-input" type="text" />
+                <input v-model="client.name" class="form-input" type="text" />
               </div>
             </div>
 
@@ -23,7 +24,7 @@
                 <label class="form-label">Email:</label>
               </div>
               <div class="col-9 col-sm-12">
-                <input class="form-input" type="text" />
+                <input v-model="client.email" class="form-input" type="text" />
               </div>
             </div>
 
@@ -32,7 +33,7 @@
                 <label class="form-label">Phone:</label>
               </div>
               <div class="col-9 col-sm-12">
-                <input class="form-input" type="text" />
+                <input v-model="client.phone" class="form-input" type="text" />
               </div>
             </div>
 
@@ -44,12 +45,11 @@
       </div>
       <div class="modal-footer">
         <div class="columns">
-          <div class="column col-6 text-left">
-            <button class="btn btn-error">Delete Client</button>
+          <div class="column col-6 text-left">           
           </div>
           <div class="column col-6 text-right">
             <button v-on:click="closeDialog" class="btn">Cancel</button>
-            <button class="btn btn-success">Save Client</button>
+            <button v-on:click="saveClient" class="btn btn-success">Add Client</button>
           </div>
         </div>
       </div>
@@ -60,7 +60,7 @@
 <script>
 import providerEditor from "./providerEditor.vue";
 
-import ClientDialogController from "../client/ClientDialogController";
+import ClientController from "../client/ClientController";
 
 export default {
   name: "newClientDialog",
@@ -69,7 +69,7 @@ export default {
   },
   methods: {
     closeDialog(event) {
-      ClientDialogController.hideNewClientDialog();
+      ClientController.hideNewClientDialog();
     }
   },
   computed: {
@@ -79,6 +79,10 @@ export default {
 
     show() {
       return this.$store.state.showNewClientDialog;
+    },
+
+    client() {
+      return this.$store.state.client;
     }
   },
   components: {

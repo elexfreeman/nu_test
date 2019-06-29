@@ -12,7 +12,7 @@ const store = {
         showNewClientDialog: false,
         showEditClientDialog: false,
      
-        clientEdit: null
+        client: null
 
     },
 
@@ -32,8 +32,8 @@ const store = {
             state.providers = payload;
         },
 
-        setClientEdit(state, payload) {
-            state.clientEdit = payload;
+        setClient(state, payload) {
+            state.client = payload;
         },
         
     }

@@ -14,6 +14,8 @@ export default class Client {
 
         this.prepareProvider = this.prepareProvider.bind(this);
 
+        this.providerEditorListData = [];
+
        
         if (providerList) {
             this.providerList = providerList;

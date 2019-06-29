@@ -4,15 +4,46 @@ import Client from './client';
 import ClientDB from './clientDB';
 import ProviderDB from '../provider/providerDB';
 
-export default class ClientDialogController {
+/**
+ * control client store an make Client entity
+ */
+export default class ClientController {
 
+    static async makeEmptyClient() {
+
+        let client;
+
+        try {
+            /* get providers */
+            providers = await ProviderDB.list();
+
+            if (clientData) {
+                /* construct client */
+                client = new Client({
+                    id: null,
+                    name: '',
+                    email: '',
+                    phone: '',
+                    providers: []
+                }, providers);
+            }
+
+        } catch (e) {
+            console.log(e);
+        }
+
+        store.commit("setClient", client);
+
+    }
 
     /* new client dialo */
     static showNewClientDialog() {
+        ClientController.makeEmptyClient();
         store.commit("setShowNewClientDialog", true);
     }
 
     static hideNewClientDialog() {
+        store.commit("setClient", null);
         store.commit("setShowNewClientDialog", false);
     }
     /* ----------------------------- */
@@ -38,20 +69,24 @@ export default class ClientDialogController {
         } catch (e) {
             console.log(e);
         }
-        
-        store.commit("setClientEdit", client);
+
+        store.commit("setClient", client);
         store.commit("setShowEditClientDialog", true);
     }
 
     static hideEditClientDialog() {
-        store.commit("setClientEdit", null);
+        store.commit("setClient", null);
         store.commit("setShowEditClientDialog", false);
     }
     /* ----------------------------- */
 
 
     static async saveClient() {
-        console.log(store.state.clientEdit);
+        console.log(store.state.client);
+    }
+
+    static async deleteClient() {
+        console.log(store.state.client);
     }
 
 
