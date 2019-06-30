@@ -54,7 +54,8 @@ export default {
 
   methods: {
     add(event){
-      ProviderController.add(this.providerName)
+      ProviderController.add(this.providerName);
+      this.providerName = '';
     }
   },
 

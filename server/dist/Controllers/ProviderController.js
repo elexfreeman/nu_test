@@ -127,14 +127,29 @@ function () {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
+                _context3.prev = 0;
+                _context3.next = 3;
+                return this.providerDB.add(this.req.body);
+
+              case 3:
+                res = _context3.sent;
+                _context3.next = 9;
+                break;
+
+              case 6:
+                _context3.prev = 6;
+                _context3.t0 = _context3["catch"](0);
+                console.log(_context3.t0);
+
+              case 9:
                 return _context3.abrupt("return", res);
 
-              case 1:
+              case 10:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3);
+        }, _callee3, this, [[0, 6]]);
       }));
 
       function add() {
@@ -254,7 +269,7 @@ function () {
             if (!data) {
               res.status(404).json({
                 "errors": [{
-                  "userNotFound": true
+                  "providerNotFound": true
                 }]
               });
             } else {
@@ -302,7 +317,7 @@ function () {
             if (!data) {
               res.status(404).json({
                 "errors": [{
-                  "some wrong": true
+                  "emptyName": true
                 }]
               });
             } else {

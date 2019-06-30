@@ -8,7 +8,7 @@ class ProviderControler {
 
     constructor(req) {
         this.req = req;
-        
+
         this.providerDB = new ProviderDB();
 
         this.list = this.list.bind(this);
@@ -35,7 +35,7 @@ class ProviderControler {
      */
     async list() {
         let res = [];
-      
+
         try {
 
             /* get providers */
@@ -54,7 +54,7 @@ class ProviderControler {
     async get() {
         let res;
 
-       
+
 
         return res;
     }
@@ -65,7 +65,12 @@ class ProviderControler {
     async add() {
         let res;
 
-      
+        try {
+            res = await this.providerDB.add(this.req.body);
+        } catch (e) {
+            console.log(e);
+        }
+
         return res;
     }
 
@@ -91,7 +96,7 @@ router.get('/provider/:id', async (req, res, next) => {
         res.status(404).json({
             "errors": [
                 {
-                    "userNotFound": true
+                    "providerNotFound": true
                 }
             ]
         })
@@ -113,7 +118,7 @@ router.post('/provider', async (req, res, next) => {
         res.status(404).json({
             "errors": [
                 {
-                    "some wrong": true
+                    "emptyName": true
                 }
             ]
         })

@@ -35,9 +35,11 @@ export default class ProviderDB extends BaseDB {
                 throw 'empty provider';
             }
 
-            if (provider.name) {
-                insertData['name'] = provider.name;
+            if (!provider.name) {
+                throw 'empty name';
             }
+            
+            insertData['name'] = provider.name;
 
             res = (await this.db('provider')
                 .insert(insertData))[0];

@@ -103,31 +103,36 @@ function (_BaseDB) {
 
               case 5:
                 if (provider.name) {
-                  insertData['name'] = provider.name;
+                  _context2.next = 7;
+                  break;
                 }
 
-                _context2.next = 8;
+                throw 'empty name';
+
+              case 7:
+                insertData['name'] = provider.name;
+                _context2.next = 10;
                 return this.db('provider').insert(insertData);
 
-              case 8:
+              case 10:
                 res = _context2.sent[0];
-                _context2.next = 14;
+                _context2.next = 16;
                 break;
 
-              case 11:
-                _context2.prev = 11;
+              case 13:
+                _context2.prev = 13;
                 _context2.t0 = _context2["catch"](2);
                 console.log(_context2.t0);
 
-              case 14:
+              case 16:
                 return _context2.abrupt("return", res);
 
-              case 15:
+              case 17:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, this, [[2, 11]]);
+        }, _callee2, this, [[2, 13]]);
       }));
 
       function add(_x) {

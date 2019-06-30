@@ -1,5 +1,6 @@
 import store from '../clientsVuex';
 import ProviderDB from './providerDB';
+import Client from '../client/client';
 
 /**
  * Work with provider store data
@@ -29,16 +30,23 @@ export default class ProviderController {
     static async add(providerName) {
 
         console.log(providerName);
-        /* add provider */
-        await ProviderDB.add(providerName);
-        /* reload list in store */
-        await ProviderController.list();
 
-        /* reload vizible client */
-        if (store.state.client) {
-            let client = { ...store.state.client };
-            client.prepareProvider();
-            store.commit("setClient", client);            
+        let providers;
+        try {
+            /* add provider */
+            await ProviderDB.add({ name: providerName });
+            /* reload list in store */
+            providers = await ProviderDB.list();
+            store.commit("setProviders", providers);
+
+            /* reload vizible client */
+            if (store.state.client) {
+                let client = new Client(store.state.client.get(), providers);                                                
+                store.commit("setClient", client);                  
+            }
+
+        } catch (e) {
+            console.log(e);
         }
 
     }

@@ -4,6 +4,7 @@ export default class Client {
 
         this.prepareProvider = this.prepareProvider.bind(this);
         this.get = this.get.bind(this);
+        this.setProviderList = this.setProviderList.bind(this);
 
         this.id = null;
         this.name = '';
@@ -42,6 +43,11 @@ export default class Client {
         }
     }
 
+
+    setProviderList(providerList){
+        this.providerList = providerList;
+    }
+
     /**
      * Create provider string like 'Provider 1, Provider 2'
      */
@@ -74,6 +80,8 @@ export default class Client {
 
         }   // i++ 
 
+        console.log('this.providerEditorListData', this.providerEditorListData);
+
         this.providersString = tmp.join(', ');
     }
 
@@ -81,6 +89,8 @@ export default class Client {
      * get only client data (for ajax save)
      */
     get() {
+
+        /* reload providers */
         let providers = [];
         for (let i = 0; i < this.providerEditorListData.length; i++) {
             if (this.providerEditorListData[i].check) {
