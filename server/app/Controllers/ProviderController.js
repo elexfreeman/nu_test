@@ -73,6 +73,28 @@ class ProviderControler {
         return res;
     }
 
+    /**
+     * add new POST-route
+     */
+    async update() {
+        let res;
+
+        let providerId = parseInt(this.req.params.id);
+
+        try {
+
+            let data = this.req.body;          
+            data['id'] = providerId;
+
+            res = await this.providerDB.update(data);
+           
+        } catch (e) {
+            console.log(e);
+        }
+
+        return res;
+    }
+
 }
 
 /**
@@ -102,6 +124,31 @@ router.post('/provider', async (req, res, next) => {
 
     } else {
         res.json({ id: data });
+    }
+
+});
+
+
+
+/**
+ * update provider
+ */
+router.put('/provider/:id', async (req, res, next) => {
+    const self = await ProviderControler.init(req);
+
+    let data = await self.update();
+    if (!data) {
+        res.status(404).json({
+            done: false, 
+            "errors": [
+                {
+                    "some wrong": true
+                }
+            ]
+        })
+
+    } else {
+        res.json({ done: true });
     }
 
 });

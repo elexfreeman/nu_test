@@ -78,6 +78,34 @@ export default class ProviderController {
 
     }
 
+    
+    /**
+     * delete provider
+     * @param {number} providerId 
+     */
+    static async save(providerId) {        
+
+        let providers;
+
+        try {
+            /* delete provider */
+            await ProviderDB.remove(providerId);
+            /* reload list in store */
+            providers = await ProviderDB.list();
+            store.commit("setProviders", providers);
+
+            /* reload vizible client */
+            if (store.state.client) {
+                let client = new Client(store.state.client.get(), providers);                                                
+                store.commit("setClient", client);                  
+            }
+
+        } catch (e) {
+            console.log(e);
+        }
+
+    }
+
 
 }
 

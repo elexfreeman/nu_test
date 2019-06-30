@@ -170,6 +170,56 @@ function () {
 
       return add;
     }()
+    /**
+     * add new POST-route
+     */
+
+  }, {
+    key: "update",
+    value: function () {
+      var _update = (0, _asyncToGenerator2["default"])(
+      /*#__PURE__*/
+      _regenerator["default"].mark(function _callee4() {
+        var res, providerId, data;
+        return _regenerator["default"].wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                providerId = parseInt(this.req.params.id);
+                _context4.prev = 1;
+                data = this.req.body;
+                data['id'] = providerId;
+                _context4.next = 6;
+                return this.providerDB.update(data);
+
+              case 6:
+                res = _context4.sent;
+                console.log('res', res);
+                _context4.next = 13;
+                break;
+
+              case 10:
+                _context4.prev = 10;
+                _context4.t0 = _context4["catch"](1);
+                console.log(_context4.t0);
+
+              case 13:
+                return _context4.abrupt("return", res);
+
+              case 14:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this, [[1, 10]]);
+      }));
+
+      function update() {
+        return _update.apply(this, arguments);
+      }
+
+      return update;
+    }()
   }], [{
     key: "init",
 
@@ -180,25 +230,25 @@ function () {
     value: function () {
       var _init = (0, _asyncToGenerator2["default"])(
       /*#__PURE__*/
-      _regenerator["default"].mark(function _callee4(req) {
+      _regenerator["default"].mark(function _callee5(req) {
         var self;
-        return _regenerator["default"].wrap(function _callee4$(_context4) {
+        return _regenerator["default"].wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
                 self = new ProviderControler(req);
                 /* important place */
 
                 /* here we can insert some async code */
 
-                return _context4.abrupt("return", self);
+                return _context5.abrupt("return", self);
 
               case 2:
               case "end":
-                return _context4.stop();
+                return _context5.stop();
             }
           }
-        }, _callee4);
+        }, _callee5);
       }));
 
       function init(_x) {
@@ -220,32 +270,32 @@ router.get('/provider/list',
 function () {
   var _ref = (0, _asyncToGenerator2["default"])(
   /*#__PURE__*/
-  _regenerator["default"].mark(function _callee5(req, res, next) {
+  _regenerator["default"].mark(function _callee6(req, res, next) {
     var self;
-    return _regenerator["default"].wrap(function _callee5$(_context5) {
+    return _regenerator["default"].wrap(function _callee6$(_context6) {
       while (1) {
-        switch (_context5.prev = _context5.next) {
+        switch (_context6.prev = _context6.next) {
           case 0:
-            _context5.next = 2;
+            _context6.next = 2;
             return ProviderControler.init(req);
 
           case 2:
-            self = _context5.sent;
-            _context5.t0 = res;
-            _context5.next = 6;
+            self = _context6.sent;
+            _context6.t0 = res;
+            _context6.next = 6;
             return self.list();
 
           case 6:
-            _context5.t1 = _context5.sent;
+            _context6.t1 = _context6.sent;
 
-            _context5.t0.json.call(_context5.t0, _context5.t1);
+            _context6.t0.json.call(_context6.t0, _context6.t1);
 
           case 8:
           case "end":
-            return _context5.stop();
+            return _context6.stop();
         }
       }
-    }, _callee5);
+    }, _callee6);
   }));
 
   return function (_x2, _x3, _x4) {
@@ -261,22 +311,22 @@ router.post('/provider',
 function () {
   var _ref2 = (0, _asyncToGenerator2["default"])(
   /*#__PURE__*/
-  _regenerator["default"].mark(function _callee6(req, res, next) {
+  _regenerator["default"].mark(function _callee7(req, res, next) {
     var self, data;
-    return _regenerator["default"].wrap(function _callee6$(_context6) {
+    return _regenerator["default"].wrap(function _callee7$(_context7) {
       while (1) {
-        switch (_context6.prev = _context6.next) {
+        switch (_context7.prev = _context7.next) {
           case 0:
-            _context6.next = 2;
+            _context7.next = 2;
             return ProviderControler.init(req);
 
           case 2:
-            self = _context6.sent;
-            _context6.next = 5;
+            self = _context7.sent;
+            _context7.next = 5;
             return self.add();
 
           case 5:
-            data = _context6.sent;
+            data = _context7.sent;
 
             if (!data) {
               res.status(404).json({
@@ -292,33 +342,84 @@ function () {
 
           case 7:
           case "end":
-            return _context6.stop();
+            return _context7.stop();
         }
       }
-    }, _callee6);
+    }, _callee7);
   }));
 
   return function (_x5, _x6, _x7) {
     return _ref2.apply(this, arguments);
   };
 }());
-router["delete"]('/provider/:id',
+/**
+ * update provider
+ */
+
+router.put('/provider/:id',
 /*#__PURE__*/
 function () {
   var _ref3 = (0, _asyncToGenerator2["default"])(
   /*#__PURE__*/
-  _regenerator["default"].mark(function _callee7(req, res, next) {
-    var self;
-    return _regenerator["default"].wrap(function _callee7$(_context7) {
+  _regenerator["default"].mark(function _callee8(req, res, next) {
+    var self, data;
+    return _regenerator["default"].wrap(function _callee8$(_context8) {
       while (1) {
-        switch (_context7.prev = _context7.next) {
+        switch (_context8.prev = _context8.next) {
           case 0:
-            _context7.next = 2;
+            _context8.next = 2;
             return ProviderControler.init(req);
 
           case 2:
-            self = _context7.sent;
-            _context7.next = 5;
+            self = _context8.sent;
+            _context8.next = 5;
+            return self.update();
+
+          case 5:
+            data = _context8.sent;
+
+            if (!data) {
+              res.status(404).json({
+                done: false,
+                "errors": [{
+                  "some wrong": true
+                }]
+              });
+            } else {
+              res.json({
+                done: true
+              });
+            }
+
+          case 7:
+          case "end":
+            return _context8.stop();
+        }
+      }
+    }, _callee8);
+  }));
+
+  return function (_x8, _x9, _x10) {
+    return _ref3.apply(this, arguments);
+  };
+}());
+router["delete"]('/provider/:id',
+/*#__PURE__*/
+function () {
+  var _ref4 = (0, _asyncToGenerator2["default"])(
+  /*#__PURE__*/
+  _regenerator["default"].mark(function _callee9(req, res, next) {
+    var self;
+    return _regenerator["default"].wrap(function _callee9$(_context9) {
+      while (1) {
+        switch (_context9.prev = _context9.next) {
+          case 0:
+            _context9.next = 2;
+            return ProviderControler.init(req);
+
+          case 2:
+            self = _context9.sent;
+            _context9.next = 5;
             return self.remove();
 
           case 5:
@@ -328,13 +429,13 @@ function () {
 
           case 6:
           case "end":
-            return _context7.stop();
+            return _context9.stop();
         }
       }
-    }, _callee7);
+    }, _callee9);
   }));
 
-  return function (_x8, _x9, _x10) {
-    return _ref3.apply(this, arguments);
+  return function (_x11, _x12, _x13) {
+    return _ref4.apply(this, arguments);
   };
 }());

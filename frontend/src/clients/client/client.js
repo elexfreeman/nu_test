@@ -16,7 +16,7 @@ export default class Client {
         this.providerList = [];
 
         /* data for provider editor check list */
-        this.providerEditorListData = [];
+        this.providerListListData = [];
 
 
         if (providerList) {
@@ -49,7 +49,7 @@ export default class Client {
     prepareProvider() {
 
         this.providersString = '';
-        this.providerEditorListData = [];
+        this.providerListListData = [];
 
         let tmp = [];
 
@@ -67,7 +67,7 @@ export default class Client {
             } // k++        
 
             /* for provider_Editor component */
-            this.providerEditorListData.push({
+            this.providerListListData.push({
                 id: this.providerList[i].id,
                 name: this.providerList[i].name,
                 check: check
@@ -85,9 +85,9 @@ export default class Client {
 
         /* reload providers */
         let providers = [];
-        for (let i = 0; i < this.providerEditorListData.length; i++) {
-            if (this.providerEditorListData[i].check) {
-                providers.push({ id: this.providerEditorListData[i].id })
+        for (let i = 0; i < this.providerListListData.length; i++) {
+            if (this.providerListListData[i].check) {
+                providers.push({ id: this.providerListListData[i].id })
             }
         }
         

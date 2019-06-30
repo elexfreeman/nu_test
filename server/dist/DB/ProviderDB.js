@@ -176,13 +176,13 @@ function (_BaseDB) {
                   updateData['name'] = provider.name;
                 }
 
-                _context3.next = 10;
+                console.log(updateData);
+                _context3.next = 11;
                 return this.db('provider').where({
                   id: provider.id
                 }).update(updateData);
 
-              case 10:
-                res = _context3.sent;
+              case 11:
                 _context3.next = 17;
                 break;
 

@@ -36,7 +36,7 @@
               </div>
             </div>
 
-            <providerEditor></providerEditor>
+            <providerList></providerList>
 
             <!-- form structure -->
           </form>
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import providerEditor from "./providerEditor.vue";
+import providerList from "./providerList.vue";
 
 import ClientController from "../client/ClientController";
 
@@ -87,7 +87,7 @@ export default {
     }
   },
   components: {
-    providerEditor
+    providerList
   }
 };
 </script>

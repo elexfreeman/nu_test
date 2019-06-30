@@ -25,10 +25,19 @@ export default class ProviderDB {
         ]
     }
 
-    static async add(provider) {
+
+    static async save(provider) {
         let res;
         try {
-            res = await axios.post(window.server_url + '/provider', provider);
+
+            if (provider.id) {
+                /* update */
+                res = await axios.put(window.server_url + '/provider/' + provider.id, provider);
+            } else {
+                /* insert */
+                res = await axios.post(window.server_url + '/provider', provider);
+            }
+
             if (res) {
                 res = res['data'];
             }

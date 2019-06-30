@@ -56,6 +56,7 @@ export default class ProviderDB extends BaseDB {
 
     async update(provider) {
         let res = true;
+       
         let updateData = {};
         try {
             if (!provider) {
@@ -68,9 +69,9 @@ export default class ProviderDB extends BaseDB {
 
             if (provider.name) {
                 updateData['name'] = provider.name;
-            }
+            }            
 
-            res = await this.db('provider')
+            await this.db('provider')
                 .where({
                     id: provider.id
                 })
