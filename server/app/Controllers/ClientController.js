@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 import ClientDB from '../DB/ClientDB';
+import ClientProvidersDB from '../DB/ClientProvidersDB';
 
 class ClientControler {
 
@@ -9,6 +10,7 @@ class ClientControler {
         this.req = req;
 
         this.clientDB = new ClientDB();
+        this.clientProvidersDB = new ClientProvidersDB();
 
         this.list = this.list.bind(this);
         this.get = this.get.bind(this);
@@ -57,7 +59,11 @@ class ClientControler {
                 search = this.req.params.search;
             }
 
-            res = this.clientDB.list(offset, limit, search);
+            res = await this.clientDB.list(offset, limit, search);
+
+            for (let i = 0; i < res.length; i++) {
+                res[i]['providers'] = await this.clientProvidersDB.get(res[i].id);
+            }
 
         } catch (e) {
             console.log(e);
@@ -80,7 +86,10 @@ class ClientControler {
                 throw 'empty id';
             }
 
-            res = this.clientDB.get(parseInt(this.req.params.id));
+            res = await this.clientDB.get(parseInt(this.req.params.id));
+            if (res) {
+                res['providers'] = await this.clientProvidersDB.get(parseInt(this.req.params.id));
+            }
 
 
         } catch (e) {

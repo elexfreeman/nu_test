@@ -9,6 +9,24 @@ export default class ProviderDB extends BaseDB {
         super();
     }
 
+    async get(clientId){
+        
+        let res;
+
+        let sql = 'SELECT cp.provider_id id FROM client_providers cp WHERE cp.client_id = :clientId ;';
+        try {
+            res = (await this.db.raw(sql, {
+                clientId: clientId
+            }))[0];
+
+
+        } catch (e) {
+            console.log(e);
+        }
+
+        return res;
+    }
+
     async add(data) {
         let res = true;
         let insertData = {};

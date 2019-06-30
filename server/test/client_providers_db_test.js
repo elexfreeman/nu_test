@@ -34,6 +34,17 @@ async function run() {
         });
 
 
+        it('Test get', async () => {
+
+            let clientProvidersDB = new ClientProvidersDB();
+            
+            let res = await clientProvidersDB.get(1);
+            
+            assert(res.length > 0);
+
+        });
+
+
 
     });
 

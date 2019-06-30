@@ -17,6 +17,8 @@ var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/creat
 
 var _ClientDB = _interopRequireDefault(require("../DB/ClientDB"));
 
+var _ClientProvidersDB = _interopRequireDefault(require("../DB/ClientProvidersDB"));
+
 var express = require('express');
 
 var router = express.Router();
@@ -29,6 +31,7 @@ function () {
     (0, _classCallCheck2["default"])(this, ClientControler);
     this.req = req;
     this.clientDB = new _ClientDB["default"]();
+    this.clientProvidersDB = new _ClientProvidersDB["default"]();
     this.list = this.list.bind(this);
     this.get = this.get.bind(this);
   }
@@ -43,7 +46,7 @@ function () {
       var _list = (0, _asyncToGenerator2["default"])(
       /*#__PURE__*/
       _regenerator["default"].mark(function _callee() {
-        var res, offset, limit, search;
+        var res, offset, limit, search, i;
         return _regenerator["default"].wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -52,38 +55,67 @@ function () {
                 offset = 0;
                 limit = 20;
                 search = '';
+                _context.prev = 4;
 
-                try {
-                  /* check params */
-                  if (this.req.params.offset) {
-                    offset = parseInt(this.req.params.offset);
-                  }
-
-                  if (this.req.params.limit) {
-                    limit = parseInt(this.req.params.limit);
-                  }
-
-                  if (limit > 1000) {
-                    limit = 20;
-                  }
-
-                  if (this.req.params.search) {
-                    search = this.req.params.search;
-                  }
-
-                  res = this.clientDB.list(offset, limit, search);
-                } catch (e) {
-                  console.log(e);
+                /* check params */
+                if (this.req.params.offset) {
+                  offset = parseInt(this.req.params.offset);
                 }
 
+                if (this.req.params.limit) {
+                  limit = parseInt(this.req.params.limit);
+                }
+
+                if (limit > 1000) {
+                  limit = 20;
+                }
+
+                if (this.req.params.search) {
+                  search = this.req.params.search;
+                }
+
+                _context.next = 11;
+                return this.clientDB.list(offset, limit, search);
+
+              case 11:
+                res = _context.sent;
+                i = 0;
+
+              case 13:
+                if (!(i < res.length)) {
+                  _context.next = 20;
+                  break;
+                }
+
+                _context.next = 16;
+                return this.clientProvidersDB.get(res[i].id);
+
+              case 16:
+                res[i]['providers'] = _context.sent;
+
+              case 17:
+                i++;
+                _context.next = 13;
+                break;
+
+              case 20:
+                _context.next = 25;
+                break;
+
+              case 22:
+                _context.prev = 22;
+                _context.t0 = _context["catch"](4);
+                console.log(_context.t0);
+
+              case 25:
                 return _context.abrupt("return", res);
 
-              case 6:
+              case 26:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this);
+        }, _callee, this, [[4, 22]]);
       }));
 
       function list() {
@@ -118,24 +150,41 @@ function () {
                 throw 'empty id';
 
               case 4:
-                res = this.clientDB.get(parseInt(this.req.params.id));
+                _context2.next = 6;
+                return this.clientDB.get(parseInt(this.req.params.id));
+
+              case 6:
+                res = _context2.sent;
+
+                if (!res) {
+                  _context2.next = 11;
+                  break;
+                }
+
                 _context2.next = 10;
+                return this.clientProvidersDB.get(parseInt(this.req.params.id));
+
+              case 10:
+                res['providers'] = _context2.sent;
+
+              case 11:
+                _context2.next = 16;
                 break;
 
-              case 7:
-                _context2.prev = 7;
+              case 13:
+                _context2.prev = 13;
                 _context2.t0 = _context2["catch"](1);
                 console.log(_context2.t0);
 
-              case 10:
+              case 16:
                 return _context2.abrupt("return", res);
 
-              case 11:
+              case 17:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, this, [[1, 7]]);
+        }, _callee2, this, [[1, 13]]);
       }));
 
       function get() {

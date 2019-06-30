@@ -37,83 +37,63 @@ function (_BaseDB) {
   }
 
   (0, _createClass2["default"])(ProviderDB, [{
-    key: "add",
+    key: "get",
     value: function () {
-      var _add = (0, _asyncToGenerator2["default"])(
+      var _get = (0, _asyncToGenerator2["default"])(
       /*#__PURE__*/
-      _regenerator["default"].mark(function _callee(data) {
-        var res, insertData;
+      _regenerator["default"].mark(function _callee(clientId) {
+        var res, sql;
         return _regenerator["default"].wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                res = true;
-                insertData = {};
-                _context.prev = 2;
+                sql = 'SELECT cp.provider_id id FROM client_providers cp WHERE cp.client_id = :clientId ;';
+                _context.prev = 1;
+                _context.next = 4;
+                return this.db.raw(sql, {
+                  clientId: clientId
+                });
 
-                if (data.client_id) {
-                  _context.next = 5;
-                  break;
-                }
-
-                throw 'empty client_id';
-
-              case 5:
-                if (data.provider_id) {
-                  _context.next = 7;
-                  break;
-                }
-
-                throw 'empty provider_id';
-
-              case 7:
-                insertData = {
-                  client_id: data.client_id,
-                  provider_id: data.provider_id
-                };
+              case 4:
+                res = _context.sent[0];
                 _context.next = 10;
-                return this.db('client_providers').insert(insertData);
-
-              case 10:
-                _context.next = 16;
                 break;
 
-              case 12:
-                _context.prev = 12;
-                _context.t0 = _context["catch"](2);
+              case 7:
+                _context.prev = 7;
+                _context.t0 = _context["catch"](1);
                 console.log(_context.t0);
-                res = false;
 
-              case 16:
+              case 10:
                 return _context.abrupt("return", res);
 
-              case 17:
+              case 11:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[2, 12]]);
+        }, _callee, this, [[1, 7]]);
       }));
 
-      function add(_x) {
-        return _add.apply(this, arguments);
+      function get(_x) {
+        return _get.apply(this, arguments);
       }
 
-      return add;
+      return get;
     }()
   }, {
-    key: "delete",
+    key: "add",
     value: function () {
-      var _delete2 = (0, _asyncToGenerator2["default"])(
+      var _add = (0, _asyncToGenerator2["default"])(
       /*#__PURE__*/
       _regenerator["default"].mark(function _callee2(data) {
-        var res, deleteData;
+        var res, insertData;
         return _regenerator["default"].wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 res = true;
-                deleteData = {};
+                insertData = {};
                 _context2.prev = 2;
 
                 if (data.client_id) {
@@ -132,12 +112,12 @@ function (_BaseDB) {
                 throw 'empty provider_id';
 
               case 7:
-                deleteData = {
+                insertData = {
                   client_id: data.client_id,
                   provider_id: data.provider_id
                 };
                 _context2.next = 10;
-                return this.db('client_providers').where(deleteData).del();
+                return this.db('client_providers').insert(insertData);
 
               case 10:
                 _context2.next = 16;
@@ -160,7 +140,72 @@ function (_BaseDB) {
         }, _callee2, this, [[2, 12]]);
       }));
 
-      function _delete(_x2) {
+      function add(_x2) {
+        return _add.apply(this, arguments);
+      }
+
+      return add;
+    }()
+  }, {
+    key: "delete",
+    value: function () {
+      var _delete2 = (0, _asyncToGenerator2["default"])(
+      /*#__PURE__*/
+      _regenerator["default"].mark(function _callee3(data) {
+        var res, deleteData;
+        return _regenerator["default"].wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                res = true;
+                deleteData = {};
+                _context3.prev = 2;
+
+                if (data.client_id) {
+                  _context3.next = 5;
+                  break;
+                }
+
+                throw 'empty client_id';
+
+              case 5:
+                if (data.provider_id) {
+                  _context3.next = 7;
+                  break;
+                }
+
+                throw 'empty provider_id';
+
+              case 7:
+                deleteData = {
+                  client_id: data.client_id,
+                  provider_id: data.provider_id
+                };
+                _context3.next = 10;
+                return this.db('client_providers').where(deleteData).del();
+
+              case 10:
+                _context3.next = 16;
+                break;
+
+              case 12:
+                _context3.prev = 12;
+                _context3.t0 = _context3["catch"](2);
+                console.log(_context3.t0);
+                res = false;
+
+              case 16:
+                return _context3.abrupt("return", res);
+
+              case 17:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this, [[2, 12]]);
+      }));
+
+      function _delete(_x3) {
         return _delete2.apply(this, arguments);
       }
 
