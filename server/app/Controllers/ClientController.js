@@ -142,6 +142,7 @@ class ClientControler {
     async update() {
         let res;
 
+        let clientId = parseInt(this.req.params.id);
         try {
 
             if (!this.req.body) {
@@ -149,22 +150,25 @@ class ClientControler {
             }          
 
             let data = this.req.body;
-            data['id'] = this.req.params.id;
+          
+            data['id'] = clientId;
 
             res = await this.clientDB.update(this.req.body);
             
             /* add providers */
-           /*  if (this.req.body.providers) {
+             if (this.req.body.providers) {
+                 /* dellete all client providers */
+                await this.clientProvidersDB.deleteByClientId(clientId);
                 
                 for (let i = 0; i < this.req.body.providers.length; i++) {
                    
                     await this.clientProvidersDB.add({
-                        client_id: res,
+                        client_id: clientId,
                         provider_id: this.req.body.providers[i].id
                     })
 
                 }
-            } */
+            } 
 
         } catch (e) {
             console.log(e);

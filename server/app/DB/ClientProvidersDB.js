@@ -9,8 +9,8 @@ export default class ProviderDB extends BaseDB {
         super();
     }
 
-    async get(clientId){
-        
+    async get(clientId) {
+
         let res;
 
         let sql = 'SELECT cp.provider_id id FROM client_providers cp WHERE cp.client_id = :clientId ;';
@@ -56,6 +56,30 @@ export default class ProviderDB extends BaseDB {
         return res;
     }
 
+
+
+    async deleteByClientId(clientId) {
+        let res = true;
+        let deleteData = {};
+
+        try {
+
+            deleteData = {
+                client_id: clientId
+            }
+
+            await this.db('client_providers')
+                .where(deleteData)
+                .del();
+
+
+        } catch (e) {
+            console.log(e);
+            res = false;
+        }
+
+        return res;
+    }
 
     async delete(data) {
         let res = true;

@@ -85,6 +85,7 @@ export default class ClientController {
         store.commit('setOnLoad', true);
 
         if (store.state.client) {
+            console.log(store.state.client);
             await ClientDB.save(store.state.client.get());
             ClientController.hideNewClientDialog();
             ClientController.hideEditClientDialog();

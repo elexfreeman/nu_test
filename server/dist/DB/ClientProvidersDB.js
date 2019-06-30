@@ -147,11 +147,11 @@ function (_BaseDB) {
       return add;
     }()
   }, {
-    key: "delete",
+    key: "deleteByClientId",
     value: function () {
-      var _delete2 = (0, _asyncToGenerator2["default"])(
+      var _deleteByClientId = (0, _asyncToGenerator2["default"])(
       /*#__PURE__*/
-      _regenerator["default"].mark(function _callee3(data) {
+      _regenerator["default"].mark(function _callee3(clientId) {
         var res, deleteData;
         return _regenerator["default"].wrap(function _callee3$(_context3) {
           while (1) {
@@ -160,9 +160,56 @@ function (_BaseDB) {
                 res = true;
                 deleteData = {};
                 _context3.prev = 2;
+                deleteData = {
+                  client_id: clientId
+                };
+                _context3.next = 6;
+                return this.db('client_providers').where(deleteData).del();
+
+              case 6:
+                _context3.next = 12;
+                break;
+
+              case 8:
+                _context3.prev = 8;
+                _context3.t0 = _context3["catch"](2);
+                console.log(_context3.t0);
+                res = false;
+
+              case 12:
+                return _context3.abrupt("return", res);
+
+              case 13:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this, [[2, 8]]);
+      }));
+
+      function deleteByClientId(_x3) {
+        return _deleteByClientId.apply(this, arguments);
+      }
+
+      return deleteByClientId;
+    }()
+  }, {
+    key: "delete",
+    value: function () {
+      var _delete2 = (0, _asyncToGenerator2["default"])(
+      /*#__PURE__*/
+      _regenerator["default"].mark(function _callee4(data) {
+        var res, deleteData;
+        return _regenerator["default"].wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                res = true;
+                deleteData = {};
+                _context4.prev = 2;
 
                 if (data.client_id) {
-                  _context3.next = 5;
+                  _context4.next = 5;
                   break;
                 }
 
@@ -170,7 +217,7 @@ function (_BaseDB) {
 
               case 5:
                 if (data.provider_id) {
-                  _context3.next = 7;
+                  _context4.next = 7;
                   break;
                 }
 
@@ -181,31 +228,31 @@ function (_BaseDB) {
                   client_id: data.client_id,
                   provider_id: data.provider_id
                 };
-                _context3.next = 10;
+                _context4.next = 10;
                 return this.db('client_providers').where(deleteData).del();
 
               case 10:
-                _context3.next = 16;
+                _context4.next = 16;
                 break;
 
               case 12:
-                _context3.prev = 12;
-                _context3.t0 = _context3["catch"](2);
-                console.log(_context3.t0);
+                _context4.prev = 12;
+                _context4.t0 = _context4["catch"](2);
+                console.log(_context4.t0);
                 res = false;
 
               case 16:
-                return _context3.abrupt("return", res);
+                return _context4.abrupt("return", res);
 
               case 17:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3, this, [[2, 12]]);
+        }, _callee4, this, [[2, 12]]);
       }));
 
-      function _delete(_x3) {
+      function _delete(_x4) {
         return _delete2.apply(this, arguments);
       }
 

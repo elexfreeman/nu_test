@@ -294,45 +294,76 @@ function () {
       var _update = (0, _asyncToGenerator2["default"])(
       /*#__PURE__*/
       _regenerator["default"].mark(function _callee4() {
-        var res, data;
+        var res, clientId, data, i;
         return _regenerator["default"].wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                _context4.prev = 0;
+                clientId = parseInt(this.req.params.id);
+                _context4.prev = 1;
 
                 if (this.req.body) {
-                  _context4.next = 3;
+                  _context4.next = 4;
                   break;
                 }
 
                 throw 'empty body';
 
-              case 3:
+              case 4:
                 data = this.req.body;
-                data['id'] = this.req.params.id;
-                _context4.next = 7;
+                data['id'] = clientId;
+                _context4.next = 8;
                 return this.clientDB.update(this.req.body);
 
-              case 7:
+              case 8:
                 res = _context4.sent;
+
+                if (!this.req.body.providers) {
+                  _context4.next = 19;
+                  break;
+                }
+
+                _context4.next = 12;
+                return this.clientProvidersDB.deleteByClientId(clientId);
+
+              case 12:
+                i = 0;
+
+              case 13:
+                if (!(i < this.req.body.providers.length)) {
+                  _context4.next = 19;
+                  break;
+                }
+
+                _context4.next = 16;
+                return this.clientProvidersDB.add({
+                  client_id: clientId,
+                  provider_id: this.req.body.providers[i].id
+                });
+
+              case 16:
+                i++;
                 _context4.next = 13;
                 break;
 
-              case 10:
-                _context4.prev = 10;
-                _context4.t0 = _context4["catch"](0);
+              case 19:
+                _context4.next = 24;
+                break;
+
+              case 21:
+                _context4.prev = 21;
+                _context4.t0 = _context4["catch"](1);
                 console.log(_context4.t0);
 
-              case 13:
+              case 24:
                 return _context4.abrupt("return", res);
 
-              case 14:
+              case 25:
               case "end":
                 return _context4.stop();
             }
           }
-        }, _callee4, this, [[0, 10]]);
+        }, _callee4, this, [[1, 21]]);
       }));
 
       function update() {
@@ -679,7 +710,7 @@ function () {
               });
             } else {
               res.json({
-                done: data
+                done: true
               });
             }
 

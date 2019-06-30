@@ -78,15 +78,22 @@ export default class Client {
     }
 
     /**
-     * get only client data (for ajax)
+     * get only client data (for ajax save)
      */
     get() {
+        let providers = [];
+        for (let i = 0; i < this.providerEditorListData.length; i++) {
+            if (this.providerEditorListData[i].check) {
+                providers.push({ id: this.providerEditorListData[i].id })
+            }
+        }
+        
         return {
             id: this.id,
             name: this.name,
             email: this.email,
             phone: this.phone,
-            providers: this.providers
+            providers: providers
         }
     }
 }
