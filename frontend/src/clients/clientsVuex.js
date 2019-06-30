@@ -11,14 +11,21 @@ const store = {
         providers: [],
         showNewClientDialog: false,
         showEditClientDialog: false,
-     
-        client: null
+
+        client: null,
+
+        offset: 0,
+        limit: 100,
+        search: ''
 
     },
 
     mutations: {
 
-        setShowNewClientDialog(state, payload) {            
+        setOnLoad(state, payload) {
+            state.onLoad = payload;
+        },
+        setShowNewClientDialog(state, payload) {
             state.showNewClientDialog = payload;
         },
         setShowEditClientDialog(state, payload) {
@@ -35,7 +42,7 @@ const store = {
         setClient(state, payload) {
             state.client = payload;
         },
-        
+
     }
 };
 

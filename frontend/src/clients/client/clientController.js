@@ -82,7 +82,16 @@ export default class ClientController {
 
 
     static async saveClient() {
-        console.log(store.state.client);
+        store.commit('setOnLoad', true);
+
+        if (store.state.client) {
+            await ClientDB.save(store.state.client.get());
+            ClientController.hideNewClientDialog();
+            ClientController.hideEditClientDialog();
+            ClientController.list(store.state.offset, store.state.limit, store.state.search);
+        }
+
+        store.commit('setOnLoad', false);
     }
 
     static async deleteClient() {
@@ -97,7 +106,7 @@ export default class ClientController {
 
         try {
             /* get clients */
-            let clientsFromDB = await ClientDB.list(offset, limit, search);            
+            let clientsFromDB = await ClientDB.list(offset, limit, search);
             providers = await ProviderDB.list();
             /* join with providers */
             for (let i = 0; i < clientsFromDB.length; i++) {
@@ -107,7 +116,7 @@ export default class ClientController {
         } catch (e) {
             console.log(e);
         }
-       
+
         store.commit('setClients', clients);
     }
 

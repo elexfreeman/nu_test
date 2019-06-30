@@ -3,6 +3,7 @@ export default class Client {
     constructor(client, providerList) {
 
         this.prepareProvider = this.prepareProvider.bind(this);
+        this.get = this.get.bind(this);
 
         this.id = null;
         this.name = '';
@@ -74,5 +75,18 @@ export default class Client {
         }   // i++ 
 
         this.providersString = tmp.join(', ');
+    }
+
+    /**
+     * get only client data (for ajax)
+     */
+    get() {
+        return {
+            id: this.id,
+            name: this.name,
+            email: this.email,
+            phone: this.phone,
+            providers: this.providers
+        }
     }
 }

@@ -25,7 +25,7 @@ export default {
   },
 
   mounted() {
-    ClientController.list(0, 20, "");
+    ClientController.list(this.$store.state.offset, this.$store.state.limit, this.$store.state.search);
   },
 
   methods: {

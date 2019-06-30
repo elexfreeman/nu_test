@@ -136,6 +136,42 @@ class ClientControler {
         return res;
     }
 
+    /**
+     * update client PUT-route
+     */
+    async update() {
+        let res;
+
+        try {
+
+            if (!this.req.body) {
+                throw 'empty body';
+            }          
+
+            let data = this.req.body;
+            data['id'] = this.req.params.id;
+
+            res = await this.clientDB.update(this.req.body);
+            
+            /* add providers */
+           /*  if (this.req.body.providers) {
+                
+                for (let i = 0; i < this.req.body.providers.length; i++) {
+                   
+                    await this.clientProvidersDB.add({
+                        client_id: res,
+                        provider_id: this.req.body.providers[i].id
+                    })
+
+                }
+            } */
+
+        } catch (e) {
+            console.log(e);
+        }
+        return res;
+    }
+
 }
 
 /**
@@ -209,6 +245,29 @@ router.post('/client', async (req, res, next) => {
 
     } else {
         res.json({ id: data });
+    }
+
+});
+
+/**
+ * add new client
+ */
+router.put('/client/:id', async (req, res, next) => {
+    const self = await ClientControler.init(req);
+
+    let data = await self.update();
+    if (!data) {
+        res.status(404).json({
+            done: false, 
+            "errors": [
+                {
+                    "some wrong": true
+                }
+            ]
+        })
+
+    } else {
+        res.json({ done: true });
     }
 
 });

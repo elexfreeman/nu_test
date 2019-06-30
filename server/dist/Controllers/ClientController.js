@@ -284,6 +284,63 @@ function () {
 
       return add;
     }()
+    /**
+     * update client PUT-route
+     */
+
+  }, {
+    key: "update",
+    value: function () {
+      var _update = (0, _asyncToGenerator2["default"])(
+      /*#__PURE__*/
+      _regenerator["default"].mark(function _callee4() {
+        var res, data;
+        return _regenerator["default"].wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.prev = 0;
+
+                if (this.req.body) {
+                  _context4.next = 3;
+                  break;
+                }
+
+                throw 'empty body';
+
+              case 3:
+                data = this.req.body;
+                data['id'] = this.req.params.id;
+                _context4.next = 7;
+                return this.clientDB.update(this.req.body);
+
+              case 7:
+                res = _context4.sent;
+                _context4.next = 13;
+                break;
+
+              case 10:
+                _context4.prev = 10;
+                _context4.t0 = _context4["catch"](0);
+                console.log(_context4.t0);
+
+              case 13:
+                return _context4.abrupt("return", res);
+
+              case 14:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this, [[0, 10]]);
+      }));
+
+      function update() {
+        return _update.apply(this, arguments);
+      }
+
+      return update;
+    }()
   }], [{
     key: "init",
 
@@ -294,25 +351,25 @@ function () {
     value: function () {
       var _init = (0, _asyncToGenerator2["default"])(
       /*#__PURE__*/
-      _regenerator["default"].mark(function _callee4(req) {
+      _regenerator["default"].mark(function _callee5(req) {
         var self;
-        return _regenerator["default"].wrap(function _callee4$(_context4) {
+        return _regenerator["default"].wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
                 self = new ClientControler(req);
                 /* important place */
 
                 /* here we can insert some async code */
 
-                return _context4.abrupt("return", self);
+                return _context5.abrupt("return", self);
 
               case 2:
               case "end":
-                return _context4.stop();
+                return _context5.stop();
             }
           }
-        }, _callee4);
+        }, _callee5);
       }));
 
       function init(_x) {
@@ -333,47 +390,6 @@ router.get('/client/list',
 /*#__PURE__*/
 function () {
   var _ref = (0, _asyncToGenerator2["default"])(
-  /*#__PURE__*/
-  _regenerator["default"].mark(function _callee5(req, res, next) {
-    var self;
-    return _regenerator["default"].wrap(function _callee5$(_context5) {
-      while (1) {
-        switch (_context5.prev = _context5.next) {
-          case 0:
-            _context5.next = 2;
-            return ClientControler.init(req);
-
-          case 2:
-            self = _context5.sent;
-            _context5.t0 = res;
-            _context5.next = 6;
-            return self.list();
-
-          case 6:
-            _context5.t1 = _context5.sent;
-
-            _context5.t0.json.call(_context5.t0, _context5.t1);
-
-          case 8:
-          case "end":
-            return _context5.stop();
-        }
-      }
-    }, _callee5);
-  }));
-
-  return function (_x2, _x3, _x4) {
-    return _ref.apply(this, arguments);
-  };
-}());
-/**
- * list clients
- */
-
-router.get('/client/list/:offset',
-/*#__PURE__*/
-function () {
-  var _ref2 = (0, _asyncToGenerator2["default"])(
   /*#__PURE__*/
   _regenerator["default"].mark(function _callee6(req, res, next) {
     var self;
@@ -403,18 +419,18 @@ function () {
     }, _callee6);
   }));
 
-  return function (_x5, _x6, _x7) {
-    return _ref2.apply(this, arguments);
+  return function (_x2, _x3, _x4) {
+    return _ref.apply(this, arguments);
   };
 }());
 /**
  * list clients
  */
 
-router.get('/client/list/:offset/:limit',
+router.get('/client/list/:offset',
 /*#__PURE__*/
 function () {
-  var _ref3 = (0, _asyncToGenerator2["default"])(
+  var _ref2 = (0, _asyncToGenerator2["default"])(
   /*#__PURE__*/
   _regenerator["default"].mark(function _callee7(req, res, next) {
     var self;
@@ -444,18 +460,18 @@ function () {
     }, _callee7);
   }));
 
-  return function (_x8, _x9, _x10) {
-    return _ref3.apply(this, arguments);
+  return function (_x5, _x6, _x7) {
+    return _ref2.apply(this, arguments);
   };
 }());
 /**
  * list clients
  */
 
-router.get('/client/list/:offset/:limit/:search',
+router.get('/client/list/:offset/:limit',
 /*#__PURE__*/
 function () {
-  var _ref4 = (0, _asyncToGenerator2["default"])(
+  var _ref3 = (0, _asyncToGenerator2["default"])(
   /*#__PURE__*/
   _regenerator["default"].mark(function _callee8(req, res, next) {
     var self;
@@ -485,6 +501,47 @@ function () {
     }, _callee8);
   }));
 
+  return function (_x8, _x9, _x10) {
+    return _ref3.apply(this, arguments);
+  };
+}());
+/**
+ * list clients
+ */
+
+router.get('/client/list/:offset/:limit/:search',
+/*#__PURE__*/
+function () {
+  var _ref4 = (0, _asyncToGenerator2["default"])(
+  /*#__PURE__*/
+  _regenerator["default"].mark(function _callee9(req, res, next) {
+    var self;
+    return _regenerator["default"].wrap(function _callee9$(_context9) {
+      while (1) {
+        switch (_context9.prev = _context9.next) {
+          case 0:
+            _context9.next = 2;
+            return ClientControler.init(req);
+
+          case 2:
+            self = _context9.sent;
+            _context9.t0 = res;
+            _context9.next = 6;
+            return self.list();
+
+          case 6:
+            _context9.t1 = _context9.sent;
+
+            _context9.t0.json.call(_context9.t0, _context9.t1);
+
+          case 8:
+          case "end":
+            return _context9.stop();
+        }
+      }
+    }, _callee9);
+  }));
+
   return function (_x11, _x12, _x13) {
     return _ref4.apply(this, arguments);
   };
@@ -498,22 +555,22 @@ router.get('/client/:id',
 function () {
   var _ref5 = (0, _asyncToGenerator2["default"])(
   /*#__PURE__*/
-  _regenerator["default"].mark(function _callee9(req, res, next) {
+  _regenerator["default"].mark(function _callee10(req, res, next) {
     var self, data;
-    return _regenerator["default"].wrap(function _callee9$(_context9) {
+    return _regenerator["default"].wrap(function _callee10$(_context10) {
       while (1) {
-        switch (_context9.prev = _context9.next) {
+        switch (_context10.prev = _context10.next) {
           case 0:
-            _context9.next = 2;
+            _context10.next = 2;
             return ClientControler.init(req);
 
           case 2:
-            self = _context9.sent;
-            _context9.next = 5;
+            self = _context10.sent;
+            _context10.next = 5;
             return self.get();
 
           case 5:
-            data = _context9.sent;
+            data = _context10.sent;
 
             if (!data) {
               res.status(404).json({
@@ -527,10 +584,10 @@ function () {
 
           case 7:
           case "end":
-            return _context9.stop();
+            return _context10.stop();
         }
       }
-    }, _callee9);
+    }, _callee10);
   }));
 
   return function (_x14, _x15, _x16) {
@@ -546,22 +603,22 @@ router.post('/client',
 function () {
   var _ref6 = (0, _asyncToGenerator2["default"])(
   /*#__PURE__*/
-  _regenerator["default"].mark(function _callee10(req, res, next) {
+  _regenerator["default"].mark(function _callee11(req, res, next) {
     var self, data;
-    return _regenerator["default"].wrap(function _callee10$(_context10) {
+    return _regenerator["default"].wrap(function _callee11$(_context11) {
       while (1) {
-        switch (_context10.prev = _context10.next) {
+        switch (_context11.prev = _context11.next) {
           case 0:
-            _context10.next = 2;
+            _context11.next = 2;
             return ClientControler.init(req);
 
           case 2:
-            self = _context10.sent;
-            _context10.next = 5;
+            self = _context11.sent;
+            _context11.next = 5;
             return self.add();
 
           case 5:
-            data = _context10.sent;
+            data = _context11.sent;
 
             if (!data) {
               res.status(404).json({
@@ -577,13 +634,64 @@ function () {
 
           case 7:
           case "end":
-            return _context10.stop();
+            return _context11.stop();
         }
       }
-    }, _callee10);
+    }, _callee11);
   }));
 
   return function (_x17, _x18, _x19) {
     return _ref6.apply(this, arguments);
+  };
+}());
+/**
+ * add new client
+ */
+
+router.put('/client/:id',
+/*#__PURE__*/
+function () {
+  var _ref7 = (0, _asyncToGenerator2["default"])(
+  /*#__PURE__*/
+  _regenerator["default"].mark(function _callee12(req, res, next) {
+    var self, data;
+    return _regenerator["default"].wrap(function _callee12$(_context12) {
+      while (1) {
+        switch (_context12.prev = _context12.next) {
+          case 0:
+            _context12.next = 2;
+            return ClientControler.init(req);
+
+          case 2:
+            self = _context12.sent;
+            _context12.next = 5;
+            return self.update();
+
+          case 5:
+            data = _context12.sent;
+
+            if (!data) {
+              res.status(404).json({
+                done: false,
+                "errors": [{
+                  "some wrong": true
+                }]
+              });
+            } else {
+              res.json({
+                done: data
+              });
+            }
+
+          case 7:
+          case "end":
+            return _context12.stop();
+        }
+      }
+    }, _callee12);
+  }));
+
+  return function (_x20, _x21, _x22) {
+    return _ref7.apply(this, arguments);
   };
 }());

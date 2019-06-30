@@ -12,7 +12,7 @@ export default class ClientDB {
         let res;
         try {
             res = await axios.get(window.server_url + '/client/list/' + offset + '/' + limit + '/' + search);
-            if(res){
+            if (res) {
                 res = res['data'];
             }
         } catch (e) {
@@ -27,19 +27,39 @@ export default class ClientDB {
      * @param {number} clientId 
      */
     static async get(clientId) {
-        return {
-            "id": 1,
-            "name": "Test ",
-            "email": "test1@email.com",
-            "phone": "3021545465464",
-            "providers": [
-                { "id": 1 }, { "id": 2 }
-            ]
-        };
+        let res;
+        try {
+            res = await axios.get(window.server_url + '/client/' + clientId);
+            if (res) {
+                res = res['data'];
+            }
+        } catch (e) {
+            console.log(e);
+        }
+
+        return res;
     }
 
     static async save(client) {
+        let res;
+        try {
 
+            if (client.id) {
+                /* update */
+                res = await axios.put(window.server_url + '/client/' + client.id, client);
+            } else {
+                /* insert */
+                res = await axios.post(window.server_url + '/client', client);
+            }
+
+            if (res) {
+                res = res['data'];
+            }
+        } catch (e) {
+            console.log(e);
+        }
+
+        return res;
     }
 
     static async delete(client) {
