@@ -29,12 +29,39 @@ export default class ProviderController {
      */
     static async add(providerName) {
 
-        console.log(providerName);
-
         let providers;
+
         try {
             /* add provider */
             await ProviderDB.add({ name: providerName });
+            /* reload list in store */
+            providers = await ProviderDB.list();
+            store.commit("setProviders", providers);
+
+            /* reload vizible client */
+            if (store.state.client) {
+                let client = new Client(store.state.client.get(), providers);                                                
+                store.commit("setClient", client);                  
+            }
+
+        } catch (e) {
+            console.log(e);
+        }
+
+    }
+
+    
+    /**
+     * delete provider
+     * @param {number} providerId 
+     */
+    static async remove(providerId) {        
+
+        let providers;
+
+        try {
+            /* delete provider */
+            await ProviderDB.remove(providerId);
             /* reload list in store */
             providers = await ProviderDB.list();
             store.commit("setProviders", providers);

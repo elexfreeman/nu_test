@@ -12,9 +12,6 @@ class ClientControler {
         this.clientDB = new ClientDB();
         this.clientProvidersDB = new ClientProvidersDB();
 
-        this.list = this.list.bind(this);
-        this.get = this.get.bind(this);
-        this.add = this.add.bind(this);
     };
 
     /**

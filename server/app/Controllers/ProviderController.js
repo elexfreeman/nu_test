@@ -8,12 +8,7 @@ class ProviderControler {
 
     constructor(req) {
         this.req = req;
-
         this.providerDB = new ProviderDB();
-
-        this.list = this.list.bind(this);
-        this.get = this.get.bind(this);
-        this.add = this.add.bind(this);
     };
 
     /**
@@ -49,12 +44,16 @@ class ProviderControler {
     }
 
     /**
-     * get route
+     * delete route
      */
-    async get() {
+    async remove() {
         let res;
 
-
+        try {            
+            res = await this.providerDB.remove(parseInt(this.req.params.id));
+        } catch (e) {
+            console.log(e);
+        }
 
         return res;
     }
@@ -85,30 +84,8 @@ router.get('/provider/list', async (req, res, next) => {
 });
 
 
-
 /**
- * get client by id
- */
-router.get('/provider/:id', async (req, res, next) => {
-    const self = await ProviderControler.init(req);
-    let data = await self.get();
-    if (!data) {
-        res.status(404).json({
-            "errors": [
-                {
-                    "providerNotFound": true
-                }
-            ]
-        })
-
-    } else {
-        res.json(data);
-    }
-
-});
-
-/**
- * add new client
+ * add new provider
  */
 router.post('/provider', async (req, res, next) => {
     const self = await ProviderControler.init(req);
@@ -129,6 +106,14 @@ router.post('/provider', async (req, res, next) => {
 
 });
 
+
+
+router.delete('/provider/:id', async (req, res, next) => {    
+    const self = await ProviderControler.init(req);
+    await self.remove();
+    res.json({ done: true });
+
+}); 
 
 
 export { router };

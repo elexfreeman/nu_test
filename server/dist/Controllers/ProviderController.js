@@ -29,9 +29,6 @@ function () {
     (0, _classCallCheck2["default"])(this, ProviderControler);
     this.req = req;
     this.providerDB = new _ProviderDB["default"]();
-    this.list = this.list.bind(this);
-    this.get = this.get.bind(this);
-    this.add = this.add.bind(this);
   }
 
   (0, _createClass2["default"])(ProviderControler, [{
@@ -82,13 +79,13 @@ function () {
       return list;
     }()
     /**
-     * get route
+     * delete route
      */
 
   }, {
-    key: "get",
+    key: "remove",
     value: function () {
-      var _get = (0, _asyncToGenerator2["default"])(
+      var _remove = (0, _asyncToGenerator2["default"])(
       /*#__PURE__*/
       _regenerator["default"].mark(function _callee2() {
         var res;
@@ -96,21 +93,36 @@ function () {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
+                _context2.prev = 0;
+                _context2.next = 3;
+                return this.providerDB.remove(parseInt(this.req.params.id));
+
+              case 3:
+                res = _context2.sent;
+                _context2.next = 9;
+                break;
+
+              case 6:
+                _context2.prev = 6;
+                _context2.t0 = _context2["catch"](0);
+                console.log(_context2.t0);
+
+              case 9:
                 return _context2.abrupt("return", res);
 
-              case 1:
+              case 10:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2);
+        }, _callee2, this, [[0, 6]]);
       }));
 
-      function get() {
-        return _get.apply(this, arguments);
+      function remove() {
+        return _remove.apply(this, arguments);
       }
 
-      return get;
+      return remove;
     }()
     /**
      * add new POST-route
@@ -241,10 +253,10 @@ function () {
   };
 }());
 /**
- * get client by id
+ * add new provider
  */
 
-router.get('/provider/:id',
+router.post('/provider',
 /*#__PURE__*/
 function () {
   var _ref2 = (0, _asyncToGenerator2["default"])(
@@ -261,58 +273,10 @@ function () {
           case 2:
             self = _context6.sent;
             _context6.next = 5;
-            return self.get();
-
-          case 5:
-            data = _context6.sent;
-
-            if (!data) {
-              res.status(404).json({
-                "errors": [{
-                  "providerNotFound": true
-                }]
-              });
-            } else {
-              res.json(data);
-            }
-
-          case 7:
-          case "end":
-            return _context6.stop();
-        }
-      }
-    }, _callee6);
-  }));
-
-  return function (_x5, _x6, _x7) {
-    return _ref2.apply(this, arguments);
-  };
-}());
-/**
- * add new client
- */
-
-router.post('/provider',
-/*#__PURE__*/
-function () {
-  var _ref3 = (0, _asyncToGenerator2["default"])(
-  /*#__PURE__*/
-  _regenerator["default"].mark(function _callee7(req, res, next) {
-    var self, data;
-    return _regenerator["default"].wrap(function _callee7$(_context7) {
-      while (1) {
-        switch (_context7.prev = _context7.next) {
-          case 0:
-            _context7.next = 2;
-            return ProviderControler.init(req);
-
-          case 2:
-            self = _context7.sent;
-            _context7.next = 5;
             return self.add();
 
           case 5:
-            data = _context7.sent;
+            data = _context6.sent;
 
             if (!data) {
               res.status(404).json({
@@ -327,6 +291,42 @@ function () {
             }
 
           case 7:
+          case "end":
+            return _context6.stop();
+        }
+      }
+    }, _callee6);
+  }));
+
+  return function (_x5, _x6, _x7) {
+    return _ref2.apply(this, arguments);
+  };
+}());
+router["delete"]('/provider/:id',
+/*#__PURE__*/
+function () {
+  var _ref3 = (0, _asyncToGenerator2["default"])(
+  /*#__PURE__*/
+  _regenerator["default"].mark(function _callee7(req, res, next) {
+    var self;
+    return _regenerator["default"].wrap(function _callee7$(_context7) {
+      while (1) {
+        switch (_context7.prev = _context7.next) {
+          case 0:
+            _context7.next = 2;
+            return ProviderControler.init(req);
+
+          case 2:
+            self = _context7.sent;
+            _context7.next = 5;
+            return self.remove();
+
+          case 5:
+            res.json({
+              done: true
+            });
+
+          case 6:
           case "end":
             return _context7.stop();
         }

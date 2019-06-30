@@ -32,9 +32,6 @@ function () {
     this.req = req;
     this.clientDB = new _ClientDB["default"]();
     this.clientProvidersDB = new _ClientProvidersDB["default"]();
-    this.list = this.list.bind(this);
-    this.get = this.get.bind(this);
-    this.add = this.add.bind(this);
   }
 
   (0, _createClass2["default"])(ClientControler, [{

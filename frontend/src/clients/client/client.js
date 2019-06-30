@@ -4,8 +4,7 @@ export default class Client {
 
         this.prepareProvider = this.prepareProvider.bind(this);
         this.get = this.get.bind(this);
-        this.setProviderList = this.setProviderList.bind(this);
-
+      
         this.id = null;
         this.name = '';
         this.email = '';
@@ -44,10 +43,6 @@ export default class Client {
     }
 
 
-    setProviderList(providerList){
-        this.providerList = providerList;
-    }
-
     /**
      * Create provider string like 'Provider 1, Provider 2'
      */
@@ -78,9 +73,7 @@ export default class Client {
                 check: check
             });
 
-        }   // i++ 
-
-        console.log('this.providerEditorListData', this.providerEditorListData);
+        }   // i++      
 
         this.providersString = tmp.join(', ');
     }

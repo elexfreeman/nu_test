@@ -38,7 +38,7 @@ export default class ProviderDB extends BaseDB {
             if (!provider.name) {
                 throw 'empty name';
             }
-            
+
             insertData['name'] = provider.name;
 
             res = (await this.db('provider')
@@ -83,6 +83,33 @@ export default class ProviderDB extends BaseDB {
 
         return res;
     }
+
+    /**
+     * 
+     * @param {number} providerId 
+     */
+    async remove(providerId) {
+        let res = true;
+        let deleteData = {};
+      
+        try {
+
+            deleteData = {
+                id: providerId
+            }            
+
+            await this.db('provider')
+                .where(deleteData)
+                .del();
+
+        } catch (e) {
+            console.log(e);
+            res = false;
+        }
+
+        return res;
+    }
+
 
 
 }

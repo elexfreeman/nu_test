@@ -209,6 +209,58 @@ function (_BaseDB) {
 
       return update;
     }()
+    /**
+     * 
+     * @param {number} providerId 
+     */
+
+  }, {
+    key: "remove",
+    value: function () {
+      var _remove = (0, _asyncToGenerator2["default"])(
+      /*#__PURE__*/
+      _regenerator["default"].mark(function _callee4(providerId) {
+        var res, deleteData;
+        return _regenerator["default"].wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                res = true;
+                deleteData = {};
+                _context4.prev = 2;
+                deleteData = {
+                  id: providerId
+                };
+                _context4.next = 6;
+                return this.db('provider').where(deleteData).del();
+
+              case 6:
+                _context4.next = 12;
+                break;
+
+              case 8:
+                _context4.prev = 8;
+                _context4.t0 = _context4["catch"](2);
+                console.log(_context4.t0);
+                res = false;
+
+              case 12:
+                return _context4.abrupt("return", res);
+
+              case 13:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this, [[2, 8]]);
+      }));
+
+      function remove(_x3) {
+        return _remove.apply(this, arguments);
+      }
+
+      return remove;
+    }()
   }]);
   return ProviderDB;
 }(_BaseDB2["default"]);

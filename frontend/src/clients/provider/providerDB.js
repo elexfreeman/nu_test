@@ -39,4 +39,18 @@ export default class ProviderDB {
         return res;
     }
 
+    static async remove(providerId) {
+        let res;
+        try {
+            res = await axios.delete(window.server_url + '/provider/' + providerId);
+            if (res) {
+                res = res['data'];
+            }
+        } catch (e) {
+            console.log(e);
+        }
+
+        return res;
+    }
+
 }
