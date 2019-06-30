@@ -32,7 +32,7 @@
         <!-- isEdit -->
         <div v-if="isEdit" class="column col-1">
           <button v-on:click="editDone" type="button" class="btn">
-            <i class="icon icon-check"></i>
+            <i v-bind:provider_id="item.id" class="icon icon-check"></i>
           </button>
         </div>
         <div v-if="isEdit" class="column col-1">
@@ -71,7 +71,8 @@ export default {
       this.isEdit = true;
     },
     editDone(event) {
-      this.isEdit = false;
+      this.isEdit = false;    
+       ProviderController.save(this.item);
     },
     editCansel(event) {
       this.isEdit = false;

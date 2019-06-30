@@ -83,13 +83,13 @@ export default class ProviderController {
      * delete provider
      * @param {number} providerId 
      */
-    static async save(providerId) {        
+    static async save(provider) {        
 
         let providers;
 
         try {
             /* delete provider */
-            await ProviderDB.remove(providerId);
+            await ProviderDB.save(provider);
             /* reload list in store */
             providers = await ProviderDB.list();
             store.commit("setProviders", providers);
