@@ -6,6 +6,7 @@ let clients_vue = document.getElementById('clients_vue');
 
 if (clients_vue) {
 
+    console.log('init');
     new Vue({
         el: '#clients_vue',
         store: store,

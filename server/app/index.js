@@ -18,6 +18,10 @@ app.options('*', cors());
 import * as ClientControler from './Controllers/ClientController.js';
 app.use(ClientControler.router);
 
+/* provider ctrl */
+import * as ProviderController from './Controllers/ProviderController.js';
+app.use(ProviderController.router);
+
 
 console.log('server start at http://localhost:' + port);
 app.listen(port);

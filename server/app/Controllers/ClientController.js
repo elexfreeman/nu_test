@@ -14,6 +14,7 @@ class ClientControler {
 
         this.list = this.list.bind(this);
         this.get = this.get.bind(this);
+        this.add = this.add.bind(this);
     };
 
     /**
@@ -59,8 +60,10 @@ class ClientControler {
                 search = this.req.params.search;
             }
 
+            /* get clients */
             res = await this.clientDB.list(offset, limit, search);
 
+            /* get providers for clients */
             for (let i = 0; i < res.length; i++) {
                 res[i]['providers'] = await this.clientProvidersDB.get(res[i].id);
             }
@@ -77,8 +80,6 @@ class ClientControler {
      */
     async get() {
         let res;
-
-        let id = 0;
 
         try {
             /* check params */
@@ -97,8 +98,42 @@ class ClientControler {
         }
 
         return res;
+    }
 
+    /**
+     * add new POST-route
+     */
+    async add() {
+        let res;
 
+        try {
+
+            if (!this.req.body) {
+                throw 'empty body';
+            }
+            if (!this.req.body['name']) {
+                throw 'empty name';
+            }
+
+            res = await this.clientDB.add(this.req.body);
+            
+            /* add providers */
+            if (this.req.body.providers) {
+                
+                for (let i = 0; i < this.req.body.providers.length; i++) {
+                   
+                    await this.clientProvidersDB.add({
+                        client_id: res,
+                        provider_id: this.req.body.providers[i].id
+                    })
+
+                }
+            }
+
+        } catch (e) {
+            console.log(e);
+        }
+        return res;
     }
 
 }
@@ -145,7 +180,7 @@ router.get('/client/:id', async (req, res, next) => {
         res.status(404).json({
             "errors": [
                 {
-                    "userNotFound": true
+                    "clientNotFound": true
                 }
             ]
         })
@@ -154,7 +189,30 @@ router.get('/client/:id', async (req, res, next) => {
         res.json(data);
     }
 
+});
+
+/**
+ * add new client
+ */
+router.post('/client', async (req, res, next) => {
+    const self = await ClientControler.init(req);
+
+    let data = await self.add();
+    if (!data) {
+        res.status(404).json({
+            "errors": [
+                {
+                    "some wrong": true
+                }
+            ]
+        })
+
+    } else {
+        res.json({ id: data });
+    }
 
 });
+
+
 
 export { router };

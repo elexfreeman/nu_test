@@ -4,6 +4,8 @@ var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWild
 
 var ClientControler = _interopRequireWildcard(require("./Controllers/ClientController.js"));
 
+var ProviderController = _interopRequireWildcard(require("./Controllers/ProviderController.js"));
+
 var port = 3005;
 
 var express = require('express');
@@ -25,5 +27,8 @@ app.options('*', cors());
 /* client ctrl */
 
 app.use(ClientControler.router);
+/* provider ctrl */
+
+app.use(ProviderController.router);
 console.log('server start at http://localhost:' + port);
 app.listen(port);

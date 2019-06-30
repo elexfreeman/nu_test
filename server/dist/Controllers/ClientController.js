@@ -34,6 +34,7 @@ function () {
     this.clientProvidersDB = new _ClientProvidersDB["default"]();
     this.list = this.list.bind(this);
     this.get = this.get.bind(this);
+    this.add = this.add.bind(this);
   }
 
   (0, _createClass2["default"])(ClientControler, [{
@@ -73,6 +74,8 @@ function () {
                 if (this.req.params.search) {
                   search = this.req.params.search;
                 }
+                /* get clients */
+
 
                 _context.next = 11;
                 return this.clientDB.list(offset, limit, search);
@@ -134,57 +137,56 @@ function () {
       var _get = (0, _asyncToGenerator2["default"])(
       /*#__PURE__*/
       _regenerator["default"].mark(function _callee2() {
-        var res, id;
+        var res;
         return _regenerator["default"].wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                id = 0;
-                _context2.prev = 1;
+                _context2.prev = 0;
 
                 if (this.req.params.id) {
-                  _context2.next = 4;
+                  _context2.next = 3;
                   break;
                 }
 
                 throw 'empty id';
 
-              case 4:
-                _context2.next = 6;
+              case 3:
+                _context2.next = 5;
                 return this.clientDB.get(parseInt(this.req.params.id));
 
-              case 6:
+              case 5:
                 res = _context2.sent;
 
                 if (!res) {
-                  _context2.next = 11;
+                  _context2.next = 10;
                   break;
                 }
 
-                _context2.next = 10;
+                _context2.next = 9;
                 return this.clientProvidersDB.get(parseInt(this.req.params.id));
 
-              case 10:
+              case 9:
                 res['providers'] = _context2.sent;
 
-              case 11:
-                _context2.next = 16;
+              case 10:
+                _context2.next = 15;
                 break;
 
-              case 13:
-                _context2.prev = 13;
-                _context2.t0 = _context2["catch"](1);
+              case 12:
+                _context2.prev = 12;
+                _context2.t0 = _context2["catch"](0);
                 console.log(_context2.t0);
 
-              case 16:
+              case 15:
                 return _context2.abrupt("return", res);
 
-              case 17:
+              case 16:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, this, [[1, 13]]);
+        }, _callee2, this, [[0, 12]]);
       }));
 
       function get() {
@@ -192,6 +194,95 @@ function () {
       }
 
       return get;
+    }()
+    /**
+     * add new POST-route
+     */
+
+  }, {
+    key: "add",
+    value: function () {
+      var _add = (0, _asyncToGenerator2["default"])(
+      /*#__PURE__*/
+      _regenerator["default"].mark(function _callee3() {
+        var res, i;
+        return _regenerator["default"].wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.prev = 0;
+
+                if (this.req.body) {
+                  _context3.next = 3;
+                  break;
+                }
+
+                throw 'empty body';
+
+              case 3:
+                if (this.req.body['name']) {
+                  _context3.next = 5;
+                  break;
+                }
+
+                throw 'empty name';
+
+              case 5:
+                _context3.next = 7;
+                return this.clientDB.add(this.req.body);
+
+              case 7:
+                res = _context3.sent;
+
+                if (!this.req.body.providers) {
+                  _context3.next = 16;
+                  break;
+                }
+
+                i = 0;
+
+              case 10:
+                if (!(i < this.req.body.providers.length)) {
+                  _context3.next = 16;
+                  break;
+                }
+
+                _context3.next = 13;
+                return this.clientProvidersDB.add({
+                  client_id: res,
+                  provider_id: this.req.body.providers[i].id
+                });
+
+              case 13:
+                i++;
+                _context3.next = 10;
+                break;
+
+              case 16:
+                _context3.next = 21;
+                break;
+
+              case 18:
+                _context3.prev = 18;
+                _context3.t0 = _context3["catch"](0);
+                console.log(_context3.t0);
+
+              case 21:
+                return _context3.abrupt("return", res);
+
+              case 22:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this, [[0, 18]]);
+      }));
+
+      function add() {
+        return _add.apply(this, arguments);
+      }
+
+      return add;
     }()
   }], [{
     key: "init",
@@ -203,25 +294,25 @@ function () {
     value: function () {
       var _init = (0, _asyncToGenerator2["default"])(
       /*#__PURE__*/
-      _regenerator["default"].mark(function _callee3(req) {
+      _regenerator["default"].mark(function _callee4(req) {
         var self;
-        return _regenerator["default"].wrap(function _callee3$(_context3) {
+        return _regenerator["default"].wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
                 self = new ClientControler(req);
                 /* important place */
 
                 /* here we can insert some async code */
 
-                return _context3.abrupt("return", self);
+                return _context4.abrupt("return", self);
 
               case 2:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3);
+        }, _callee4);
       }));
 
       function init(_x) {
@@ -242,47 +333,6 @@ router.get('/client/list',
 /*#__PURE__*/
 function () {
   var _ref = (0, _asyncToGenerator2["default"])(
-  /*#__PURE__*/
-  _regenerator["default"].mark(function _callee4(req, res, next) {
-    var self;
-    return _regenerator["default"].wrap(function _callee4$(_context4) {
-      while (1) {
-        switch (_context4.prev = _context4.next) {
-          case 0:
-            _context4.next = 2;
-            return ClientControler.init(req);
-
-          case 2:
-            self = _context4.sent;
-            _context4.t0 = res;
-            _context4.next = 6;
-            return self.list();
-
-          case 6:
-            _context4.t1 = _context4.sent;
-
-            _context4.t0.json.call(_context4.t0, _context4.t1);
-
-          case 8:
-          case "end":
-            return _context4.stop();
-        }
-      }
-    }, _callee4);
-  }));
-
-  return function (_x2, _x3, _x4) {
-    return _ref.apply(this, arguments);
-  };
-}());
-/**
- * list clients
- */
-
-router.get('/client/list/:offset',
-/*#__PURE__*/
-function () {
-  var _ref2 = (0, _asyncToGenerator2["default"])(
   /*#__PURE__*/
   _regenerator["default"].mark(function _callee5(req, res, next) {
     var self;
@@ -312,18 +362,18 @@ function () {
     }, _callee5);
   }));
 
-  return function (_x5, _x6, _x7) {
-    return _ref2.apply(this, arguments);
+  return function (_x2, _x3, _x4) {
+    return _ref.apply(this, arguments);
   };
 }());
 /**
  * list clients
  */
 
-router.get('/client/list/:offset/:limit',
+router.get('/client/list/:offset',
 /*#__PURE__*/
 function () {
-  var _ref3 = (0, _asyncToGenerator2["default"])(
+  var _ref2 = (0, _asyncToGenerator2["default"])(
   /*#__PURE__*/
   _regenerator["default"].mark(function _callee6(req, res, next) {
     var self;
@@ -353,18 +403,18 @@ function () {
     }, _callee6);
   }));
 
-  return function (_x8, _x9, _x10) {
-    return _ref3.apply(this, arguments);
+  return function (_x5, _x6, _x7) {
+    return _ref2.apply(this, arguments);
   };
 }());
 /**
  * list clients
  */
 
-router.get('/client/list/:offset/:limit/:search',
+router.get('/client/list/:offset/:limit',
 /*#__PURE__*/
 function () {
-  var _ref4 = (0, _asyncToGenerator2["default"])(
+  var _ref3 = (0, _asyncToGenerator2["default"])(
   /*#__PURE__*/
   _regenerator["default"].mark(function _callee7(req, res, next) {
     var self;
@@ -394,6 +444,47 @@ function () {
     }, _callee7);
   }));
 
+  return function (_x8, _x9, _x10) {
+    return _ref3.apply(this, arguments);
+  };
+}());
+/**
+ * list clients
+ */
+
+router.get('/client/list/:offset/:limit/:search',
+/*#__PURE__*/
+function () {
+  var _ref4 = (0, _asyncToGenerator2["default"])(
+  /*#__PURE__*/
+  _regenerator["default"].mark(function _callee8(req, res, next) {
+    var self;
+    return _regenerator["default"].wrap(function _callee8$(_context8) {
+      while (1) {
+        switch (_context8.prev = _context8.next) {
+          case 0:
+            _context8.next = 2;
+            return ClientControler.init(req);
+
+          case 2:
+            self = _context8.sent;
+            _context8.t0 = res;
+            _context8.next = 6;
+            return self.list();
+
+          case 6:
+            _context8.t1 = _context8.sent;
+
+            _context8.t0.json.call(_context8.t0, _context8.t1);
+
+          case 8:
+          case "end":
+            return _context8.stop();
+        }
+      }
+    }, _callee8);
+  }));
+
   return function (_x11, _x12, _x13) {
     return _ref4.apply(this, arguments);
   };
@@ -407,27 +498,27 @@ router.get('/client/:id',
 function () {
   var _ref5 = (0, _asyncToGenerator2["default"])(
   /*#__PURE__*/
-  _regenerator["default"].mark(function _callee8(req, res, next) {
+  _regenerator["default"].mark(function _callee9(req, res, next) {
     var self, data;
-    return _regenerator["default"].wrap(function _callee8$(_context8) {
+    return _regenerator["default"].wrap(function _callee9$(_context9) {
       while (1) {
-        switch (_context8.prev = _context8.next) {
+        switch (_context9.prev = _context9.next) {
           case 0:
-            _context8.next = 2;
+            _context9.next = 2;
             return ClientControler.init(req);
 
           case 2:
-            self = _context8.sent;
-            _context8.next = 5;
+            self = _context9.sent;
+            _context9.next = 5;
             return self.get();
 
           case 5:
-            data = _context8.sent;
+            data = _context9.sent;
 
             if (!data) {
               res.status(404).json({
                 "errors": [{
-                  "userNotFound": true
+                  "clientNotFound": true
                 }]
               });
             } else {
@@ -436,13 +527,63 @@ function () {
 
           case 7:
           case "end":
-            return _context8.stop();
+            return _context9.stop();
         }
       }
-    }, _callee8);
+    }, _callee9);
   }));
 
   return function (_x14, _x15, _x16) {
     return _ref5.apply(this, arguments);
+  };
+}());
+/**
+ * add new client
+ */
+
+router.post('/client',
+/*#__PURE__*/
+function () {
+  var _ref6 = (0, _asyncToGenerator2["default"])(
+  /*#__PURE__*/
+  _regenerator["default"].mark(function _callee10(req, res, next) {
+    var self, data;
+    return _regenerator["default"].wrap(function _callee10$(_context10) {
+      while (1) {
+        switch (_context10.prev = _context10.next) {
+          case 0:
+            _context10.next = 2;
+            return ClientControler.init(req);
+
+          case 2:
+            self = _context10.sent;
+            _context10.next = 5;
+            return self.add();
+
+          case 5:
+            data = _context10.sent;
+
+            if (!data) {
+              res.status(404).json({
+                "errors": [{
+                  "some wrong": true
+                }]
+              });
+            } else {
+              res.json({
+                id: data
+              });
+            }
+
+          case 7:
+          case "end":
+            return _context10.stop();
+        }
+      }
+    }, _callee10);
+  }));
+
+  return function (_x17, _x18, _x19) {
+    return _ref6.apply(this, arguments);
   };
 }());
