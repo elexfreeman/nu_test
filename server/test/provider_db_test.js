@@ -25,6 +25,37 @@ async function run() {
         });
 
 
+        it('Test insert data', async () => {
+
+            let providerDB = new ProviderDB();
+
+            let data = {
+                name: 'test name',              
+            };
+            
+            let res = await providerDB.add(data);
+
+            assert(res > 0);
+
+        });
+
+
+        it('Test update data', async () => {
+
+            let providerDB = new ProviderDB();
+
+            let data = {
+                id: 1,
+                name: 'test name',               
+            };
+            
+            let res = await providerDB.update(data);
+
+            assert(res);
+
+        });
+
+
 
     });
 

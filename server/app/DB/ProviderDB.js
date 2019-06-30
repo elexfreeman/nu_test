@@ -7,9 +7,6 @@ export default class ProviderDB extends BaseDB {
 
     constructor() {
         super();
-
-        this.list = this.list.bind(this);
-      
     }
 
     async list() {
@@ -22,11 +19,67 @@ export default class ProviderDB extends BaseDB {
 
 
         } catch (e) {
-           console.log(e);
+            console.log(e);
         }
 
         return res;
 
+    }
+
+
+    async add(provider) {
+        let res = 0;
+        let insertData = {};
+        try {
+            if (!provider) {
+                throw 'empty provider';
+            }
+
+            if (provider.name) {
+                insertData['name'] = provider.name;
+            }
+
+            res = (await this.db('provider')
+                .insert(insertData))[0];
+
+
+        } catch (e) {
+            console.log(e);
+        }
+
+        return res;
+    }
+
+
+
+    async update(provider) {
+        let res = true;
+        let updateData = {};
+        try {
+            if (!provider) {
+                throw 'empty provider';
+            }
+
+            if (!provider.id) {
+                throw 'empty id';
+            }
+
+            if (provider.name) {
+                updateData['name'] = provider.name;
+            }
+
+            res = await this.db('provider')
+                .where({
+                    id: provider.id
+                })
+                .update(updateData);
+
+        } catch (e) {
+            console.log(e);
+            res = false;
+        }
+
+        return res;
     }
 
 

@@ -1,11 +1,6 @@
 "use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports["default"] = void 0;
-
-var _default = config = {
+module.exports = {
   mysql: {
     "client": "mysql",
     "connection": {
@@ -18,12 +13,7 @@ var _default = config = {
       "min": 0,
       "max": 7
     },
-    "migrations": {
-      "tableName": "knex_migrations",
-      "directory": "./src/Infrastructure/SQL/Migrations"
-    },
+    "migrations": {},
     "acquireConnectionTimeout": 60000
   }
 };
-
-exports["default"] = _default;

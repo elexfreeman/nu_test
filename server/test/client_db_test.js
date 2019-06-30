@@ -19,7 +19,17 @@ async function run() {
 
             let clientDB = new ClientDB();
 
-            let data = await clientDB.list(0, 10, '');           
+            let data = await clientDB.list(0, 10, '');  
+            console.log(data);         
+            assert(data.length > 0);
+
+        });
+
+        it('Test getProviders', async () => {
+
+            let clientDB = new ClientDB();
+
+            let data = await clientDB.getProviders(1);           
             assert(data.length > 0);
 
         });
@@ -40,6 +50,40 @@ async function run() {
 
             let data = await clientDB.get(-1);           
             assert(!data);
+
+        });
+
+        it('Test insert data', async () => {
+
+            let clientDB = new ClientDB();
+
+            let data = {
+                name: 'test name',
+                phone: 'test phone',
+                email: 'test email'
+            };
+            
+            let res = await clientDB.add(data);
+
+            assert(res > 0);
+
+        });
+
+
+        it('Test update data', async () => {
+
+            let clientDB = new ClientDB();
+
+            let data = {
+                id: 1,
+                name: 'test name',
+                phone: 'test phone',
+                email: 'test email'
+            };
+            
+            let res = await clientDB.update(data);
+
+            assert(res);
 
         });
 

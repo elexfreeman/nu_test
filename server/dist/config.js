@@ -13,10 +13,7 @@ module.exports = {
       "min": 0,
       "max": 7
     },
-    "migrations": {
-      "tableName": "knex_migrations",
-      "directory": "./src/Infrastructure/SQL/Migrations"
-    },
+    "migrations": {},
     "acquireConnectionTimeout": 60000
   }
 };

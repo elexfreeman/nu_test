@@ -15,6 +15,8 @@ var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/cl
 
 var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 
+var _ClientDB = _interopRequireDefault(require("../DB/ClientDB"));
+
 var express = require('express');
 
 var router = express.Router();
@@ -26,6 +28,7 @@ function () {
   function ClientControler(req) {
     (0, _classCallCheck2["default"])(this, ClientControler);
     this.req = req;
+    this.clientDB = new _ClientDB["default"]();
     this.list = this.list.bind(this);
     this.get = this.get.bind(this);
   }
@@ -40,20 +43,47 @@ function () {
       var _list = (0, _asyncToGenerator2["default"])(
       /*#__PURE__*/
       _regenerator["default"].mark(function _callee() {
-        var res;
+        var res, offset, limit, search;
         return _regenerator["default"].wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 res = [];
+                offset = 0;
+                limit = 20;
+                search = '';
+
+                try {
+                  /* check params */
+                  if (this.req.params.offset) {
+                    offset = parseInt(this.req.params.offset);
+                  }
+
+                  if (this.req.params.limit) {
+                    limit = parseInt(this.req.params.limit);
+                  }
+
+                  if (limit > 1000) {
+                    limit = 20;
+                  }
+
+                  if (this.req.params.search) {
+                    search = this.req.params.search;
+                  }
+
+                  res = this.clientDB.list(offset, limit, search);
+                } catch (e) {
+                  console.log(e);
+                }
+
                 return _context.abrupt("return", res);
 
-              case 2:
+              case 6:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee);
+        }, _callee, this);
       }));
 
       function list() {
@@ -72,18 +102,40 @@ function () {
       var _get = (0, _asyncToGenerator2["default"])(
       /*#__PURE__*/
       _regenerator["default"].mark(function _callee2() {
+        var res, id;
         return _regenerator["default"].wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                return _context2.abrupt("return", null);
+                id = 0;
+                _context2.prev = 1;
 
-              case 1:
+                if (this.req.params.id) {
+                  _context2.next = 4;
+                  break;
+                }
+
+                throw 'empty id';
+
+              case 4:
+                res = this.clientDB.get(parseInt(this.req.params.id));
+                _context2.next = 10;
+                break;
+
+              case 7:
+                _context2.prev = 7;
+                _context2.t0 = _context2["catch"](1);
+                console.log(_context2.t0);
+
+              case 10:
+                return _context2.abrupt("return", res);
+
+              case 11:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2);
+        }, _callee2, this, [[1, 7]]);
       }));
 
       function get() {
@@ -175,10 +227,10 @@ function () {
   };
 }());
 /**
- * get client by id
+ * list clients
  */
 
-router.get('/client/:id',
+router.get('/client/list/:offset',
 /*#__PURE__*/
 function () {
   var _ref2 = (0, _asyncToGenerator2["default"])(
@@ -196,7 +248,7 @@ function () {
             self = _context5.sent;
             _context5.t0 = res;
             _context5.next = 6;
-            return self.get();
+            return self.list();
 
           case 6:
             _context5.t1 = _context5.sent;
@@ -213,5 +265,135 @@ function () {
 
   return function (_x5, _x6, _x7) {
     return _ref2.apply(this, arguments);
+  };
+}());
+/**
+ * list clients
+ */
+
+router.get('/client/list/:offset/:limit',
+/*#__PURE__*/
+function () {
+  var _ref3 = (0, _asyncToGenerator2["default"])(
+  /*#__PURE__*/
+  _regenerator["default"].mark(function _callee6(req, res, next) {
+    var self;
+    return _regenerator["default"].wrap(function _callee6$(_context6) {
+      while (1) {
+        switch (_context6.prev = _context6.next) {
+          case 0:
+            _context6.next = 2;
+            return ClientControler.init(req);
+
+          case 2:
+            self = _context6.sent;
+            _context6.t0 = res;
+            _context6.next = 6;
+            return self.list();
+
+          case 6:
+            _context6.t1 = _context6.sent;
+
+            _context6.t0.json.call(_context6.t0, _context6.t1);
+
+          case 8:
+          case "end":
+            return _context6.stop();
+        }
+      }
+    }, _callee6);
+  }));
+
+  return function (_x8, _x9, _x10) {
+    return _ref3.apply(this, arguments);
+  };
+}());
+/**
+ * list clients
+ */
+
+router.get('/client/list/:offset/:limit/:search',
+/*#__PURE__*/
+function () {
+  var _ref4 = (0, _asyncToGenerator2["default"])(
+  /*#__PURE__*/
+  _regenerator["default"].mark(function _callee7(req, res, next) {
+    var self;
+    return _regenerator["default"].wrap(function _callee7$(_context7) {
+      while (1) {
+        switch (_context7.prev = _context7.next) {
+          case 0:
+            _context7.next = 2;
+            return ClientControler.init(req);
+
+          case 2:
+            self = _context7.sent;
+            _context7.t0 = res;
+            _context7.next = 6;
+            return self.list();
+
+          case 6:
+            _context7.t1 = _context7.sent;
+
+            _context7.t0.json.call(_context7.t0, _context7.t1);
+
+          case 8:
+          case "end":
+            return _context7.stop();
+        }
+      }
+    }, _callee7);
+  }));
+
+  return function (_x11, _x12, _x13) {
+    return _ref4.apply(this, arguments);
+  };
+}());
+/**
+ * get client by id
+ */
+
+router.get('/client/:id',
+/*#__PURE__*/
+function () {
+  var _ref5 = (0, _asyncToGenerator2["default"])(
+  /*#__PURE__*/
+  _regenerator["default"].mark(function _callee8(req, res, next) {
+    var self, data;
+    return _regenerator["default"].wrap(function _callee8$(_context8) {
+      while (1) {
+        switch (_context8.prev = _context8.next) {
+          case 0:
+            _context8.next = 2;
+            return ClientControler.init(req);
+
+          case 2:
+            self = _context8.sent;
+            _context8.next = 5;
+            return self.get();
+
+          case 5:
+            data = _context8.sent;
+
+            if (!data) {
+              res.status(404).json({
+                "errors": [{
+                  "userNotFound": true
+                }]
+              });
+            } else {
+              res.json(data);
+            }
+
+          case 7:
+          case "end":
+            return _context8.stop();
+        }
+      }
+    }, _callee8);
+  }));
+
+  return function (_x14, _x15, _x16) {
+    return _ref5.apply(this, arguments);
   };
 }());
