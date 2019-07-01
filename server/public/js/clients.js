@@ -37740,29 +37740,36 @@ var editClientDialogvue_type_template_id_7535aaa6_render = function() {
                   _c("div", { staticClass: "form-group" }, [
                     _vm._m(0),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-9 col-sm-12" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.client.name,
-                            expression: "client.name"
-                          }
-                        ],
-                        staticClass: "form-input",
-                        attrs: { type: "text" },
-                        domProps: { value: _vm.client.name },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
+                    _c(
+                      "div",
+                      {
+                        staticClass: "col-9 col-sm-12",
+                        class: { "has-error": _vm.clientNameError }
+                      },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.client.name,
+                              expression: "client.name"
                             }
-                            _vm.$set(_vm.client, "name", $event.target.value)
+                          ],
+                          staticClass: "form-input",
+                          attrs: { type: "text" },
+                          domProps: { value: _vm.client.name },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.client, "name", $event.target.value)
+                            }
                           }
-                        }
-                      })
-                    ])
+                        })
+                      ]
+                    )
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
@@ -38224,77 +38231,85 @@ var providervue_type_template_id_7d920b7a_render = function() {
     _c("div", { staticClass: "col-9 col-sm-12" }, [
       _c("div", { staticClass: "columns" }, [
         _c("div", { staticClass: "column col-6" }, [
-          _c("label", { staticClass: "form-checkbox" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.item.check,
-                  expression: "item.check"
-                }
-              ],
-              attrs: { type: "checkbox" },
-              domProps: {
-                checked: Array.isArray(_vm.item.check)
-                  ? _vm._i(_vm.item.check, null) > -1
-                  : _vm.item.check
-              },
-              on: {
-                change: function($event) {
-                  var $$a = _vm.item.check,
-                    $$el = $event.target,
-                    $$c = $$el.checked ? true : false
-                  if (Array.isArray($$a)) {
-                    var $$v = null,
-                      $$i = _vm._i($$a, $$v)
-                    if ($$el.checked) {
-                      $$i < 0 && _vm.$set(_vm.item, "check", $$a.concat([$$v]))
-                    } else {
-                      $$i > -1 &&
-                        _vm.$set(
-                          _vm.item,
-                          "check",
-                          $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                        )
-                    }
-                  } else {
-                    _vm.$set(_vm.item, "check", $$c)
+          _c(
+            "label",
+            {
+              staticClass: "form-checkbox",
+              class: { "has-error": _vm.providerNameError }
+            },
+            [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.item.check,
+                    expression: "item.check"
                   }
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("i", { staticClass: "form-icon" }),
-            _vm._v(" "),
-            !_vm.isEdit
-              ? _c("span", [_vm._v(_vm._s(_vm.item.name))])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.isEdit
-              ? _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.item.name,
-                      expression: "item.name"
-                    }
-                  ],
-                  staticClass: "form-input input_provider_edit",
-                  attrs: { type: "text" },
-                  domProps: { value: _vm.item.name },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+                ],
+                attrs: { type: "checkbox" },
+                domProps: {
+                  checked: Array.isArray(_vm.item.check)
+                    ? _vm._i(_vm.item.check, null) > -1
+                    : _vm.item.check
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.item.check,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(_vm.item, "check", $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.item,
+                            "check",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
                       }
-                      _vm.$set(_vm.item, "name", $event.target.value)
+                    } else {
+                      _vm.$set(_vm.item, "check", $$c)
                     }
                   }
-                })
-              : _vm._e()
-          ])
+                }
+              }),
+              _vm._v(" "),
+              _c("i", { staticClass: "form-icon" }),
+              _vm._v(" "),
+              !_vm.isEdit
+                ? _c("span", [_vm._v(_vm._s(_vm.item.name))])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.isEdit
+                ? _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.item.name,
+                        expression: "item.name"
+                      }
+                    ],
+                    staticClass: "form-input input_provider_edit",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.item.name },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.item, "name", $event.target.value)
+                      }
+                    }
+                  })
+                : _vm._e()
+            ]
+          )
         ]),
         _vm._v(" "),
         !_vm.isEdit
@@ -38378,7 +38393,7 @@ providervue_type_template_id_7d920b7a_render._withStripped = true
 // CONCATENATED MODULE: ./src/clients/components/provider.vue?vue&type=template&id=7d920b7a&
 
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib??ref--0!./node_modules/vue-loader/lib??vue-loader-options!./src/clients/components/provider.vue?vue&type=script&lang=js&
-//
+
 //
 //
 //
@@ -38433,14 +38448,16 @@ providervue_type_template_id_7d920b7a_render._withStripped = true
   props: ["item"],
   data: function data() {
     return {
-      isEdit: false
+      isEdit: false,
+      providerNameError: false,
+      oldName: ''
     };
   },
+  mounted: function mounted() {
+    this.oldName = this.item.name;
+  },
+  // mounted
   methods: {
-    add: function add(event) {
-      ProviderController_ProviderController.add(this.providerName);
-      this.providerName = "";
-    },
     remove: function remove(event) {
       ProviderController_ProviderController.remove(event.target.getAttribute("provider_id"));
     },
@@ -38448,10 +38465,17 @@ providervue_type_template_id_7d920b7a_render._withStripped = true
       this.isEdit = true;
     },
     editDone: function editDone(event) {
-      this.isEdit = false;
-      ProviderController_ProviderController.save(this.item);
+      if (this.item.name.length < 2) {
+        this.providerNameError = true;
+      } else {
+        this.isEdit = false;
+        ProviderController_ProviderController.save(this.item);
+        this.providerNameError = false;
+      }
     },
     editCansel: function editCansel(event) {
+      /* return back old name */
+      this.item.name = this.oldName;
       this.isEdit = false;
     }
   },
@@ -38580,7 +38604,7 @@ if (false) { var providerList_api; }
 providerList_component.options.__file = "src/clients/components/providerList.vue"
 /* harmony default export */ var components_providerList = (providerList_component.exports);
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib??ref--0!./node_modules/vue-loader/lib??vue-loader-options!./src/clients/components/editClientDialog.vue?vue&type=script&lang=js&
-//
+
 //
 //
 //
@@ -38645,14 +38669,21 @@ providerList_component.options.__file = "src/clients/components/providerList.vue
 /* harmony default export */ var editClientDialogvue_type_script_lang_js_ = ({
   name: "editClientDialog",
   data: function data() {
-    return {};
+    return {
+      clientNameError: false
+    };
   },
   methods: {
     closeDialog: function closeDialog(event) {
       ClientController_ClientController.hideEditClientDialog();
     },
     saveClient: function saveClient(event) {
-      ClientController_ClientController.saveClient();
+      if (this.$store.state.client.name.length < 3) {
+        this.clientNameError = true;
+      } else {
+        this.clientNameError = false;
+        ClientController_ClientController.saveClient();
+      }
     },
     deleteClient: function deleteClient(event) {
       ClientController_ClientController.deleteClient();
@@ -38731,29 +38762,36 @@ var newClientDialogvue_type_template_id_fe5bf98c_render = function() {
                   _c("div", { staticClass: "form-group" }, [
                     _vm._m(0),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-9 col-sm-12" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.client.name,
-                            expression: "client.name"
-                          }
-                        ],
-                        staticClass: "form-input",
-                        attrs: { type: "text" },
-                        domProps: { value: _vm.client.name },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
+                    _c(
+                      "div",
+                      {
+                        staticClass: "col-9 col-sm-12",
+                        class: { "has-error": _vm.clientNameError }
+                      },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.client.name,
+                              expression: "client.name"
                             }
-                            _vm.$set(_vm.client, "name", $event.target.value)
+                          ],
+                          staticClass: "form-input",
+                          attrs: { type: "text" },
+                          domProps: { value: _vm.client.name },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.client, "name", $event.target.value)
+                            }
                           }
-                        }
-                      })
-                    ])
+                        })
+                      ]
+                    )
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
@@ -38877,6 +38915,7 @@ newClientDialogvue_type_template_id_fe5bf98c_render._withStripped = true
 // CONCATENATED MODULE: ./src/clients/components/newClientDialog.vue?vue&type=template&id=fe5bf98c&
 
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib??ref--0!./node_modules/vue-loader/lib??vue-loader-options!./src/clients/components/newClientDialog.vue?vue&type=script&lang=js&
+
 //
 //
 //
@@ -38939,14 +38978,21 @@ newClientDialogvue_type_template_id_fe5bf98c_render._withStripped = true
 /* harmony default export */ var newClientDialogvue_type_script_lang_js_ = ({
   name: "newClientDialog",
   data: function data() {
-    return {};
+    return {
+      clientNameError: false
+    };
   },
   methods: {
     closeDialog: function closeDialog(event) {
       ClientController_ClientController.hideNewClientDialog();
     },
     saveClient: function saveClient(event) {
-      ClientController_ClientController.saveClient();
+      if (this.$store.state.client.name.length < 3) {
+        this.clientNameError = true;
+      } else {
+        this.clientNameError = false;
+        ClientController_ClientController.saveClient();
+      }
     }
   },
   computed: {

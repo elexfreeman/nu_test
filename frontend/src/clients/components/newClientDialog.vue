@@ -13,7 +13,7 @@
               <div class="col-3 col-sm-12">
                 <label class="form-label">Name:</label>
               </div>
-              <div class="col-9 col-sm-12">
+              <div v-bind:class="{ 'has-error': clientNameError }" class="col-9 col-sm-12">
                 <input v-model="client.name" class="form-input" type="text" />
               </div>
             </div>
@@ -63,17 +63,26 @@ import ClientController from "../client/ClientController";
 export default {
   name: "newClientDialog",
   data() {
-    return {};
+    return {
+      clientNameError: false
+    };
   },
   methods: {
     closeDialog(event) {
       ClientController.hideNewClientDialog();
     },
     saveClient(event) {
-      ClientController.saveClient();
+      if (this.$store.state.client.name.length < 3) {
+        this.clientNameError = true;
+      } else {
+         this.clientNameError = false;
+        ClientController.saveClient();
+      }
     }
   },
   computed: {
+
+  
     onLoad() {
       return this.$store.state.onLoad;
     },

@@ -4,11 +4,12 @@
     <div class="col-9 col-sm-12">
       <div class="columns">
         <div class="column col-6">
-          <label class="form-checkbox">
+          <label v-bind:class="{ 'has-error': providerNameError }" class="form-checkbox">
             <input type="checkbox" v-model="item.check" />
             <i class="form-icon"></i>
             <span v-if="!isEdit">{{item.name}}</span>
             <input
+              
               v-if="isEdit"
               v-model="item.name"
               class="form-input input_provider_edit"
@@ -40,8 +41,6 @@
             <i v-bind:provider_id="item.id" class="icon icon-stop"></i>
           </button>
         </div>
-
-
       </div>
     </div>
   </div>
@@ -55,28 +54,43 @@ export default {
   props: ["item"],
   data() {
     return {
-      isEdit: false
+      isEdit: false,
+      providerNameError: false,
+      oldName: ''
     };
   },
 
+   mounted() {
+     this.oldName = this.item.name;     
+   }, // mounted
+
+
   methods: {
-    add(event) {
-      ProviderController.add(this.providerName);
-      this.providerName = "";
-    },
+   
     remove(event) {
       ProviderController.remove(event.target.getAttribute("provider_id"));
     },
+
     setStartEdit(event) {
       this.isEdit = true;
     },
+
     editDone(event) {
-      this.isEdit = false;    
-       ProviderController.save(this.item);
+      if (this.item.name.length < 2) {
+        this.providerNameError = true;
+      } else {
+        this.isEdit = false;
+        ProviderController.save(this.item);
+        this.providerNameError = false;
+      }
     },
+
     editCansel(event) {
+      /* return back old name */
+      this.item.name = this.oldName;
       this.isEdit = false;
     }
+
   },
 
   computed: {

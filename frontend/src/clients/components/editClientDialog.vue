@@ -9,12 +9,11 @@
       <div class="modal-body">
         <div class="content">
           <form class="form-horizontal">
-
             <div class="form-group">
               <div class="col-3 col-sm-12">
                 <label class="form-label">Name:</label>
               </div>
-              <div class="col-9 col-sm-12">
+              <div v-bind:class="{ 'has-error': clientNameError }" class="col-9 col-sm-12">
                 <input v-model="client.name" class="form-input" type="text" />
               </div>
             </div>
@@ -59,7 +58,6 @@
 </template>
 
 <script>
-
 import providerList from "./providerList.vue";
 
 import ClientController from "../client/ClientController";
@@ -68,15 +66,23 @@ export default {
   name: "editClientDialog",
 
   data() {
-    return {};
+    return {
+      clientNameError: false
+    };
   },
 
   methods: {
+   
     closeDialog(event) {
       ClientController.hideEditClientDialog();
     },
     saveClient(event) {
-      ClientController.saveClient();
+      if (this.$store.state.client.name.length < 3) {
+        this.clientNameError = true;
+      } else {
+        this.clientNameError = false;
+        ClientController.saveClient();
+      }
     },
     deleteClient(event) {
       ClientController.deleteClient();
@@ -96,7 +102,6 @@ export default {
     client() {
       return this.$store.state.client;
     }
-    
   },
 
   components: {
