@@ -672,6 +672,14 @@ table.vgt-table tr.clickable:hover {
 }
 }
 
+.provider_row .form-checkbox .input_provider_edit {
+  width: auto;
+  height: auto;
+  /* overflow: auto; */
+  overflow: visible;
+  position: inherit;
+}
+
 
 
 

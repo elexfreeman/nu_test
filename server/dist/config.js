@@ -6,7 +6,7 @@ module.exports = {
     "connection": {
       "host": "localhost",
       "user": "root",
-      "password": "",
+      "password": "voland",
       "database": "nu_test"
     },
     "pool": {

@@ -93,27 +93,6 @@ module.exports = __webpack_require__("./node_modules/core-js/library/fn/object/d
 
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime-corejs2/core-js/object/get-own-property-descriptor.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__("./node_modules/core-js/library/fn/object/get-own-property-descriptor.js");
-
-/***/ }),
-
-/***/ "./node_modules/@babel/runtime-corejs2/core-js/object/get-own-property-symbols.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__("./node_modules/core-js/library/fn/object/get-own-property-symbols.js");
-
-/***/ }),
-
-/***/ "./node_modules/@babel/runtime-corejs2/core-js/object/keys.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__("./node_modules/core-js/library/fn/object/keys.js");
-
-/***/ }),
-
 /***/ "./node_modules/@babel/runtime-corejs2/core-js/promise.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1587,37 +1566,6 @@ module.exports = function defineProperty(it, key, desc) {
 
 /***/ }),
 
-/***/ "./node_modules/core-js/library/fn/object/get-own-property-descriptor.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__("./node_modules/core-js/library/modules/es6.object.get-own-property-descriptor.js");
-
-var $Object = __webpack_require__("./node_modules/core-js/library/modules/_core.js").Object;
-
-module.exports = function getOwnPropertyDescriptor(it, key) {
-  return $Object.getOwnPropertyDescriptor(it, key);
-};
-
-/***/ }),
-
-/***/ "./node_modules/core-js/library/fn/object/get-own-property-symbols.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__("./node_modules/core-js/library/modules/es6.symbol.js");
-
-module.exports = __webpack_require__("./node_modules/core-js/library/modules/_core.js").Object.getOwnPropertySymbols;
-
-/***/ }),
-
-/***/ "./node_modules/core-js/library/fn/object/keys.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__("./node_modules/core-js/library/modules/es6.object.keys.js");
-
-module.exports = __webpack_require__("./node_modules/core-js/library/modules/_core.js").Object.keys;
-
-/***/ }),
-
 /***/ "./node_modules/core-js/library/fn/promise.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1849,36 +1797,6 @@ module.exports = function (it) {
 
 // IE 8- don't enum bug keys
 module.exports = 'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'.split(',');
-
-/***/ }),
-
-/***/ "./node_modules/core-js/library/modules/_enum-keys.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-// all enumerable object keys, includes symbols
-var getKeys = __webpack_require__("./node_modules/core-js/library/modules/_object-keys.js");
-
-var gOPS = __webpack_require__("./node_modules/core-js/library/modules/_object-gops.js");
-
-var pIE = __webpack_require__("./node_modules/core-js/library/modules/_object-pie.js");
-
-module.exports = function (it) {
-  var result = getKeys(it);
-  var getSymbols = gOPS.f;
-
-  if (getSymbols) {
-    var symbols = getSymbols(it);
-    var isEnum = pIE.f;
-    var i = 0;
-    var key;
-
-    while (symbols.length > i) {
-      if (isEnum.call(it, key = symbols[i++])) result.push(key);
-    }
-  }
-
-  return result;
-};
 
 /***/ }),
 
@@ -2143,18 +2061,6 @@ module.exports = function (it) {
 
 /***/ }),
 
-/***/ "./node_modules/core-js/library/modules/_is-array.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-// 7.2.2 IsArray(argument)
-var cof = __webpack_require__("./node_modules/core-js/library/modules/_cof.js");
-
-module.exports = Array.isArray || function isArray(arg) {
-  return cof(arg) == 'Array';
-};
-
-/***/ }),
-
 /***/ "./node_modules/core-js/library/modules/_is-object.js":
 /***/ (function(module, exports) {
 
@@ -2399,85 +2305,6 @@ module.exports = true;
 
 /***/ }),
 
-/***/ "./node_modules/core-js/library/modules/_meta.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-var META = __webpack_require__("./node_modules/core-js/library/modules/_uid.js")('meta');
-
-var isObject = __webpack_require__("./node_modules/core-js/library/modules/_is-object.js");
-
-var has = __webpack_require__("./node_modules/core-js/library/modules/_has.js");
-
-var setDesc = __webpack_require__("./node_modules/core-js/library/modules/_object-dp.js").f;
-
-var id = 0;
-
-var isExtensible = Object.isExtensible || function () {
-  return true;
-};
-
-var FREEZE = !__webpack_require__("./node_modules/core-js/library/modules/_fails.js")(function () {
-  return isExtensible(Object.preventExtensions({}));
-});
-
-var setMeta = function setMeta(it) {
-  setDesc(it, META, {
-    value: {
-      i: 'O' + ++id,
-      // object ID
-      w: {} // weak collections IDs
-
-    }
-  });
-};
-
-var fastKey = function fastKey(it, create) {
-  // return primitive with prefix
-  if (!isObject(it)) return _typeof(it) == 'symbol' ? it : (typeof it == 'string' ? 'S' : 'P') + it;
-
-  if (!has(it, META)) {
-    // can't set metadata to uncaught frozen object
-    if (!isExtensible(it)) return 'F'; // not necessary to add metadata
-
-    if (!create) return 'E'; // add missing metadata
-
-    setMeta(it); // return object ID
-  }
-
-  return it[META].i;
-};
-
-var getWeak = function getWeak(it, create) {
-  if (!has(it, META)) {
-    // can't set metadata to uncaught frozen object
-    if (!isExtensible(it)) return true; // not necessary to add metadata
-
-    if (!create) return false; // add missing metadata
-
-    setMeta(it); // return hash weak collections IDs
-  }
-
-  return it[META].w;
-}; // add metadata on freeze-family methods calling
-
-
-var onFreeze = function onFreeze(it) {
-  if (FREEZE && meta.NEED && isExtensible(it) && !has(it, META)) setMeta(it);
-  return it;
-};
-
-var meta = module.exports = {
-  KEY: META,
-  NEED: false,
-  fastKey: fastKey,
-  getWeak: getWeak,
-  onFreeze: onFreeze
-};
-
-/***/ }),
-
 /***/ "./node_modules/core-js/library/modules/_microtask.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2707,83 +2534,6 @@ module.exports = __webpack_require__("./node_modules/core-js/library/modules/_de
 
 /***/ }),
 
-/***/ "./node_modules/core-js/library/modules/_object-gopd.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-var pIE = __webpack_require__("./node_modules/core-js/library/modules/_object-pie.js");
-
-var createDesc = __webpack_require__("./node_modules/core-js/library/modules/_property-desc.js");
-
-var toIObject = __webpack_require__("./node_modules/core-js/library/modules/_to-iobject.js");
-
-var toPrimitive = __webpack_require__("./node_modules/core-js/library/modules/_to-primitive.js");
-
-var has = __webpack_require__("./node_modules/core-js/library/modules/_has.js");
-
-var IE8_DOM_DEFINE = __webpack_require__("./node_modules/core-js/library/modules/_ie8-dom-define.js");
-
-var gOPD = Object.getOwnPropertyDescriptor;
-exports.f = __webpack_require__("./node_modules/core-js/library/modules/_descriptors.js") ? gOPD : function getOwnPropertyDescriptor(O, P) {
-  O = toIObject(O);
-  P = toPrimitive(P, true);
-  if (IE8_DOM_DEFINE) try {
-    return gOPD(O, P);
-  } catch (e) {
-    /* empty */
-  }
-  if (has(O, P)) return createDesc(!pIE.f.call(O, P), O[P]);
-};
-
-/***/ }),
-
-/***/ "./node_modules/core-js/library/modules/_object-gopn-ext.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-// fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
-var toIObject = __webpack_require__("./node_modules/core-js/library/modules/_to-iobject.js");
-
-var gOPN = __webpack_require__("./node_modules/core-js/library/modules/_object-gopn.js").f;
-
-var toString = {}.toString;
-var windowNames = (typeof window === "undefined" ? "undefined" : _typeof(window)) == 'object' && window && Object.getOwnPropertyNames ? Object.getOwnPropertyNames(window) : [];
-
-var getWindowNames = function getWindowNames(it) {
-  try {
-    return gOPN(it);
-  } catch (e) {
-    return windowNames.slice();
-  }
-};
-
-module.exports.f = function getOwnPropertyNames(it) {
-  return windowNames && toString.call(it) == '[object Window]' ? getWindowNames(it) : gOPN(toIObject(it));
-};
-
-/***/ }),
-
-/***/ "./node_modules/core-js/library/modules/_object-gopn.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
-var $keys = __webpack_require__("./node_modules/core-js/library/modules/_object-keys-internal.js");
-
-var hiddenKeys = __webpack_require__("./node_modules/core-js/library/modules/_enum-bug-keys.js").concat('length', 'prototype');
-
-exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
-  return $keys(O, hiddenKeys);
-};
-
-/***/ }),
-
-/***/ "./node_modules/core-js/library/modules/_object-gops.js":
-/***/ (function(module, exports) {
-
-exports.f = Object.getOwnPropertySymbols;
-
-/***/ }),
-
 /***/ "./node_modules/core-js/library/modules/_object-gpo.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2852,34 +2602,6 @@ var enumBugKeys = __webpack_require__("./node_modules/core-js/library/modules/_e
 
 module.exports = Object.keys || function keys(O) {
   return $keys(O, enumBugKeys);
-};
-
-/***/ }),
-
-/***/ "./node_modules/core-js/library/modules/_object-pie.js":
-/***/ (function(module, exports) {
-
-exports.f = {}.propertyIsEnumerable;
-
-/***/ }),
-
-/***/ "./node_modules/core-js/library/modules/_object-sap.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-// most Object methods by ES6 should accept primitives
-var $export = __webpack_require__("./node_modules/core-js/library/modules/_export.js");
-
-var core = __webpack_require__("./node_modules/core-js/library/modules/_core.js");
-
-var fails = __webpack_require__("./node_modules/core-js/library/modules/_fails.js");
-
-module.exports = function (KEY, exec) {
-  var fn = (core.Object || {})[KEY] || Object[KEY];
-  var exp = {};
-  exp[KEY] = exec(fn);
-  $export($export.S + $export.F * fails(function () {
-    fn(1);
-  }), 'Object', exp);
 };
 
 /***/ }),
@@ -3292,35 +3014,6 @@ module.exports = navigator && navigator.userAgent || '';
 
 /***/ }),
 
-/***/ "./node_modules/core-js/library/modules/_wks-define.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-var global = __webpack_require__("./node_modules/core-js/library/modules/_global.js");
-
-var core = __webpack_require__("./node_modules/core-js/library/modules/_core.js");
-
-var LIBRARY = __webpack_require__("./node_modules/core-js/library/modules/_library.js");
-
-var wksExt = __webpack_require__("./node_modules/core-js/library/modules/_wks-ext.js");
-
-var defineProperty = __webpack_require__("./node_modules/core-js/library/modules/_object-dp.js").f;
-
-module.exports = function (name) {
-  var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
-  if (name.charAt(0) != '_' && !(name in $Symbol)) defineProperty($Symbol, name, {
-    value: wksExt.f(name)
-  });
-};
-
-/***/ }),
-
-/***/ "./node_modules/core-js/library/modules/_wks-ext.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-exports.f = __webpack_require__("./node_modules/core-js/library/modules/_wks.js");
-
-/***/ }),
-
 /***/ "./node_modules/core-js/library/modules/_wks.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3410,38 +3103,6 @@ var $export = __webpack_require__("./node_modules/core-js/library/modules/_expor
 
 $export($export.S + $export.F * !__webpack_require__("./node_modules/core-js/library/modules/_descriptors.js"), 'Object', {
   defineProperty: __webpack_require__("./node_modules/core-js/library/modules/_object-dp.js").f
-});
-
-/***/ }),
-
-/***/ "./node_modules/core-js/library/modules/es6.object.get-own-property-descriptor.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.2.6 Object.getOwnPropertyDescriptor(O, P)
-var toIObject = __webpack_require__("./node_modules/core-js/library/modules/_to-iobject.js");
-
-var $getOwnPropertyDescriptor = __webpack_require__("./node_modules/core-js/library/modules/_object-gopd.js").f;
-
-__webpack_require__("./node_modules/core-js/library/modules/_object-sap.js")('getOwnPropertyDescriptor', function () {
-  return function getOwnPropertyDescriptor(it, key) {
-    return $getOwnPropertyDescriptor(toIObject(it), key);
-  };
-});
-
-/***/ }),
-
-/***/ "./node_modules/core-js/library/modules/es6.object.keys.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.2.14 Object.keys(O)
-var toObject = __webpack_require__("./node_modules/core-js/library/modules/_to-object.js");
-
-var $keys = __webpack_require__("./node_modules/core-js/library/modules/_object-keys.js");
-
-__webpack_require__("./node_modules/core-js/library/modules/_object-sap.js")('keys', function () {
-  return function keys(it) {
-    return $keys(toObject(it));
-  };
 });
 
 /***/ }),
@@ -3848,335 +3509,6 @@ __webpack_require__("./node_modules/core-js/library/modules/_iter-define.js")(St
 
 /***/ }),
 
-/***/ "./node_modules/core-js/library/modules/es6.symbol.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
- // ECMAScript 6 symbols shim
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-var global = __webpack_require__("./node_modules/core-js/library/modules/_global.js");
-
-var has = __webpack_require__("./node_modules/core-js/library/modules/_has.js");
-
-var DESCRIPTORS = __webpack_require__("./node_modules/core-js/library/modules/_descriptors.js");
-
-var $export = __webpack_require__("./node_modules/core-js/library/modules/_export.js");
-
-var redefine = __webpack_require__("./node_modules/core-js/library/modules/_redefine.js");
-
-var META = __webpack_require__("./node_modules/core-js/library/modules/_meta.js").KEY;
-
-var $fails = __webpack_require__("./node_modules/core-js/library/modules/_fails.js");
-
-var shared = __webpack_require__("./node_modules/core-js/library/modules/_shared.js");
-
-var setToStringTag = __webpack_require__("./node_modules/core-js/library/modules/_set-to-string-tag.js");
-
-var uid = __webpack_require__("./node_modules/core-js/library/modules/_uid.js");
-
-var wks = __webpack_require__("./node_modules/core-js/library/modules/_wks.js");
-
-var wksExt = __webpack_require__("./node_modules/core-js/library/modules/_wks-ext.js");
-
-var wksDefine = __webpack_require__("./node_modules/core-js/library/modules/_wks-define.js");
-
-var enumKeys = __webpack_require__("./node_modules/core-js/library/modules/_enum-keys.js");
-
-var isArray = __webpack_require__("./node_modules/core-js/library/modules/_is-array.js");
-
-var anObject = __webpack_require__("./node_modules/core-js/library/modules/_an-object.js");
-
-var isObject = __webpack_require__("./node_modules/core-js/library/modules/_is-object.js");
-
-var toObject = __webpack_require__("./node_modules/core-js/library/modules/_to-object.js");
-
-var toIObject = __webpack_require__("./node_modules/core-js/library/modules/_to-iobject.js");
-
-var toPrimitive = __webpack_require__("./node_modules/core-js/library/modules/_to-primitive.js");
-
-var createDesc = __webpack_require__("./node_modules/core-js/library/modules/_property-desc.js");
-
-var _create = __webpack_require__("./node_modules/core-js/library/modules/_object-create.js");
-
-var gOPNExt = __webpack_require__("./node_modules/core-js/library/modules/_object-gopn-ext.js");
-
-var $GOPD = __webpack_require__("./node_modules/core-js/library/modules/_object-gopd.js");
-
-var $GOPS = __webpack_require__("./node_modules/core-js/library/modules/_object-gops.js");
-
-var $DP = __webpack_require__("./node_modules/core-js/library/modules/_object-dp.js");
-
-var $keys = __webpack_require__("./node_modules/core-js/library/modules/_object-keys.js");
-
-var gOPD = $GOPD.f;
-var dP = $DP.f;
-var gOPN = gOPNExt.f;
-var $Symbol = global.Symbol;
-var $JSON = global.JSON;
-
-var _stringify = $JSON && $JSON.stringify;
-
-var PROTOTYPE = 'prototype';
-var HIDDEN = wks('_hidden');
-var TO_PRIMITIVE = wks('toPrimitive');
-var isEnum = {}.propertyIsEnumerable;
-var SymbolRegistry = shared('symbol-registry');
-var AllSymbols = shared('symbols');
-var OPSymbols = shared('op-symbols');
-var ObjectProto = Object[PROTOTYPE];
-var USE_NATIVE = typeof $Symbol == 'function' && !!$GOPS.f;
-var QObject = global.QObject; // Don't use setters in Qt Script, https://github.com/zloirock/core-js/issues/173
-
-var setter = !QObject || !QObject[PROTOTYPE] || !QObject[PROTOTYPE].findChild; // fallback for old Android, https://code.google.com/p/v8/issues/detail?id=687
-
-var setSymbolDesc = DESCRIPTORS && $fails(function () {
-  return _create(dP({}, 'a', {
-    get: function get() {
-      return dP(this, 'a', {
-        value: 7
-      }).a;
-    }
-  })).a != 7;
-}) ? function (it, key, D) {
-  var protoDesc = gOPD(ObjectProto, key);
-  if (protoDesc) delete ObjectProto[key];
-  dP(it, key, D);
-  if (protoDesc && it !== ObjectProto) dP(ObjectProto, key, protoDesc);
-} : dP;
-
-var wrap = function wrap(tag) {
-  var sym = AllSymbols[tag] = _create($Symbol[PROTOTYPE]);
-
-  sym._k = tag;
-  return sym;
-};
-
-var isSymbol = USE_NATIVE && _typeof($Symbol.iterator) == 'symbol' ? function (it) {
-  return _typeof(it) == 'symbol';
-} : function (it) {
-  return it instanceof $Symbol;
-};
-
-var $defineProperty = function defineProperty(it, key, D) {
-  if (it === ObjectProto) $defineProperty(OPSymbols, key, D);
-  anObject(it);
-  key = toPrimitive(key, true);
-  anObject(D);
-
-  if (has(AllSymbols, key)) {
-    if (!D.enumerable) {
-      if (!has(it, HIDDEN)) dP(it, HIDDEN, createDesc(1, {}));
-      it[HIDDEN][key] = true;
-    } else {
-      if (has(it, HIDDEN) && it[HIDDEN][key]) it[HIDDEN][key] = false;
-      D = _create(D, {
-        enumerable: createDesc(0, false)
-      });
-    }
-
-    return setSymbolDesc(it, key, D);
-  }
-
-  return dP(it, key, D);
-};
-
-var $defineProperties = function defineProperties(it, P) {
-  anObject(it);
-  var keys = enumKeys(P = toIObject(P));
-  var i = 0;
-  var l = keys.length;
-  var key;
-
-  while (l > i) {
-    $defineProperty(it, key = keys[i++], P[key]);
-  }
-
-  return it;
-};
-
-var $create = function create(it, P) {
-  return P === undefined ? _create(it) : $defineProperties(_create(it), P);
-};
-
-var $propertyIsEnumerable = function propertyIsEnumerable(key) {
-  var E = isEnum.call(this, key = toPrimitive(key, true));
-  if (this === ObjectProto && has(AllSymbols, key) && !has(OPSymbols, key)) return false;
-  return E || !has(this, key) || !has(AllSymbols, key) || has(this, HIDDEN) && this[HIDDEN][key] ? E : true;
-};
-
-var $getOwnPropertyDescriptor = function getOwnPropertyDescriptor(it, key) {
-  it = toIObject(it);
-  key = toPrimitive(key, true);
-  if (it === ObjectProto && has(AllSymbols, key) && !has(OPSymbols, key)) return;
-  var D = gOPD(it, key);
-  if (D && has(AllSymbols, key) && !(has(it, HIDDEN) && it[HIDDEN][key])) D.enumerable = true;
-  return D;
-};
-
-var $getOwnPropertyNames = function getOwnPropertyNames(it) {
-  var names = gOPN(toIObject(it));
-  var result = [];
-  var i = 0;
-  var key;
-
-  while (names.length > i) {
-    if (!has(AllSymbols, key = names[i++]) && key != HIDDEN && key != META) result.push(key);
-  }
-
-  return result;
-};
-
-var $getOwnPropertySymbols = function getOwnPropertySymbols(it) {
-  var IS_OP = it === ObjectProto;
-  var names = gOPN(IS_OP ? OPSymbols : toIObject(it));
-  var result = [];
-  var i = 0;
-  var key;
-
-  while (names.length > i) {
-    if (has(AllSymbols, key = names[i++]) && (IS_OP ? has(ObjectProto, key) : true)) result.push(AllSymbols[key]);
-  }
-
-  return result;
-}; // 19.4.1.1 Symbol([description])
-
-
-if (!USE_NATIVE) {
-  $Symbol = function _Symbol() {
-    if (this instanceof $Symbol) throw TypeError('Symbol is not a constructor!');
-    var tag = uid(arguments.length > 0 ? arguments[0] : undefined);
-
-    var $set = function $set(value) {
-      if (this === ObjectProto) $set.call(OPSymbols, value);
-      if (has(this, HIDDEN) && has(this[HIDDEN], tag)) this[HIDDEN][tag] = false;
-      setSymbolDesc(this, tag, createDesc(1, value));
-    };
-
-    if (DESCRIPTORS && setter) setSymbolDesc(ObjectProto, tag, {
-      configurable: true,
-      set: $set
-    });
-    return wrap(tag);
-  };
-
-  redefine($Symbol[PROTOTYPE], 'toString', function toString() {
-    return this._k;
-  });
-  $GOPD.f = $getOwnPropertyDescriptor;
-  $DP.f = $defineProperty;
-  __webpack_require__("./node_modules/core-js/library/modules/_object-gopn.js").f = gOPNExt.f = $getOwnPropertyNames;
-  __webpack_require__("./node_modules/core-js/library/modules/_object-pie.js").f = $propertyIsEnumerable;
-  $GOPS.f = $getOwnPropertySymbols;
-
-  if (DESCRIPTORS && !__webpack_require__("./node_modules/core-js/library/modules/_library.js")) {
-    redefine(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
-  }
-
-  wksExt.f = function (name) {
-    return wrap(wks(name));
-  };
-}
-
-$export($export.G + $export.W + $export.F * !USE_NATIVE, {
-  Symbol: $Symbol
-});
-
-for (var es6Symbols = // 19.4.2.2, 19.4.2.3, 19.4.2.4, 19.4.2.6, 19.4.2.8, 19.4.2.9, 19.4.2.10, 19.4.2.11, 19.4.2.12, 19.4.2.13, 19.4.2.14
-'hasInstance,isConcatSpreadable,iterator,match,replace,search,species,split,toPrimitive,toStringTag,unscopables'.split(','), j = 0; es6Symbols.length > j;) {
-  wks(es6Symbols[j++]);
-}
-
-for (var wellKnownSymbols = $keys(wks.store), k = 0; wellKnownSymbols.length > k;) {
-  wksDefine(wellKnownSymbols[k++]);
-}
-
-$export($export.S + $export.F * !USE_NATIVE, 'Symbol', {
-  // 19.4.2.1 Symbol.for(key)
-  'for': function _for(key) {
-    return has(SymbolRegistry, key += '') ? SymbolRegistry[key] : SymbolRegistry[key] = $Symbol(key);
-  },
-  // 19.4.2.5 Symbol.keyFor(sym)
-  keyFor: function keyFor(sym) {
-    if (!isSymbol(sym)) throw TypeError(sym + ' is not a symbol!');
-
-    for (var key in SymbolRegistry) {
-      if (SymbolRegistry[key] === sym) return key;
-    }
-  },
-  useSetter: function useSetter() {
-    setter = true;
-  },
-  useSimple: function useSimple() {
-    setter = false;
-  }
-});
-$export($export.S + $export.F * !USE_NATIVE, 'Object', {
-  // 19.1.2.2 Object.create(O [, Properties])
-  create: $create,
-  // 19.1.2.4 Object.defineProperty(O, P, Attributes)
-  defineProperty: $defineProperty,
-  // 19.1.2.3 Object.defineProperties(O, Properties)
-  defineProperties: $defineProperties,
-  // 19.1.2.6 Object.getOwnPropertyDescriptor(O, P)
-  getOwnPropertyDescriptor: $getOwnPropertyDescriptor,
-  // 19.1.2.7 Object.getOwnPropertyNames(O)
-  getOwnPropertyNames: $getOwnPropertyNames,
-  // 19.1.2.8 Object.getOwnPropertySymbols(O)
-  getOwnPropertySymbols: $getOwnPropertySymbols
-}); // Chrome 38 and 39 `Object.getOwnPropertySymbols` fails on primitives
-// https://bugs.chromium.org/p/v8/issues/detail?id=3443
-
-var FAILS_ON_PRIMITIVES = $fails(function () {
-  $GOPS.f(1);
-});
-$export($export.S + $export.F * FAILS_ON_PRIMITIVES, 'Object', {
-  getOwnPropertySymbols: function getOwnPropertySymbols(it) {
-    return $GOPS.f(toObject(it));
-  }
-}); // 24.3.2 JSON.stringify(value [, replacer [, space]])
-
-$JSON && $export($export.S + $export.F * (!USE_NATIVE || $fails(function () {
-  var S = $Symbol(); // MS Edge converts symbol values to JSON as {}
-  // WebKit converts symbol values to JSON as null
-  // V8 throws on boxed symbols
-
-  return _stringify([S]) != '[null]' || _stringify({
-    a: S
-  }) != '{}' || _stringify(Object(S)) != '{}';
-})), 'JSON', {
-  stringify: function stringify(it) {
-    var args = [it];
-    var i = 1;
-    var replacer, $replacer;
-
-    while (arguments.length > i) {
-      args.push(arguments[i++]);
-    }
-
-    $replacer = replacer = args[1];
-    if (!isObject(replacer) && it === undefined || isSymbol(it)) return; // IE8 returns string on undefined
-
-    if (!isArray(replacer)) replacer = function replacer(key, value) {
-      if (typeof $replacer == 'function') value = $replacer.call(this, key, value);
-      if (!isSymbol(value)) return value;
-    };
-    args[1] = replacer;
-    return _stringify.apply($JSON, args);
-  }
-}); // 19.4.3.4 Symbol.prototype[@@toPrimitive](hint)
-
-$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__("./node_modules/core-js/library/modules/_hide.js")($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf); // 19.4.3.5 Symbol.prototype[@@toStringTag]
-
-setToStringTag($Symbol, 'Symbol'); // 20.2.1.9 Math[@@toStringTag]
-
-setToStringTag(Math, 'Math', true); // 24.3.3 JSON[@@toStringTag]
-
-setToStringTag(global.JSON, 'JSON', true);
-
-/***/ }),
-
 /***/ "./node_modules/core-js/library/modules/es7.promise.finally.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4329,6 +3661,48 @@ module.exports = Function.bind || function bind(that
 
 /***/ }),
 
+/***/ "./node_modules/core-js/modules/_classof.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+// getting tag from 19.1.3.6 Object.prototype.toString()
+var cof = __webpack_require__("./node_modules/core-js/modules/_cof.js");
+
+var TAG = __webpack_require__("./node_modules/core-js/modules/_wks.js")('toStringTag'); // ES3 wrong here
+
+
+var ARG = cof(function () {
+  return arguments;
+}()) == 'Arguments'; // fallback for IE11 Script Access Denied error
+
+var tryGet = function tryGet(it, key) {
+  try {
+    return it[key];
+  } catch (e) {
+    /* empty */
+  }
+};
+
+module.exports = function (it) {
+  var O, T, B;
+  return it === undefined ? 'Undefined' : it === null ? 'Null' // @@toStringTag case
+  : typeof (T = tryGet(O = Object(it), TAG)) == 'string' ? T // builtinTag case
+  : ARG ? cof(O) // ES3 arguments fallback
+  : (B = cof(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : B;
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/_cof.js":
+/***/ (function(module, exports) {
+
+var toString = {}.toString;
+
+module.exports = function (it) {
+  return toString.call(it).slice(8, -1);
+};
+
+/***/ }),
+
 /***/ "./node_modules/core-js/modules/_core.js":
 /***/ (function(module, exports) {
 
@@ -4371,6 +3745,17 @@ module.exports = function (fn, that, length) {
   {
     return fn.apply(that, arguments);
   };
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/_defined.js":
+/***/ (function(module, exports) {
+
+// 7.2.1 RequireObjectCoercible(argument)
+module.exports = function (it) {
+  if (it == undefined) throw TypeError("Can't call method on  " + it);
+  return it;
 };
 
 /***/ }),
@@ -4478,6 +3863,155 @@ module.exports = function (exec) {
   } catch (e) {
     return true;
   }
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/_fix-re-wks.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+__webpack_require__("./node_modules/core-js/modules/es6.regexp.exec.js");
+
+var redefine = __webpack_require__("./node_modules/core-js/modules/_redefine.js");
+
+var hide = __webpack_require__("./node_modules/core-js/modules/_hide.js");
+
+var fails = __webpack_require__("./node_modules/core-js/modules/_fails.js");
+
+var defined = __webpack_require__("./node_modules/core-js/modules/_defined.js");
+
+var wks = __webpack_require__("./node_modules/core-js/modules/_wks.js");
+
+var regexpExec = __webpack_require__("./node_modules/core-js/modules/_regexp-exec.js");
+
+var SPECIES = wks('species');
+var REPLACE_SUPPORTS_NAMED_GROUPS = !fails(function () {
+  // #replace needs built-in support for named groups.
+  // #match works fine because it just return the exec results, even if it has
+  // a "grops" property.
+  var re = /./;
+
+  re.exec = function () {
+    var result = [];
+    result.groups = {
+      a: '7'
+    };
+    return result;
+  };
+
+  return ''.replace(re, '$<a>') !== '7';
+});
+
+var SPLIT_WORKS_WITH_OVERWRITTEN_EXEC = function () {
+  // Chrome 51 has a buggy "split" implementation when RegExp#exec !== nativeExec
+  var re = /(?:)/;
+  var originalExec = re.exec;
+
+  re.exec = function () {
+    return originalExec.apply(this, arguments);
+  };
+
+  var result = 'ab'.split(re);
+  return result.length === 2 && result[0] === 'a' && result[1] === 'b';
+}();
+
+module.exports = function (KEY, length, exec) {
+  var SYMBOL = wks(KEY);
+  var DELEGATES_TO_SYMBOL = !fails(function () {
+    // String methods call symbol-named RegEp methods
+    var O = {};
+
+    O[SYMBOL] = function () {
+      return 7;
+    };
+
+    return ''[KEY](O) != 7;
+  });
+  var DELEGATES_TO_EXEC = DELEGATES_TO_SYMBOL ? !fails(function () {
+    // Symbol-named RegExp methods call .exec
+    var execCalled = false;
+    var re = /a/;
+
+    re.exec = function () {
+      execCalled = true;
+      return null;
+    };
+
+    if (KEY === 'split') {
+      // RegExp[@@split] doesn't call the regex's exec method, but first creates
+      // a new one. We need to return the patched regex when creating the new one.
+      re.constructor = {};
+
+      re.constructor[SPECIES] = function () {
+        return re;
+      };
+    }
+
+    re[SYMBOL]('');
+    return !execCalled;
+  }) : undefined;
+
+  if (!DELEGATES_TO_SYMBOL || !DELEGATES_TO_EXEC || KEY === 'replace' && !REPLACE_SUPPORTS_NAMED_GROUPS || KEY === 'split' && !SPLIT_WORKS_WITH_OVERWRITTEN_EXEC) {
+    var nativeRegExpMethod = /./[SYMBOL];
+    var fns = exec(defined, SYMBOL, ''[KEY], function maybeCallNative(nativeMethod, regexp, str, arg2, forceStringMethod) {
+      if (regexp.exec === regexpExec) {
+        if (DELEGATES_TO_SYMBOL && !forceStringMethod) {
+          // The native String method already delegates to @@method (this
+          // polyfilled function), leasing to infinite recursion.
+          // We avoid it by directly calling the native @@method method.
+          return {
+            done: true,
+            value: nativeRegExpMethod.call(regexp, str, arg2)
+          };
+        }
+
+        return {
+          done: true,
+          value: nativeMethod.call(str, regexp, arg2)
+        };
+      }
+
+      return {
+        done: false
+      };
+    });
+    var strfn = fns[0];
+    var rxfn = fns[1];
+    redefine(String.prototype, KEY, strfn);
+    hide(RegExp.prototype, SYMBOL, length == 2 // 21.2.5.8 RegExp.prototype[@@replace](string, replaceValue)
+    // 21.2.5.11 RegExp.prototype[@@split](string, limit)
+    ? function (string, arg) {
+      return rxfn.call(string, this, arg);
+    } // 21.2.5.6 RegExp.prototype[@@match](string)
+    // 21.2.5.9 RegExp.prototype[@@search](string)
+    : function (string) {
+      return rxfn.call(string, this);
+    });
+  }
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/_flags.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+ // 21.2.5.3 get RegExp.prototype.flags
+
+var anObject = __webpack_require__("./node_modules/core-js/modules/_an-object.js");
+
+module.exports = function () {
+  var that = anObject(this);
+  var result = '';
+  if (that.global) result += 'g';
+  if (that.ignoreCase) result += 'i';
+  if (that.multiline) result += 'm';
+  if (that.unicode) result += 'u';
+  if (that.sticky) result += 'y';
+  return result;
 };
 
 /***/ }),
@@ -4669,6 +4203,115 @@ __webpack_require__("./node_modules/core-js/modules/_core.js").inspectSource = f
 
 /***/ }),
 
+/***/ "./node_modules/core-js/modules/_regexp-exec-abstract.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+var classof = __webpack_require__("./node_modules/core-js/modules/_classof.js");
+
+var builtinExec = RegExp.prototype.exec; // `RegExpExec` abstract operation
+// https://tc39.github.io/ecma262/#sec-regexpexec
+
+module.exports = function (R, S) {
+  var exec = R.exec;
+
+  if (typeof exec === 'function') {
+    var result = exec.call(R, S);
+
+    if (_typeof(result) !== 'object') {
+      throw new TypeError('RegExp exec method returned something other than an Object or null');
+    }
+
+    return result;
+  }
+
+  if (classof(R) !== 'RegExp') {
+    throw new TypeError('RegExp#exec called on incompatible receiver');
+  }
+
+  return builtinExec.call(R, S);
+};
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/_regexp-exec.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var regexpFlags = __webpack_require__("./node_modules/core-js/modules/_flags.js");
+
+var nativeExec = RegExp.prototype.exec; // This always refers to the native implementation, because the
+// String#replace polyfill uses ./fix-regexp-well-known-symbol-logic.js,
+// which loads this file before patching the method.
+
+var nativeReplace = String.prototype.replace;
+var patchedExec = nativeExec;
+var LAST_INDEX = 'lastIndex';
+
+var UPDATES_LAST_INDEX_WRONG = function () {
+  var re1 = /a/,
+      re2 = /b*/g;
+  nativeExec.call(re1, 'a');
+  nativeExec.call(re2, 'a');
+  return re1[LAST_INDEX] !== 0 || re2[LAST_INDEX] !== 0;
+}(); // nonparticipating capturing group, copied from es5-shim's String#split patch.
+
+
+var NPCG_INCLUDED = /()??/.exec('')[1] !== undefined;
+var PATCH = UPDATES_LAST_INDEX_WRONG || NPCG_INCLUDED;
+
+if (PATCH) {
+  patchedExec = function exec(str) {
+    var re = this;
+    var lastIndex, reCopy, match, i;
+
+    if (NPCG_INCLUDED) {
+      reCopy = new RegExp('^' + re.source + '$(?!\\s)', regexpFlags.call(re));
+    }
+
+    if (UPDATES_LAST_INDEX_WRONG) lastIndex = re[LAST_INDEX];
+    match = nativeExec.call(re, str);
+
+    if (UPDATES_LAST_INDEX_WRONG && match) {
+      re[LAST_INDEX] = re.global ? match.index + match[0].length : lastIndex;
+    }
+
+    if (NPCG_INCLUDED && match && match.length > 1) {
+      // Fix browsers whose `exec` methods don't consistently return `undefined`
+      // for NPCG, like IE8. NOTE: This doesn' work for /(.?)?/
+      // eslint-disable-next-line no-loop-func
+      nativeReplace.call(match[0], reCopy, function () {
+        for (i = 1; i < arguments.length - 2; i++) {
+          if (arguments[i] === undefined) match[i] = undefined;
+        }
+      });
+    }
+
+    return match;
+  };
+}
+
+module.exports = patchedExec;
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/_same-value.js":
+/***/ (function(module, exports) {
+
+// 7.2.9 SameValue(x, y)
+module.exports = Object.is || function is(x, y) {
+  // eslint-disable-next-line no-self-compare
+  return x === y ? x !== 0 || 1 / x === 1 / y : x != x && y != y;
+};
+
+/***/ }),
+
 /***/ "./node_modules/core-js/modules/_shared.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4719,6 +4362,25 @@ module.exports = function (key) {
 
 /***/ }),
 
+/***/ "./node_modules/core-js/modules/_wks.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+var store = __webpack_require__("./node_modules/core-js/modules/_shared.js")('wks');
+
+var uid = __webpack_require__("./node_modules/core-js/modules/_uid.js");
+
+var _Symbol = __webpack_require__("./node_modules/core-js/modules/_global.js").Symbol;
+
+var USE_SYMBOL = typeof _Symbol == 'function';
+
+var $exports = module.exports = function (name) {
+  return store[name] || (store[name] = USE_SYMBOL && _Symbol[name] || (USE_SYMBOL ? _Symbol : uid)('Symbol.' + name));
+};
+
+$exports.store = store;
+
+/***/ }),
+
 /***/ "./node_modules/core-js/modules/es6.function.bind.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4749,6 +4411,61 @@ NAME in FProto || __webpack_require__("./node_modules/core-js/modules/_descripto
       return '';
     }
   }
+});
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/es6.regexp.exec.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var regexpExec = __webpack_require__("./node_modules/core-js/modules/_regexp-exec.js");
+
+__webpack_require__("./node_modules/core-js/modules/_export.js")({
+  target: 'RegExp',
+  proto: true,
+  forced: regexpExec !== /./.exec
+}, {
+  exec: regexpExec
+});
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/es6.regexp.search.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var anObject = __webpack_require__("./node_modules/core-js/modules/_an-object.js");
+
+var sameValue = __webpack_require__("./node_modules/core-js/modules/_same-value.js");
+
+var regExpExec = __webpack_require__("./node_modules/core-js/modules/_regexp-exec-abstract.js"); // @@search logic
+
+
+__webpack_require__("./node_modules/core-js/modules/_fix-re-wks.js")('search', 1, function (defined, SEARCH, $search, maybeCallNative) {
+  return [// `String.prototype.search` method
+  // https://tc39.github.io/ecma262/#sec-string.prototype.search
+  function search(regexp) {
+    var O = defined(this);
+    var fn = regexp == undefined ? undefined : regexp[SEARCH];
+    return fn !== undefined ? fn.call(regexp, O) : new RegExp(regexp)[SEARCH](String(O));
+  }, // `RegExp.prototype[@@search]` method
+  // https://tc39.github.io/ecma262/#sec-regexp.prototype-@@search
+  function (regexp) {
+    var res = maybeCallNative($search, regexp, this);
+    if (res.done) return res.value;
+    var rx = anObject(regexp);
+    var S = String(this);
+    var previousLastIndex = rx.lastIndex;
+    if (!sameValue(previousLastIndex, 0)) rx.lastIndex = 0;
+    var result = regExpExec(rx, S);
+    if (!sameValue(rx.lastIndex, previousLastIndex)) rx.lastIndex = previousLastIndex;
+    return result === null ? -1 : result.index;
+  }];
 });
 
 /***/ }),
@@ -12428,6 +12145,13 @@ module.exports = isEqual;
 
 /***/ }),
 
+/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js!./node_modules/sass-loader/lib/loader.js!./node_modules/vue-loader/lib/index.js?!./src/clients/components/provider.vue?vue&type=style&index=0&lang=scss&":
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
 /***/ "./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js!./node_modules/sass-loader/lib/loader.js!./node_modules/vue-loader/lib/index.js?!./src/clients/components/providerList.vue?vue&type=style&index=0&lang=scss&":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13654,6 +13378,32 @@ if(false) {}
 
 
 var content = __webpack_require__("./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js!./node_modules/sass-loader/lib/loader.js!./node_modules/vue-loader/lib/index.js?!./src/clients/components/newClientDialog.vue?vue&type=style&index=0&lang=scss&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__("./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js!./node_modules/sass-loader/lib/loader.js!./node_modules/vue-loader/lib/index.js?!./src/clients/components/provider.vue?vue&type=style&index=0&lang=scss&":
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__("./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js!./node_modules/sass-loader/lib/loader.js!./node_modules/vue-loader/lib/index.js?!./src/clients/components/provider.vue?vue&type=style&index=0&lang=scss&");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -25810,6 +25560,9 @@ mainvue_type_template_id_faed707c_render._withStripped = true
 
 // CONCATENATED MODULE: ./src/clients/components/main.vue?vue&type=template&id=faed707c&
 
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es6.regexp.search.js
+var es6_regexp_search = __webpack_require__("./node_modules/core-js/modules/es6.regexp.search.js");
+
 // CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/clients/components/clientsTable.vue?vue&type=template&id=4635cd2f&
 var clientsTablevue_type_template_id_4635cd2f_render = function() {
   var _vm = this
@@ -36835,9 +36588,15 @@ var store = {
     providers: [],
     showNewClientDialog: false,
     showEditClientDialog: false,
-    client: null
+    client: null,
+    offset: 0,
+    limit: 100,
+    search: ''
   },
   mutations: {
+    setOnLoad: function setOnLoad(state, payload) {
+      state.onLoad = payload;
+    },
     setShowNewClientDialog: function setShowNewClientDialog(state, payload) {
       state.showNewClientDialog = payload;
     },
@@ -36875,6 +36634,7 @@ function () {
     _classCallCheck(this, Client);
 
     this.prepareProvider = this.prepareProvider.bind(this);
+    this.get = this.get.bind(this);
     this.id = null;
     this.name = '';
     this.email = '';
@@ -36944,10 +36704,36 @@ function () {
           name: this.providerList[i].name,
           check: check
         });
-      } // i++ 
+      } // i++      
 
 
       this.providersString = tmp.join(', ');
+    }
+    /**
+     * get only client data (for ajax save)
+     */
+
+  }, {
+    key: "get",
+    value: function get() {
+      /* reload providers */
+      var providers = [];
+
+      for (var i = 0; i < this.providerListListData.length; i++) {
+        if (this.providerListListData[i].check) {
+          providers.push({
+            id: this.providerListListData[i].id
+          });
+        }
+      }
+
+      return {
+        id: this.id,
+        name: this.name,
+        email: this.email,
+        phone: this.phone,
+        providers: providers
+      };
     }
   }]);
 
@@ -36993,7 +36779,7 @@ function () {
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return axios_default.a.get('/client/list/' + offset + '/' + limit + '/' + search);
+                return axios_default.a.get(window.server_url + '/client/list/' + offset + '/' + limit + '/' + search);
 
               case 3:
                 res = _context.sent;
@@ -37038,28 +36824,39 @@ function () {
       var _get = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee2(clientId) {
+        var res;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                return _context2.abrupt("return", {
-                  "id": 1,
-                  "name": "Test ",
-                  "email": "test1@email.com",
-                  "phone": "3021545465464",
-                  "providers": [{
-                    "id": 1
-                  }, {
-                    "id": 2
-                  }]
-                });
+                _context2.prev = 0;
+                _context2.next = 3;
+                return axios_default.a.get(window.server_url + '/client/' + clientId);
 
-              case 1:
+              case 3:
+                res = _context2.sent;
+
+                if (res) {
+                  res = res['data'];
+                }
+
+                _context2.next = 10;
+                break;
+
+              case 7:
+                _context2.prev = 7;
+                _context2.t0 = _context2["catch"](0);
+                console.log(_context2.t0);
+
+              case 10:
+                return _context2.abrupt("return", res);
+
+              case 11:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2);
+        }, _callee2, null, [[0, 7]]);
       }));
 
       function get(_x4) {
@@ -37074,15 +36871,55 @@ function () {
       var _save = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee3(client) {
+        var res;
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
+                _context3.prev = 0;
+
+                if (!client.id) {
+                  _context3.next = 7;
+                  break;
+                }
+
+                _context3.next = 4;
+                return axios_default.a.put(window.server_url + '/client/' + client.id, client);
+
+              case 4:
+                res = _context3.sent;
+                _context3.next = 10;
+                break;
+
+              case 7:
+                _context3.next = 9;
+                return axios_default.a.post(window.server_url + '/client', client);
+
+              case 9:
+                res = _context3.sent;
+
+              case 10:
+                if (res) {
+                  res = res['data'];
+                }
+
+                _context3.next = 16;
+                break;
+
+              case 13:
+                _context3.prev = 13;
+                _context3.t0 = _context3["catch"](0);
+                console.log(_context3.t0);
+
+              case 16:
+                return _context3.abrupt("return", res);
+
+              case 17:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3);
+        }, _callee3, null, [[0, 13]]);
       }));
 
       function save(_x5) {
@@ -37276,30 +37113,114 @@ function () {
       return listTest;
     }()
   }, {
-    key: "add",
+    key: "save",
     value: function () {
-      var _add = _asyncToGenerator(
+      var _save = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee3(provider) {
+        var res;
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                return _context3.abrupt("return", true);
+                _context3.prev = 0;
 
-              case 1:
+                if (!provider.id) {
+                  _context3.next = 7;
+                  break;
+                }
+
+                _context3.next = 4;
+                return axios_default.a.put(window.server_url + '/provider/' + provider.id, provider);
+
+              case 4:
+                res = _context3.sent;
+                _context3.next = 10;
+                break;
+
+              case 7:
+                _context3.next = 9;
+                return axios_default.a.post(window.server_url + '/provider', provider);
+
+              case 9:
+                res = _context3.sent;
+
+              case 10:
+                if (res) {
+                  res = res['data'];
+                }
+
+                _context3.next = 16;
+                break;
+
+              case 13:
+                _context3.prev = 13;
+                _context3.t0 = _context3["catch"](0);
+                console.log(_context3.t0);
+
+              case 16:
+                return _context3.abrupt("return", res);
+
+              case 17:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3);
+        }, _callee3, null, [[0, 13]]);
       }));
 
-      function add(_x) {
-        return _add.apply(this, arguments);
+      function save(_x) {
+        return _save.apply(this, arguments);
       }
 
-      return add;
+      return save;
+    }()
+  }, {
+    key: "remove",
+    value: function () {
+      var _remove = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee4(providerId) {
+        var res;
+        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.prev = 0;
+                _context4.next = 3;
+                return axios_default.a.delete(window.server_url + '/provider/' + providerId);
+
+              case 3:
+                res = _context4.sent;
+
+                if (res) {
+                  res = res['data'];
+                }
+
+                _context4.next = 10;
+                break;
+
+              case 7:
+                _context4.prev = 7;
+                _context4.t0 = _context4["catch"](0);
+                console.log(_context4.t0);
+
+              case 10:
+                return _context4.abrupt("return", res);
+
+              case 11:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, null, [[0, 7]]);
+      }));
+
+      function remove(_x2) {
+        return _remove.apply(this, arguments);
+      }
+
+      return remove;
     }()
   }]);
 
@@ -37307,7 +37228,8 @@ function () {
 }();
 
 
-// CONCATENATED MODULE: ./src/clients/client/clientController.js
+// CONCATENATED MODULE: ./src/clients/client/ClientController.js
+
 
 
 
@@ -37320,7 +37242,7 @@ function () {
  * control client store an make Client entity
  */
 
-var clientController_ClientController =
+var ClientController_ClientController =
 /*#__PURE__*/
 function () {
   function ClientController() {
@@ -37470,9 +37392,26 @@ function () {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                console.log(clientsVuex.state.client);
+                clientsVuex.commit('setOnLoad', true);
 
-              case 1:
+                if (!clientsVuex.state.client) {
+                  _context3.next = 8;
+                  break;
+                }
+
+                console.log(clientsVuex.state.client);
+                _context3.next = 5;
+                return clientDB_ClientDB.save(clientsVuex.state.client.get());
+
+              case 5:
+                ClientController.hideNewClientDialog();
+                ClientController.hideEditClientDialog();
+                ClientController.list(clientsVuex.state.offset, clientsVuex.state.limit, clientsVuex.state.search);
+
+              case 8:
+                clientsVuex.commit('setOnLoad', false);
+
+              case 9:
               case "end":
                 return _context3.stop();
             }
@@ -37614,7 +37553,7 @@ function () {
   },
   methods: {
     onShowEditDialog: function onShowEditDialog(event) {
-      clientController_ClientController.showEditClientDialog(event.target.getAttribute('client_id'));
+      ClientController_ClientController.showEditClientDialog(event.target.getAttribute('client_id'));
     }
   },
   computed: {
@@ -37955,8 +37894,8 @@ editClientDialogvue_type_template_id_7535aaa6_render._withStripped = true
 
 // CONCATENATED MODULE: ./src/clients/components/editClientDialog.vue?vue&type=template&id=7535aaa6&
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/clients/components/providerList.vue?vue&type=template&id=26d5d907&
-var providerListvue_type_template_id_26d5d907_render = function() {
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/clients/components/providerList.vue?vue&type=template&id=ff033f90&
+var providerListvue_type_template_id_ff033f90_render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
@@ -38004,71 +37943,12 @@ var providerListvue_type_template_id_26d5d907_render = function() {
             ])
           ]),
           _vm._v(" "),
-          _vm._l(_vm.client.providerListListData, function(item, key) {
+          _vm._l(_vm.client.providerListListData, function(item, key1) {
             return _c(
               "div",
-              { key: key, staticClass: "provider_row form-group" },
-              [
-                _c("div", { staticClass: "col-3 col-sm-12" }),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-9 col-sm-12" }, [
-                  _c("div", { staticClass: "columns" }, [
-                    _c("div", { staticClass: "column col-6" }, [
-                      _c("label", { staticClass: "form-checkbox" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: item.check,
-                              expression: "item.check"
-                            }
-                          ],
-                          attrs: { type: "checkbox" },
-                          domProps: {
-                            checked: Array.isArray(item.check)
-                              ? _vm._i(item.check, null) > -1
-                              : item.check
-                          },
-                          on: {
-                            change: function($event) {
-                              var $$a = item.check,
-                                $$el = $event.target,
-                                $$c = $$el.checked ? true : false
-                              if (Array.isArray($$a)) {
-                                var $$v = null,
-                                  $$i = _vm._i($$a, $$v)
-                                if ($$el.checked) {
-                                  $$i < 0 &&
-                                    _vm.$set(item, "check", $$a.concat([$$v]))
-                                } else {
-                                  $$i > -1 &&
-                                    _vm.$set(
-                                      item,
-                                      "check",
-                                      $$a
-                                        .slice(0, $$i)
-                                        .concat($$a.slice($$i + 1))
-                                    )
-                                }
-                              } else {
-                                _vm.$set(item, "check", $$c)
-                              }
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("i", { staticClass: "form-icon" }),
-                        _vm._v(" " + _vm._s(item.name) + "\n          ")
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _vm._m(1, true),
-                    _vm._v(" "),
-                    _vm._m(2, true)
-                  ])
-                ])
-              ]
+              { key: key1 },
+              [_c("provider", { attrs: { item: item } })],
+              1
             )
           })
         ],
@@ -38076,7 +37956,7 @@ var providerListvue_type_template_id_26d5d907_render = function() {
       )
     : _vm._e()
 }
-var providerListvue_type_template_id_26d5d907_staticRenderFns = [
+var providerListvue_type_template_id_ff033f90_staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -38084,85 +37964,13 @@ var providerListvue_type_template_id_26d5d907_staticRenderFns = [
     return _c("div", { staticClass: "col-3 col-sm-12" }, [
       _c("label", { staticClass: "form-label" }, [_vm._v("Providers:")])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "column col-1" }, [
-      _c("button", { staticClass: "btn" }, [
-        _c("i", { staticClass: "icon icon-edit" })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "column col-1" }, [
-      _c("button", { staticClass: "btn" }, [
-        _c("i", { staticClass: "icon icon-delete" })
-      ])
-    ])
   }
 ]
-providerListvue_type_template_id_26d5d907_render._withStripped = true
+providerListvue_type_template_id_ff033f90_render._withStripped = true
 
 
-// CONCATENATED MODULE: ./src/clients/components/providerList.vue?vue&type=template&id=26d5d907&
+// CONCATENATED MODULE: ./src/clients/components/providerList.vue?vue&type=template&id=ff033f90&
 
-// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/object/get-own-property-descriptor.js
-var get_own_property_descriptor = __webpack_require__("./node_modules/@babel/runtime-corejs2/core-js/object/get-own-property-descriptor.js");
-var get_own_property_descriptor_default = /*#__PURE__*/__webpack_require__.n(get_own_property_descriptor);
-
-// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/object/get-own-property-symbols.js
-var get_own_property_symbols = __webpack_require__("./node_modules/@babel/runtime-corejs2/core-js/object/get-own-property-symbols.js");
-var get_own_property_symbols_default = /*#__PURE__*/__webpack_require__.n(get_own_property_symbols);
-
-// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/object/keys.js
-var keys = __webpack_require__("./node_modules/@babel/runtime-corejs2/core-js/object/keys.js");
-var keys_default = /*#__PURE__*/__webpack_require__.n(keys);
-
-// CONCATENATED MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/defineProperty.js
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    define_property_default()(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-// CONCATENATED MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/objectSpread.js
-
-
-
-
-function _objectSpread(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i] != null ? arguments[i] : {};
-
-    var ownKeys = keys_default()(source);
-
-    if (typeof get_own_property_symbols_default.a === 'function') {
-      ownKeys = ownKeys.concat(get_own_property_symbols_default()(source).filter(function (sym) {
-        return get_own_property_descriptor_default()(source, sym).enumerable;
-      }));
-    }
-
-    ownKeys.forEach(function (key) {
-      _defineProperty(target, key, source[key]);
-    });
-  }
-
-  return target;
-}
 // CONCATENATED MODULE: ./src/clients/provider/ProviderController.js
 
 
@@ -38240,35 +38048,45 @@ function () {
       var _add = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee2(providerName) {
-        var client;
+        var providers, client;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                console.log(providerName);
-                /* add provider */
-
+                _context2.prev = 0;
                 _context2.next = 3;
-                return providerDB_ProviderDB.add(providerName);
+                return providerDB_ProviderDB.add({
+                  name: providerName
+                });
 
               case 3:
                 _context2.next = 5;
-                return ProviderController.list();
+                return providerDB_ProviderDB.list();
 
               case 5:
+                providers = _context2.sent;
+                clientsVuex.commit("setProviders", providers);
                 /* reload vizible client */
+
                 if (clientsVuex.state.client) {
-                  client = _objectSpread({}, clientsVuex.state.client);
-                  client.prepareProvider();
+                  client = new client_Client(clientsVuex.state.client.get(), providers);
                   clientsVuex.commit("setClient", client);
                 }
 
-              case 6:
+                _context2.next = 13;
+                break;
+
+              case 10:
+                _context2.prev = 10;
+                _context2.t0 = _context2["catch"](0);
+                console.log(_context2.t0);
+
+              case 13:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2);
+        }, _callee2, null, [[0, 10]]);
       }));
 
       function add(_x) {
@@ -38277,12 +38095,405 @@ function () {
 
       return add;
     }()
+    /**
+     * delete provider
+     * @param {number} providerId 
+     */
+
+  }, {
+    key: "remove",
+    value: function () {
+      var _remove = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee3(providerId) {
+        var providers, client;
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.prev = 0;
+                _context3.next = 3;
+                return providerDB_ProviderDB.remove(providerId);
+
+              case 3:
+                _context3.next = 5;
+                return providerDB_ProviderDB.list();
+
+              case 5:
+                providers = _context3.sent;
+                clientsVuex.commit("setProviders", providers);
+                /* reload vizible client */
+
+                if (clientsVuex.state.client) {
+                  client = new client_Client(clientsVuex.state.client.get(), providers);
+                  clientsVuex.commit("setClient", client);
+                }
+
+                _context3.next = 13;
+                break;
+
+              case 10:
+                _context3.prev = 10;
+                _context3.t0 = _context3["catch"](0);
+                console.log(_context3.t0);
+
+              case 13:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, null, [[0, 10]]);
+      }));
+
+      function remove(_x2) {
+        return _remove.apply(this, arguments);
+      }
+
+      return remove;
+    }()
+    /**
+     * delete provider
+     * @param {number} providerId 
+     */
+
+  }, {
+    key: "save",
+    value: function () {
+      var _save = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee4(provider) {
+        var providers, client;
+        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.prev = 0;
+                _context4.next = 3;
+                return providerDB_ProviderDB.save(provider);
+
+              case 3:
+                _context4.next = 5;
+                return providerDB_ProviderDB.list();
+
+              case 5:
+                providers = _context4.sent;
+                clientsVuex.commit("setProviders", providers);
+                /* reload vizible client */
+
+                if (clientsVuex.state.client) {
+                  client = new client_Client(clientsVuex.state.client.get(), providers);
+                  clientsVuex.commit("setClient", client);
+                }
+
+                _context4.next = 13;
+                break;
+
+              case 10:
+                _context4.prev = 10;
+                _context4.t0 = _context4["catch"](0);
+                console.log(_context4.t0);
+
+              case 13:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, null, [[0, 10]]);
+      }));
+
+      function save(_x3) {
+        return _save.apply(this, arguments);
+      }
+
+      return save;
+    }()
   }]);
 
   return ProviderController;
 }();
 
 
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/clients/components/provider.vue?vue&type=template&id=7d920b7a&
+var providervue_type_template_id_7d920b7a_render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "provider_row form-group" }, [
+    _c("div", { staticClass: "col-3 col-sm-12" }),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-9 col-sm-12" }, [
+      _c("div", { staticClass: "columns" }, [
+        _c("div", { staticClass: "column col-6" }, [
+          _c("label", { staticClass: "form-checkbox" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.item.check,
+                  expression: "item.check"
+                }
+              ],
+              attrs: { type: "checkbox" },
+              domProps: {
+                checked: Array.isArray(_vm.item.check)
+                  ? _vm._i(_vm.item.check, null) > -1
+                  : _vm.item.check
+              },
+              on: {
+                change: function($event) {
+                  var $$a = _vm.item.check,
+                    $$el = $event.target,
+                    $$c = $$el.checked ? true : false
+                  if (Array.isArray($$a)) {
+                    var $$v = null,
+                      $$i = _vm._i($$a, $$v)
+                    if ($$el.checked) {
+                      $$i < 0 && _vm.$set(_vm.item, "check", $$a.concat([$$v]))
+                    } else {
+                      $$i > -1 &&
+                        _vm.$set(
+                          _vm.item,
+                          "check",
+                          $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                        )
+                    }
+                  } else {
+                    _vm.$set(_vm.item, "check", $$c)
+                  }
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("i", { staticClass: "form-icon" }),
+            _vm._v(" "),
+            !_vm.isEdit
+              ? _c("span", [_vm._v(_vm._s(_vm.item.name))])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.isEdit
+              ? _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.item.name,
+                      expression: "item.name"
+                    }
+                  ],
+                  staticClass: "form-input input_provider_edit",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.item.name },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.item, "name", $event.target.value)
+                    }
+                  }
+                })
+              : _vm._e()
+          ])
+        ]),
+        _vm._v(" "),
+        !_vm.isEdit
+          ? _c("div", { staticClass: "column col-1" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn",
+                  attrs: { type: "button" },
+                  on: { click: _vm.setStartEdit }
+                },
+                [_c("i", { staticClass: "icon icon-edit" })]
+              )
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        !_vm.isEdit
+          ? _c("div", { staticClass: "column col-1" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn",
+                  attrs: { provider_id: _vm.item.id, type: "button" },
+                  on: { click: _vm.remove }
+                },
+                [
+                  _c("i", {
+                    staticClass: "icon icon-delete",
+                    attrs: { provider_id: _vm.item.id }
+                  })
+                ]
+              )
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.isEdit
+          ? _c("div", { staticClass: "column col-1" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn",
+                  attrs: { type: "button" },
+                  on: { click: _vm.editDone }
+                },
+                [
+                  _c("i", {
+                    staticClass: "icon icon-check",
+                    attrs: { provider_id: _vm.item.id }
+                  })
+                ]
+              )
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.isEdit
+          ? _c("div", { staticClass: "column col-1" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn",
+                  attrs: { provider_id: _vm.item.id, type: "button" },
+                  on: { click: _vm.editCansel }
+                },
+                [
+                  _c("i", {
+                    staticClass: "icon icon-stop",
+                    attrs: { provider_id: _vm.item.id }
+                  })
+                ]
+              )
+            ])
+          : _vm._e()
+      ])
+    ])
+  ])
+}
+var providervue_type_template_id_7d920b7a_staticRenderFns = []
+providervue_type_template_id_7d920b7a_render._withStripped = true
+
+
+// CONCATENATED MODULE: ./src/clients/components/provider.vue?vue&type=template&id=7d920b7a&
+
+// CONCATENATED MODULE: ./node_modules/babel-loader/lib??ref--0!./node_modules/vue-loader/lib??vue-loader-options!./src/clients/components/provider.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ var providervue_type_script_lang_js_ = ({
+  name: "provider",
+  props: ["item"],
+  data: function data() {
+    return {
+      isEdit: false
+    };
+  },
+  methods: {
+    add: function add(event) {
+      ProviderController_ProviderController.add(this.providerName);
+      this.providerName = "";
+    },
+    remove: function remove(event) {
+      ProviderController_ProviderController.remove(event.target.getAttribute("provider_id"));
+    },
+    setStartEdit: function setStartEdit(event) {
+      this.isEdit = true;
+    },
+    editDone: function editDone(event) {
+      this.isEdit = false;
+      ProviderController_ProviderController.save(this.item);
+    },
+    editCansel: function editCansel(event) {
+      this.isEdit = false;
+    }
+  },
+  computed: {
+    onLoad: function onLoad() {
+      return this.$store.state.onLoad;
+    },
+    client: function client() {
+      return this.$store.state.client;
+    }
+  },
+  components: {}
+});
+// CONCATENATED MODULE: ./src/clients/components/provider.vue?vue&type=script&lang=js&
+ /* harmony default export */ var components_providervue_type_script_lang_js_ = (providervue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./src/clients/components/provider.vue?vue&type=style&index=0&lang=scss&
+var providervue_type_style_index_0_lang_scss_ = __webpack_require__("./src/clients/components/provider.vue?vue&type=style&index=0&lang=scss&");
+
+// CONCATENATED MODULE: ./src/clients/components/provider.vue
+
+
+
+
+
+
+/* normalize component */
+
+var provider_component = componentNormalizer_normalizeComponent(
+  components_providervue_type_script_lang_js_,
+  providervue_type_template_id_7d920b7a_render,
+  providervue_type_template_id_7d920b7a_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var provider_api; }
+provider_component.options.__file = "src/clients/components/provider.vue"
+/* harmony default export */ var components_provider = (provider_component.exports);
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib??ref--0!./node_modules/vue-loader/lib??vue-loader-options!./src/clients/components/providerList.vue?vue&type=script&lang=js&
 //
 //
@@ -38309,34 +38520,22 @@ function () {
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 /* harmony default export */ var providerListvue_type_script_lang_js_ = ({
   name: "providerList",
   data: function data() {
     return {
-      providerName: ''
+      providerName: ""
     };
   },
   methods: {
     add: function add(event) {
       ProviderController_ProviderController.add(this.providerName);
+      this.providerName = "";
+    },
+    remove: function remove(event) {
+      ProviderController_ProviderController.remove(event.target.getAttribute("provider_id"));
     }
   },
   computed: {
@@ -38347,7 +38546,9 @@ function () {
       return this.$store.state.client;
     }
   },
-  components: {}
+  components: {
+    provider: components_provider
+  }
 });
 // CONCATENATED MODULE: ./src/clients/components/providerList.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_providerListvue_type_script_lang_js_ = (providerListvue_type_script_lang_js_); 
@@ -38365,8 +38566,8 @@ var providerListvue_type_style_index_0_lang_scss_ = __webpack_require__("./src/c
 
 var providerList_component = componentNormalizer_normalizeComponent(
   components_providerListvue_type_script_lang_js_,
-  providerListvue_type_template_id_26d5d907_render,
-  providerListvue_type_template_id_26d5d907_staticRenderFns,
+  providerListvue_type_template_id_ff033f90_render,
+  providerListvue_type_template_id_ff033f90_staticRenderFns,
   false,
   null,
   null,
@@ -38377,273 +38578,7 @@ var providerList_component = componentNormalizer_normalizeComponent(
 /* hot reload */
 if (false) { var providerList_api; }
 providerList_component.options.__file = "src/clients/components/providerList.vue"
-/* harmony default export */ var providerList = (providerList_component.exports);
-// CONCATENATED MODULE: ./src/clients/client/ClientController.js
-
-
-
-
-
-
-
-
-/**
- * control client store an make Client entity
- */
-
-var ClientController_ClientController =
-/*#__PURE__*/
-function () {
-  function ClientController() {
-    _classCallCheck(this, ClientController);
-  }
-
-  _createClass(ClientController, null, [{
-    key: "makeEmptyClient",
-    value: function () {
-      var _makeEmptyClient = _asyncToGenerator(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee() {
-        var client, providers;
-        return regeneratorRuntime.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.prev = 0;
-                _context.next = 3;
-                return providerDB_ProviderDB.list();
-
-              case 3:
-                providers = _context.sent;
-
-                /* construct client */
-                client = new client_Client({
-                  id: null,
-                  name: '',
-                  email: '',
-                  phone: '',
-                  providers: []
-                }, providers);
-                _context.next = 10;
-                break;
-
-              case 7:
-                _context.prev = 7;
-                _context.t0 = _context["catch"](0);
-                console.log(_context.t0);
-
-              case 10:
-                clientsVuex.commit("setClient", client);
-
-              case 11:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, null, [[0, 7]]);
-      }));
-
-      function makeEmptyClient() {
-        return _makeEmptyClient.apply(this, arguments);
-      }
-
-      return makeEmptyClient;
-    }()
-    /* new client dialo */
-
-  }, {
-    key: "showNewClientDialog",
-    value: function showNewClientDialog() {
-      ClientController.makeEmptyClient();
-      clientsVuex.commit("setShowNewClientDialog", true);
-    }
-  }, {
-    key: "hideNewClientDialog",
-    value: function hideNewClientDialog() {
-      clientsVuex.commit("setClient", null);
-      clientsVuex.commit("setShowNewClientDialog", false);
-    }
-    /* ----------------------------- */
-
-    /* edit client dialog */
-
-  }, {
-    key: "showEditClientDialog",
-    value: function () {
-      var _showEditClientDialog = _asyncToGenerator(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee2(clientId) {
-        var clientData, client, providers;
-        return regeneratorRuntime.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                /* loading client info */
-                providers = [];
-                _context2.prev = 1;
-                _context2.next = 4;
-                return providerDB_ProviderDB.list();
-
-              case 4:
-                providers = _context2.sent;
-                _context2.next = 7;
-                return clientDB_ClientDB.get(clientId);
-
-              case 7:
-                clientData = _context2.sent;
-
-                if (clientData) {
-                  /* construct client */
-                  client = new client_Client(clientData, providers);
-                }
-
-                _context2.next = 14;
-                break;
-
-              case 11:
-                _context2.prev = 11;
-                _context2.t0 = _context2["catch"](1);
-                console.log(_context2.t0);
-
-              case 14:
-                clientsVuex.commit("setClient", client);
-                clientsVuex.commit("setShowEditClientDialog", true);
-
-              case 16:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, null, [[1, 11]]);
-      }));
-
-      function showEditClientDialog(_x) {
-        return _showEditClientDialog.apply(this, arguments);
-      }
-
-      return showEditClientDialog;
-    }()
-  }, {
-    key: "hideEditClientDialog",
-    value: function hideEditClientDialog() {
-      clientsVuex.commit("setClient", null);
-      clientsVuex.commit("setShowEditClientDialog", false);
-    }
-    /* ----------------------------- */
-
-  }, {
-    key: "saveClient",
-    value: function () {
-      var _saveClient = _asyncToGenerator(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee3() {
-        return regeneratorRuntime.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                console.log(clientsVuex.state.client);
-
-              case 1:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3);
-      }));
-
-      function saveClient() {
-        return _saveClient.apply(this, arguments);
-      }
-
-      return saveClient;
-    }()
-  }, {
-    key: "deleteClient",
-    value: function () {
-      var _deleteClient = _asyncToGenerator(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee4() {
-        return regeneratorRuntime.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                console.log(clientsVuex.state.client);
-
-              case 1:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4);
-      }));
-
-      function deleteClient() {
-        return _deleteClient.apply(this, arguments);
-      }
-
-      return deleteClient;
-    }()
-  }, {
-    key: "list",
-    value: function () {
-      var _list = _asyncToGenerator(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee5(offset, limit, search) {
-        var clients, providers, clientsFromDB, i;
-        return regeneratorRuntime.wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                clients = [];
-                providers = [];
-                _context5.prev = 2;
-                _context5.next = 5;
-                return clientDB_ClientDB.list(offset, limit, search);
-
-              case 5:
-                clientsFromDB = _context5.sent;
-                _context5.next = 8;
-                return providerDB_ProviderDB.list();
-
-              case 8:
-                providers = _context5.sent;
-
-                /* join with providers */
-                for (i = 0; i < clientsFromDB.length; i++) {
-                  clients.push(new client_Client(clientsFromDB[i], providers));
-                }
-
-                _context5.next = 15;
-                break;
-
-              case 12:
-                _context5.prev = 12;
-                _context5.t0 = _context5["catch"](2);
-                console.log(_context5.t0);
-
-              case 15:
-                clientsVuex.commit('setClients', clients);
-
-              case 16:
-              case "end":
-                return _context5.stop();
-            }
-          }
-        }, _callee5, null, [[2, 12]]);
-      }));
-
-      function list(_x2, _x3, _x4) {
-        return _list.apply(this, arguments);
-      }
-
-      return list;
-    }()
-  }]);
-
-  return ClientController;
-}();
-
-
+/* harmony default export */ var components_providerList = (providerList_component.exports);
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib??ref--0!./node_modules/vue-loader/lib??vue-loader-options!./src/clients/components/editClientDialog.vue?vue&type=script&lang=js&
 //
 //
@@ -38736,7 +38671,7 @@ function () {
     }
   },
   components: {
-    providerList: providerList
+    providerList: components_providerList
   }
 });
 // CONCATENATED MODULE: ./src/clients/components/editClientDialog.vue?vue&type=script&lang=js&
@@ -39026,7 +38961,7 @@ newClientDialogvue_type_template_id_fe5bf98c_render._withStripped = true
     }
   },
   components: {
-    providerList: providerList
+    providerList: components_providerList
   }
 });
 // CONCATENATED MODULE: ./src/clients/components/newClientDialog.vue?vue&type=script&lang=js&
@@ -39059,6 +38994,7 @@ if (false) { var newClientDialog_api; }
 newClientDialog_component.options.__file = "src/clients/components/newClientDialog.vue"
 /* harmony default export */ var newClientDialog = (newClientDialog_component.exports);
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib??ref--0!./node_modules/vue-loader/lib??vue-loader-options!./src/clients/components/main.vue?vue&type=script&lang=js&
+
 //
 //
 //
@@ -39081,14 +39017,14 @@ newClientDialog_component.options.__file = "src/clients/components/newClientDial
     return {};
   },
   mounted: function mounted() {
-    clientController_ClientController.list(0, 20, "");
+    ClientController_ClientController.list(this.$store.state.offset, this.$store.state.limit, this.$store.state.search);
   },
   methods: {
     onRemoveFromFavorite: function onRemoveFromFavorite() {
       ClientsController.newClientDialog(true);
     },
     showNewClientDialog: function showNewClientDialog(event) {
-      clientController_ClientController.showNewClientDialog();
+      ClientController_ClientController.showNewClientDialog();
     }
   },
   computed: {
@@ -39192,6 +39128,17 @@ if (clients_vue) {
 /* harmony import */ var _node_modules_style_loader_index_js_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_sass_loader_lib_loader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_newClientDialog_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_sass_loader_lib_loader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_newClientDialog_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
  /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_style_loader_index_js_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_sass_loader_lib_loader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_newClientDialog_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./src/clients/components/provider.vue?vue&type=style&index=0&lang=scss&":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_sass_loader_lib_loader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_provider_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("./node_modules/style-loader/index.js!./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js!./node_modules/sass-loader/lib/loader.js!./node_modules/vue-loader/lib/index.js?!./src/clients/components/provider.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_sass_loader_lib_loader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_provider_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_sass_loader_lib_loader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_provider_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_style_loader_index_js_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_sass_loader_lib_loader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_provider_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 

@@ -176,31 +176,30 @@ function (_BaseDB) {
                   updateData['name'] = provider.name;
                 }
 
-                console.log(updateData);
-                _context3.next = 11;
+                _context3.next = 10;
                 return this.db('provider').where({
                   id: provider.id
                 }).update(updateData);
 
-              case 11:
-                _context3.next = 17;
+              case 10:
+                _context3.next = 16;
                 break;
 
-              case 13:
-                _context3.prev = 13;
+              case 12:
+                _context3.prev = 12;
                 _context3.t0 = _context3["catch"](2);
                 console.log(_context3.t0);
                 res = false;
 
-              case 17:
+              case 16:
                 return _context3.abrupt("return", res);
 
-              case 18:
+              case 17:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, this, [[2, 13]]);
+        }, _callee3, this, [[2, 12]]);
       }));
 
       function update(_x2) {

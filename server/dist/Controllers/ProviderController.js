@@ -194,24 +194,23 @@ function () {
 
               case 6:
                 res = _context4.sent;
-                console.log('res', res);
-                _context4.next = 13;
+                _context4.next = 12;
                 break;
 
-              case 10:
-                _context4.prev = 10;
+              case 9:
+                _context4.prev = 9;
                 _context4.t0 = _context4["catch"](1);
                 console.log(_context4.t0);
 
-              case 13:
+              case 12:
                 return _context4.abrupt("return", res);
 
-              case 14:
+              case 13:
               case "end":
                 return _context4.stop();
             }
           }
-        }, _callee4, this, [[1, 10]]);
+        }, _callee4, this, [[1, 9]]);
       }));
 
       function update() {
