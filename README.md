@@ -10,7 +10,8 @@
 * npm run start
 
 ## Run
-* go to http://localhost:3005
+* go to http://localhost:3005 for app
+* go to http://localhost:3005/api-docs/ for api docs
 * DONE
 
 
