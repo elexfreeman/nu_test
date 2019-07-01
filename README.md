@@ -1,5 +1,7 @@
 # Client - simple clients app
 
+* mysql + nodejs 9+
+
 ## Install
 * create config file server/app/config.js from server/app/config.sample.js
 * write you db setting
