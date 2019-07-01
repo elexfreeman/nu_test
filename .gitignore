@@ -65,3 +65,4 @@ server/app/config.js
 frontend/package-lock.json
 server/package-lock.json
 server/dist/config.js
+server/dist
