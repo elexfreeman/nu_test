@@ -113,12 +113,12 @@ class ClientControler {
             }
 
             res = await this.clientDB.add(this.req.body);
-            
+
             /* add providers */
             if (this.req.body.providers) {
-                
+
                 for (let i = 0; i < this.req.body.providers.length; i++) {
-                   
+
                     await this.clientProvidersDB.add({
                         client_id: res,
                         provider_id: this.req.body.providers[i].id
@@ -144,32 +144,52 @@ class ClientControler {
 
             if (!this.req.body) {
                 throw 'empty body';
-            }          
+            }
 
             let data = this.req.body;
-          
+
             data['id'] = clientId;
 
             res = await this.clientDB.update(this.req.body);
-            
+
             /* add providers */
-             if (this.req.body.providers) {
-                 /* dellete all client providers */
-                await this.clientProvidersDB.deleteByClientId(clientId);
-                
+            if (this.req.body.providers) {
+                /* dellete all client providers */
+                await this.clientProvidersDB.removeByClientId(clientId);
+
                 for (let i = 0; i < this.req.body.providers.length; i++) {
-                   
+
                     await this.clientProvidersDB.add({
                         client_id: clientId,
                         provider_id: this.req.body.providers[i].id
                     })
 
                 }
-            } 
+            }
 
         } catch (e) {
             console.log(e);
         }
+        return res;
+    }
+
+    /**
+    * delete route
+    */
+    async remove() {
+        let res;
+
+        try {
+
+            let clientId = parseInt(this.req.params.id);
+            /* dellete all client providers */
+            await this.clientProvidersDB.removeByClientId(clientId);
+            /* delete client */
+            res = await this.clientDB.remove(clientId);
+        } catch (e) {
+            console.log(e);
+        }
+
         return res;
     }
 
@@ -259,7 +279,7 @@ router.put('/client/:id', async (req, res, next) => {
     let data = await self.update();
     if (!data) {
         res.status(404).json({
-            done: false, 
+            done: false,
             "errors": [
                 {
                     "some wrong": true
@@ -272,6 +292,14 @@ router.put('/client/:id', async (req, res, next) => {
     }
 
 });
+
+
+router.delete('/client/:id', async (req, res, next) => {    
+    const self = await ClientControler.init(req);
+    await self.remove();
+    res.json({ done: true });
+
+}); 
 
 
 

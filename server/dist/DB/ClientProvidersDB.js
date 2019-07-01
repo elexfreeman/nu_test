@@ -147,9 +147,9 @@ function (_BaseDB) {
       return add;
     }()
   }, {
-    key: "deleteByClientId",
+    key: "removeByClientId",
     value: function () {
-      var _deleteByClientId = (0, _asyncToGenerator2["default"])(
+      var _removeByClientId = (0, _asyncToGenerator2["default"])(
       /*#__PURE__*/
       _regenerator["default"].mark(function _callee3(clientId) {
         var res, deleteData;
@@ -187,11 +187,11 @@ function (_BaseDB) {
         }, _callee3, this, [[2, 8]]);
       }));
 
-      function deleteByClientId(_x3) {
-        return _deleteByClientId.apply(this, arguments);
+      function removeByClientId(_x3) {
+        return _removeByClientId.apply(this, arguments);
       }
 
-      return deleteByClientId;
+      return removeByClientId;
     }()
   }, {
     key: "delete",

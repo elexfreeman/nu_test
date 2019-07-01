@@ -5,7 +5,7 @@
         <label class="form-label">Providers:</label>
       </div>
       <div class="col-9 col-sm-12">
-        <div class="input-group">
+        <div v-bind:class="{ 'has-error': prviderNameError }" class="input-group">
           <input v-model="providerName" class="form-input input-lg" type="text" />
           <button
             type="button"
@@ -19,7 +19,6 @@
     <div v-bind:key="key1" v-for="(item, key1) in client.providerListListData">
       <provider v-bind:item="item"></provider>
     </div>
-    
   </div>
 </template>
 
@@ -32,17 +31,20 @@ export default {
 
   data() {
     return {
-      providerName: ""
+      providerName: "",
+      prviderNameError: false
     };
   },
 
   methods: {
     add(event) {
-      ProviderController.add(this.providerName);
-      this.providerName = "";
-    },
-    remove(event) {
-      ProviderController.remove(event.target.getAttribute("provider_id"));
+      if (this.providerName.length < 2) {
+        this.prviderNameError = true;
+      } else {
+        ProviderController.save({ name: this.providerName });
+        this.providerName = "";
+        this.prviderNameError = false;
+      }
     }
   },
 

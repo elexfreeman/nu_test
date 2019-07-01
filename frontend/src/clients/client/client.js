@@ -1,3 +1,6 @@
+/**
+ * Client entity
+ */
 export default class Client {
 
     constructor(client, providerList) {
@@ -99,4 +102,5 @@ export default class Client {
             providers: providers
         }
     }
+    
 }

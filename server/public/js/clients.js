@@ -36627,6 +36627,9 @@ var es6_function_bind = __webpack_require__("./node_modules/core-js/modules/es6.
 
 
 
+/**
+ * Client entity
+ */
 var client_Client =
 /*#__PURE__*/
 function () {
@@ -36929,27 +36932,51 @@ function () {
       return save;
     }()
   }, {
-    key: "delete",
+    key: "remove",
     value: function () {
-      var _delete2 = _asyncToGenerator(
+      var _remove = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee4(client) {
         return regeneratorRuntime.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
+                _context4.prev = 0;
+
+                if (client.id) {
+                  _context4.next = 3;
+                  break;
+                }
+
+                throw 'empty client';
+
+              case 3:
+                _context4.next = 5;
+                return axios_default.a.delete(window.server_url + '/client/' + client.id);
+
+              case 5:
+                res = _context4.sent;
+                _context4.next = 11;
+                break;
+
+              case 8:
+                _context4.prev = 8;
+                _context4.t0 = _context4["catch"](0);
+                console.log(_context4.t0);
+
+              case 11:
               case "end":
                 return _context4.stop();
             }
           }
-        }, _callee4);
+        }, _callee4, null, [[0, 8]]);
       }));
 
-      function _delete(_x6) {
-        return _delete2.apply(this, arguments);
+      function remove(_x6) {
+        return _remove.apply(this, arguments);
       }
 
-      return _delete;
+      return remove;
     }()
   }, {
     key: "listTest",
@@ -37395,23 +37422,22 @@ function () {
                 clientsVuex.commit('setOnLoad', true);
 
                 if (!clientsVuex.state.client) {
-                  _context3.next = 8;
+                  _context3.next = 7;
                   break;
                 }
 
-                console.log(clientsVuex.state.client);
-                _context3.next = 5;
+                _context3.next = 4;
                 return clientDB_ClientDB.save(clientsVuex.state.client.get());
 
-              case 5:
+              case 4:
                 ClientController.hideNewClientDialog();
                 ClientController.hideEditClientDialog();
                 ClientController.list(clientsVuex.state.offset, clientsVuex.state.limit, clientsVuex.state.search);
 
-              case 8:
+              case 7:
                 clientsVuex.commit('setOnLoad', false);
 
-              case 9:
+              case 8:
               case "end":
                 return _context3.stop();
             }
@@ -37435,9 +37461,24 @@ function () {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                console.log(clientsVuex.state.client);
+                clientsVuex.commit('setOnLoad', true);
 
-              case 1:
+                if (!clientsVuex.state.client) {
+                  _context4.next = 6;
+                  break;
+                }
+
+                _context4.next = 4;
+                return clientDB_ClientDB.remove(clientsVuex.state.client);
+
+              case 4:
+                ClientController.hideEditClientDialog();
+                ClientController.list(clientsVuex.state.offset, clientsVuex.state.limit, clientsVuex.state.search);
+
+              case 6:
+                clientsVuex.commit('setOnLoad', false);
+
+              case 7:
               case "end":
                 return _context4.stop();
             }
@@ -37544,6 +37585,10 @@ function () {
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ var clientsTablevue_type_script_lang_js_ = ({
@@ -37582,6 +37627,7 @@ function () {
       }];
     }
   },
+  // computed
   components: {
     VueGoodTable: VueGoodTable
   }
@@ -37914,39 +37960,46 @@ var providerListvue_type_template_id_ff033f90_render = function() {
             _vm._m(0),
             _vm._v(" "),
             _c("div", { staticClass: "col-9 col-sm-12" }, [
-              _c("div", { staticClass: "input-group" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.providerName,
-                      expression: "providerName"
-                    }
-                  ],
-                  staticClass: "form-input input-lg",
-                  attrs: { type: "text" },
-                  domProps: { value: _vm.providerName },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+              _c(
+                "div",
+                {
+                  staticClass: "input-group",
+                  class: { "has-error": _vm.prviderNameError }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.providerName,
+                        expression: "providerName"
                       }
-                      _vm.providerName = $event.target.value
+                    ],
+                    staticClass: "form-input input-lg",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.providerName },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.providerName = $event.target.value
+                      }
                     }
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-primary input-group-btn btn-lg",
-                    attrs: { type: "button" },
-                    on: { click: _vm.add }
-                  },
-                  [_vm._v("Add provider")]
-                )
-              ])
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary input-group-btn btn-lg",
+                      attrs: { type: "button" },
+                      on: { click: _vm.add }
+                    },
+                    [_vm._v("Add provider")]
+                  )
+                ]
+              )
             ])
           ]),
           _vm._v(" "),
@@ -38465,6 +38518,7 @@ providervue_type_template_id_7d920b7a_render._withStripped = true
       this.isEdit = true;
     },
     editDone: function editDone(event) {
+      /* check item.name.lenght */
       if (this.item.name.length < 2) {
         this.providerNameError = true;
       } else {
@@ -38479,6 +38533,7 @@ providervue_type_template_id_7d920b7a_render._withStripped = true
       this.isEdit = false;
     }
   },
+  // methods
   computed: {
     onLoad: function onLoad() {
       return this.$store.state.onLoad;
@@ -38543,23 +38598,27 @@ provider_component.options.__file = "src/clients/components/provider.vue"
 //
 //
 //
-//
 
 
 /* harmony default export */ var providerListvue_type_script_lang_js_ = ({
   name: "providerList",
   data: function data() {
     return {
-      providerName: ""
+      providerName: "",
+      prviderNameError: false
     };
   },
   methods: {
     add: function add(event) {
-      ProviderController_ProviderController.add(this.providerName);
-      this.providerName = "";
-    },
-    remove: function remove(event) {
-      ProviderController_ProviderController.remove(event.target.getAttribute("provider_id"));
+      if (this.providerName.length < 2) {
+        this.prviderNameError = true;
+      } else {
+        ProviderController_ProviderController.save({
+          name: this.providerName
+        });
+        this.providerName = "";
+        this.prviderNameError = false;
+      }
     }
   },
   computed: {
@@ -38605,6 +38664,12 @@ providerList_component.options.__file = "src/clients/components/providerList.vue
 /* harmony default export */ var components_providerList = (providerList_component.exports);
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib??ref--0!./node_modules/vue-loader/lib??vue-loader-options!./src/clients/components/editClientDialog.vue?vue&type=script&lang=js&
 
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -38916,6 +38981,10 @@ newClientDialogvue_type_template_id_fe5bf98c_render._withStripped = true
 
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib??ref--0!./node_modules/vue-loader/lib??vue-loader-options!./src/clients/components/newClientDialog.vue?vue&type=script&lang=js&
 
+//
+//
+//
+//
 //
 //
 //

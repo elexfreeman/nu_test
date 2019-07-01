@@ -62,7 +62,17 @@ export default class ClientDB {
         return res;
     }
 
-    static async delete(client) {
+    static async remove(client) {
+        try {
+            if (!client.id) {
+                throw 'empty client';
+            }
+
+            res = await axios.delete(window.server_url + '/client/' + client.id);
+
+        } catch (e) {
+            console.log(e);
+        }
 
     }
 

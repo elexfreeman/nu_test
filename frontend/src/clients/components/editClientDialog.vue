@@ -2,13 +2,17 @@
   <div v-bind:class="{ active: show }" class="modal">
     <a v-on:click="closeDialog" class="modal-overlay"></a>
     <div v-if="client" class="modal-container">
+
       <div class="modal-header">
         <button v-on:click="closeDialog" class="btn btn-clear float-right"></button>
         <div class="modal-title h5">Edit Client</div>
       </div>
+
       <div class="modal-body">
         <div class="content">
+
           <form class="form-horizontal">
+
             <div class="form-group">
               <div class="col-3 col-sm-12">
                 <label class="form-label">Name:</label>
@@ -38,10 +42,11 @@
 
             <providerList></providerList>
 
-            <!-- form structure -->
           </form>
+
         </div>
       </div>
+
       <div class="modal-footer">
         <div class="columns">
           <div class="column col-6 text-left">
@@ -53,6 +58,7 @@
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </template>
@@ -63,6 +69,7 @@ import providerList from "./providerList.vue";
 import ClientController from "../client/ClientController";
 
 export default {
+  
   name: "editClientDialog",
 
   data() {
@@ -76,6 +83,7 @@ export default {
     closeDialog(event) {
       ClientController.hideEditClientDialog();
     },
+
     saveClient(event) {
       if (this.$store.state.client.name.length < 3) {
         this.clientNameError = true;
@@ -84,9 +92,11 @@ export default {
         ClientController.saveClient();
       }
     },
+
     deleteClient(event) {
       ClientController.deleteClient();
     }
+
   },
 
   computed: {

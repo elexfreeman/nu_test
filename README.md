@@ -1,3 +1,11 @@
-# nu_test
+# Client - simple clients app
 
-https://github.com/babel/example-node-server
+## Install
+* create config file server/app/config.js from server/app/config.sample.js
+* cd server
+* npm run install_app
+* npm run start
+
+## Run
+* go to http://localhost:3005
+* DONE

@@ -19,7 +19,9 @@ import newClientDialog from "./newClientDialog.vue";
 import ClientController from "../client/ClientController";
 
 export default {
+
   name: "main",
+  
   data() {
     return {};
   },
@@ -37,12 +39,14 @@ export default {
       ClientController.showNewClientDialog();
     }
   },
+
   computed: {
     onLoad() {
       /*признак отправи сообщения на сервер*/
       return this.$store.state.onLoad;
     }
   },
+
   components: {
     clientsTable,
     editClientDialog,

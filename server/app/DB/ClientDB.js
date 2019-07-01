@@ -142,4 +142,30 @@ export default class ClientDB extends BaseDB {
         return res;
     }
 
+    /**
+     * Delete client from DB
+     * @param {number} clientId 
+     */
+    async remove(clientId) {
+        let res = true;
+        let deleteData = {};
+      
+        try {
+
+            deleteData = {
+                id: clientId
+            }            
+
+            await this.db('clients')
+                .where(deleteData)
+                .del();
+
+        } catch (e) {
+            console.log(e);
+            res = false;
+        }
+
+        return res;
+    }
+
 }

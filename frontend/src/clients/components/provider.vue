@@ -50,8 +50,11 @@
 import ProviderController from "../provider/ProviderController";
 
 export default {
+  
   name: "provider",
+
   props: ["item"],
+
   data() {
     return {
       isEdit: false,
@@ -76,6 +79,7 @@ export default {
     },
 
     editDone(event) {
+      /* check item.name.lenght */
       if (this.item.name.length < 2) {
         this.providerNameError = true;
       } else {
@@ -91,7 +95,7 @@ export default {
       this.isEdit = false;
     }
 
-  },
+  }, // methods
 
   computed: {
     onLoad() {

@@ -322,6 +322,58 @@ function (_BaseDB) {
 
       return update;
     }()
+    /**
+     * Delete client from DB
+     * @param {number} clientId 
+     */
+
+  }, {
+    key: "remove",
+    value: function () {
+      var _remove = (0, _asyncToGenerator2["default"])(
+      /*#__PURE__*/
+      _regenerator["default"].mark(function _callee6(clientId) {
+        var res, deleteData;
+        return _regenerator["default"].wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                res = true;
+                deleteData = {};
+                _context6.prev = 2;
+                deleteData = {
+                  id: clientId
+                };
+                _context6.next = 6;
+                return this.db('clients').where(deleteData).del();
+
+              case 6:
+                _context6.next = 12;
+                break;
+
+              case 8:
+                _context6.prev = 8;
+                _context6.t0 = _context6["catch"](2);
+                console.log(_context6.t0);
+                res = false;
+
+              case 12:
+                return _context6.abrupt("return", res);
+
+              case 13:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6, this, [[2, 8]]);
+      }));
+
+      function remove(_x8) {
+        return _remove.apply(this, arguments);
+      }
+
+      return remove;
+    }()
   }]);
   return ClientDB;
 }(_BaseDB2["default"]);

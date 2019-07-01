@@ -58,7 +58,7 @@ export default class ProviderDB extends BaseDB {
 
 
 
-    async deleteByClientId(clientId) {
+    async removeByClientId(clientId) {
         let res = true;
         let deleteData = {};
 

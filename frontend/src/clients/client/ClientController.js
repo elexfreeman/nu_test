@@ -84,8 +84,7 @@ export default class ClientController {
     static async saveClient() {
         store.commit('setOnLoad', true);
 
-        if (store.state.client) {
-            console.log(store.state.client);
+        if (store.state.client) {          
             await ClientDB.save(store.state.client.get());
             ClientController.hideNewClientDialog();
             ClientController.hideEditClientDialog();
@@ -96,7 +95,15 @@ export default class ClientController {
     }
 
     static async deleteClient() {
-        console.log(store.state.client);
+        store.commit('setOnLoad', true);
+
+        if (store.state.client) {
+            await ClientDB.remove(store.state.client);
+            ClientController.hideEditClientDialog();
+            ClientController.list(store.state.offset, store.state.limit, store.state.search);
+        }
+
+        store.commit('setOnLoad', false);
     }
 
 
