@@ -10,3 +10,6 @@
 ## Run
 * go to http://localhost:3005
 * DONE
+
+
+![Image of Scr](https://raw.githubusercontent.com/elexfreeman/nu_test/master/frontend/scr.png)
