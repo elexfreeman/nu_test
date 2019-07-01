@@ -198,7 +198,7 @@ class ClientControler {
 /**
  * list clients
  */
-router.get('/client/list', async (req, res, next) => {
+router.get('/api/v1/client/list', async (req, res, next) => {
     const self = await ClientControler.init(req);
     res.json(await self.list())
 });
@@ -206,7 +206,7 @@ router.get('/client/list', async (req, res, next) => {
 /**
  * list clients
  */
-router.get('/client/list/:offset', async (req, res, next) => {
+router.get('/api/v1/client/list/:offset', async (req, res, next) => {
     const self = await ClientControler.init(req);
     res.json(await self.list())
 });
@@ -214,7 +214,7 @@ router.get('/client/list/:offset', async (req, res, next) => {
 /**
  * list clients
  */
-router.get('/client/list/:offset/:limit', async (req, res, next) => {
+router.get('/api/v1/client/list/:offset/:limit', async (req, res, next) => {
     const self = await ClientControler.init(req);
     res.json(await self.list())
 });
@@ -222,7 +222,7 @@ router.get('/client/list/:offset/:limit', async (req, res, next) => {
 /**
  * list clients
  */
-router.get('/client/list/:offset/:limit/:search', async (req, res, next) => {
+router.get('/api/v1/client/list/:offset/:limit/:search', async (req, res, next) => {
     const self = await ClientControler.init(req);
     res.json(await self.list())
 });
@@ -230,11 +230,11 @@ router.get('/client/list/:offset/:limit/:search', async (req, res, next) => {
 /**
  * get client by id
  */
-router.get('/client/:id', async (req, res, next) => {
+router.get('/api/v1/client/:id', async (req, res, next) => {
     const self = await ClientControler.init(req);
     let data = await self.get();
     if (!data) {
-        res.status(404).json({
+        res.status(405).json({
             "errors": [
                 {
                     "clientNotFound": true
@@ -251,7 +251,7 @@ router.get('/client/:id', async (req, res, next) => {
 /**
  * add new client
  */
-router.post('/client', async (req, res, next) => {
+router.post('/api/v1/client', async (req, res, next) => {
     const self = await ClientControler.init(req);
 
     let data = await self.add();
@@ -273,12 +273,12 @@ router.post('/client', async (req, res, next) => {
 /**
  * add new client
  */
-router.put('/client/:id', async (req, res, next) => {
+router.put('/api/v1/client/:id', async (req, res, next) => {
     const self = await ClientControler.init(req);
 
     let data = await self.update();
     if (!data) {
-        res.status(404).json({
+        res.status(405).json({
             done: false,
             "errors": [
                 {
@@ -294,7 +294,7 @@ router.put('/client/:id', async (req, res, next) => {
 });
 
 
-router.delete('/client/:id', async (req, res, next) => {    
+router.delete('/api/v1/client/:id', async (req, res, next) => {    
     const self = await ClientControler.init(req);
     await self.remove();
     res.json({ done: true });

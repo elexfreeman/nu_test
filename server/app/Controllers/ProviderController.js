@@ -100,7 +100,7 @@ class ProviderControler {
 /**
  * list providers
  */
-router.get('/provider/list', async (req, res, next) => {
+router.get('/api/v1/provider/list', async (req, res, next) => {
     const self = await ProviderControler.init(req);
     res.json(await self.list())
 });
@@ -109,7 +109,7 @@ router.get('/provider/list', async (req, res, next) => {
 /**
  * add new provider
  */
-router.post('/provider', async (req, res, next) => {
+router.post('/api/v1/provider', async (req, res, next) => {
     const self = await ProviderControler.init(req);
 
     let data = await self.add();
@@ -133,7 +133,7 @@ router.post('/provider', async (req, res, next) => {
 /**
  * update provider
  */
-router.put('/provider/:id', async (req, res, next) => {
+router.put('/api/v1/provider/:id', async (req, res, next) => {
     const self = await ProviderControler.init(req);
 
     let data = await self.update();
@@ -155,7 +155,7 @@ router.put('/provider/:id', async (req, res, next) => {
 
 
 
-router.delete('/provider/:id', async (req, res, next) => {    
+router.delete('/api/v1/provider/:id', async (req, res, next) => {    
     const self = await ProviderControler.init(req);
     await self.remove();
     res.json({ done: true });

@@ -5,6 +5,9 @@ const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('../swagger.json');
+
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(bodyParser.json());
 
@@ -21,6 +24,8 @@ app.use(ClientControler.router);
 /* provider ctrl */
 import * as ProviderController from './Controllers/ProviderController.js';
 app.use(ProviderController.router);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
 console.log('server start at http://localhost:' + port);

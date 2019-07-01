@@ -1,0 +1,511 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Client App",
+    "version": "1.0.0",
+    "title": "Client App",
+    "contact": {
+      "email": "elextraza@gmail.com"
+    }
+  },
+  "host": "localhost:3005",
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "client",
+      "description": ""
+    },
+    {
+      "name": "provider",
+      "description": ""
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/client/list": {
+      "get": {
+        "tags": [
+          "client"
+        ],
+        "summary": "List clients",
+        "description": "",
+        "operationId": "clientList",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Client"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/client/list/{offset}": {
+      "get": {
+        "tags": [
+          "client"
+        ],
+        "summary": "List clients",
+        "description": "",
+        "operationId": "clientListOffset",
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "path",
+            "description": "page offset",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Client"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/client/list/{offset}/{limit}": {
+      "get": {
+        "tags": [
+          "client"
+        ],
+        "summary": "List clients",
+        "description": "",
+        "operationId": "clientListOffsetLimit",
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "path",
+            "description": "page offset",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "limit",
+            "in": "path",
+            "description": "page limit",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Client"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/client/list/{offset}/{limit}/{search}": {
+      "get": {
+        "tags": [
+          "client"
+        ],
+        "summary": "List clients",
+        "description": "",
+        "operationId": "clientListOffsetLimitSearch",
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "path",
+            "description": "page offset",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "limit",
+            "in": "path",
+            "description": "page limit",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "search",
+            "in": "path",
+            "description": "search string",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Client"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/client/{clientId}": {
+      "get": {
+        "tags": [
+          "client"
+        ],
+        "summary": "Find client by ID",
+        "description": "Returns a single client",
+        "operationId": "getClientById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "description": "ID of pet to return",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Client"
+            }
+          },
+          "404": {
+            "description": "Client not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "client"
+        ],
+        "summary": "Updates a client",
+        "description": "",
+        "operationId": "updateClient",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "description": "ID of client",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Client object that needs to be updated",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ClientPut"
+            }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "client"
+        ],
+        "summary": "Deletes a client",
+        "description": "",
+        "operationId": "deleteClient",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "description": "Client id to delete",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/client": {
+      "post": {
+        "tags": [
+          "client"
+        ],
+        "summary": "Add a new client",
+        "description": "",
+        "operationId": "addClient",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Client object that needs to be added",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Client"
+            }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/provider/list": {
+      "get": {
+        "tags": [
+          "provider"
+        ],
+        "summary": "List providers",
+        "description": "",
+        "operationId": "providerList",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Provider"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/provider": {
+      "post": {
+        "tags": [
+          "provider"
+        ],
+        "summary": "Add a new provider",
+        "description": "",
+        "operationId": "addProvider",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Provider object that needs to be added",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Provider"
+            }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/provider/{providerId}": {
+      "put": {
+        "tags": [
+          "client"
+        ],
+        "summary": "Updates a client",
+        "description": "",
+        "operationId": "updateProvider",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "providerId",
+            "in": "path",
+            "description": "ID of client",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Client object that needs to be updated",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Provider"
+            }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "provider"
+        ],
+        "summary": "Deletes a client",
+        "description": "",
+        "operationId": "deleteProvider",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "providerId",
+            "in": "path",
+            "description": "Client id to delete",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ClientPut": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "providers": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "Client": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "providers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      }
+    },
+    "Provider": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
