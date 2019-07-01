@@ -16,7 +16,7 @@ import editClientDialog from "./editClientDialog.vue";
 import newClientDialog from "./newClientDialog.vue";
 
 
-import ClientController from "../client/clientController";
+import ClientController from "../client/ClientController";
 
 export default {
   name: "main",

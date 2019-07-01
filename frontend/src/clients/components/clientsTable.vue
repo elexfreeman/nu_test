@@ -32,7 +32,7 @@
 <script>
 import { VueGoodTable } from "vue-good-table";
 
-import ClientController from '../client/clientController';
+import ClientController from '../client/ClientController';
 
 export default {
   name: "clientsTable",
