@@ -25595,19 +25595,19 @@ var clientsTablevue_type_template_id_4635cd2f_render = function() {
               key: "table-row",
               fn: function(props) {
                 return [
-                  props.column.field != "id"
+                  props.column.field != "_id"
                     ? _c("div", [
                         _vm._v(_vm._s(props.formattedRow[props.column.field]))
                       ])
                     : _vm._e(),
                   _vm._v(" "),
-                  props.column.field == "id"
+                  props.column.field == "_id"
                     ? _c("div", { staticClass: "text-center" }, [
                         _c(
                           "span",
                           {
                             staticClass: "edit_client_link",
-                            attrs: { client_id: props.formattedRow["id"] },
+                            attrs: { client_id: props.formattedRow["_id"] },
                             on: { click: _vm.onShowEditDialog }
                           },
                           [_vm._v("Edit")]
@@ -36638,7 +36638,7 @@ function () {
 
     this.prepareProvider = this.prepareProvider.bind(this);
     this.get = this.get.bind(this);
-    this.id = null;
+    this._id = null;
     this.name = '';
     this.email = '';
     this.phone = '';
@@ -36655,8 +36655,8 @@ function () {
       this.providerList = providerList;
     }
 
-    if (client.id) {
-      this.id = client.id;
+    if (client._id) {
+      this._id = client._id;
     }
 
     if (client.name) {
@@ -36693,7 +36693,7 @@ function () {
         var check = false;
 
         for (var k = 0; k < this.providers.length; k++) {
-          if (this.providerList[i].id == this.providers[k].id) {
+          if (this.providerList[i]._id == this.providers[k]._id) {
             tmp.push(this.providerList[i].name);
             check = true;
           }
@@ -36703,7 +36703,7 @@ function () {
 
 
         this.providerListListData.push({
-          id: this.providerList[i].id,
+          _id: this.providerList[i]._id,
           name: this.providerList[i].name,
           check: check
         });
@@ -36725,13 +36725,13 @@ function () {
       for (var i = 0; i < this.providerListListData.length; i++) {
         if (this.providerListListData[i].check) {
           providers.push({
-            id: this.providerListListData[i].id
+            _id: this.providerListListData[i]._id
           });
         }
       }
 
       return {
-        id: this.id,
+        _id: this._id,
         name: this.name,
         email: this.email,
         phone: this.phone,
@@ -36881,13 +36881,13 @@ function () {
               case 0:
                 _context3.prev = 0;
 
-                if (!client.id) {
+                if (!client._id) {
                   _context3.next = 7;
                   break;
                 }
 
                 _context3.next = 4;
-                return axios_default.a.put(window.server_url + '/client/' + client.id, client);
+                return axios_default.a.put(window.server_url + '/client/' + client._id, client);
 
               case 4:
                 res = _context3.sent;
@@ -36943,7 +36943,7 @@ function () {
               case 0:
                 _context4.prev = 0;
 
-                if (client.id) {
+                if (client._id) {
                   _context4.next = 3;
                   break;
                 }
@@ -36952,7 +36952,7 @@ function () {
 
               case 3:
                 _context4.next = 5;
-                return axios_default.a.delete(window.server_url + '/client/' + client.id);
+                return axios_default.a.delete(window.server_url + '/client/' + client._id);
 
               case 5:
                 res = _context4.sent;
@@ -37152,13 +37152,13 @@ function () {
               case 0:
                 _context3.prev = 0;
 
-                if (!provider.id) {
+                if (!provider._id) {
                   _context3.next = 7;
                   break;
                 }
 
                 _context3.next = 4;
-                return axios_default.a.put(window.server_url + '/provider/' + provider.id, provider);
+                return axios_default.a.put(window.server_url + '/provider/' + provider._id, provider);
 
               case 4:
                 res = _context3.sent;
@@ -37623,7 +37623,7 @@ function () {
         field: "providersString"
       }, {
         label: "",
-        field: "id"
+        field: "_id"
       }];
     }
   },
@@ -38385,13 +38385,13 @@ var providervue_type_template_id_7d920b7a_render = function() {
                 "button",
                 {
                   staticClass: "btn",
-                  attrs: { provider_id: _vm.item.id, type: "button" },
+                  attrs: { provider_id: _vm.item._id, type: "button" },
                   on: { click: _vm.remove }
                 },
                 [
                   _c("i", {
                     staticClass: "icon icon-delete",
-                    attrs: { provider_id: _vm.item.id }
+                    attrs: { provider_id: _vm.item._id }
                   })
                 ]
               )
@@ -38410,7 +38410,7 @@ var providervue_type_template_id_7d920b7a_render = function() {
                 [
                   _c("i", {
                     staticClass: "icon icon-check",
-                    attrs: { provider_id: _vm.item.id }
+                    attrs: { provider_id: _vm.item._id }
                   })
                 ]
               )
@@ -38423,13 +38423,13 @@ var providervue_type_template_id_7d920b7a_render = function() {
                 "button",
                 {
                   staticClass: "btn",
-                  attrs: { provider_id: _vm.item.id, type: "button" },
+                  attrs: { provider_id: _vm.item._id, type: "button" },
                   on: { click: _vm.editCansel }
                 },
                 [
                   _c("i", {
                     staticClass: "icon icon-stop",
-                    attrs: { provider_id: _vm.item.id }
+                    attrs: { provider_id: _vm.item._id }
                   })
                 ]
               )
@@ -39056,6 +39056,8 @@ newClientDialogvue_type_template_id_fe5bf98c_render._withStripped = true
       ClientController_ClientController.hideNewClientDialog();
     },
     saveClient: function saveClient(event) {
+      console.log(this.$store.state.client);
+
       if (this.$store.state.client.name.length < 3) {
         this.clientNameError = true;
       } else {

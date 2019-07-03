@@ -8,7 +8,7 @@ export default class Client {
         this.prepareProvider = this.prepareProvider.bind(this);
         this.get = this.get.bind(this);
       
-        this.id = null;
+        this._id = null;
         this.name = '';
         this.email = '';
         this.phone = '';
@@ -26,8 +26,8 @@ export default class Client {
             this.providerList = providerList;
         }
 
-        if (client.id) {
-            this.id = client.id;
+        if (client._id) {
+            this._id = client._id;
         }
         if (client.name) {
             this.name = client.name;
@@ -62,7 +62,7 @@ export default class Client {
             let check = false;
             for (let k = 0; k < this.providers.length; k++) {
 
-                if (this.providerList[i].id == this.providers[k].id) {
+                if (this.providerList[i]._id == this.providers[k]._id) {
                     tmp.push(this.providerList[i].name);
                     check = true;
                 }
@@ -71,7 +71,7 @@ export default class Client {
 
             /* for provider_Editor component */
             this.providerListListData.push({
-                id: this.providerList[i].id,
+                _id: this.providerList[i]._id,
                 name: this.providerList[i].name,
                 check: check
             });
@@ -90,12 +90,12 @@ export default class Client {
         let providers = [];
         for (let i = 0; i < this.providerListListData.length; i++) {
             if (this.providerListListData[i].check) {
-                providers.push({ id: this.providerListListData[i].id })
+                providers.push({ _id: this.providerListListData[i]._id })
             }
         }
         
         return {
-            id: this.id,
+            _id: this._id,
             name: this.name,
             email: this.email,
             phone: this.phone,

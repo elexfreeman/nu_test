@@ -1,14 +1,13 @@
 const express = require('express');
 const router = express.Router();
 
-
-import ProviderDB from '../DB/ProviderDB';
+import ProviderMDB from '../DB/mongoDB/ProviderMDB';
 
 class ProviderControler {
 
     constructor(req) {
         this.req = req;
-        this.providerDB = new ProviderDB();
+        this.providerMDB = new ProviderMDB();
     };
 
     /**
@@ -34,7 +33,7 @@ class ProviderControler {
         try {
 
             /* get providers */
-            res = await this.providerDB.list();
+            res = await this.providerMDB.list();
 
         } catch (e) {
             console.log(e);
@@ -49,8 +48,9 @@ class ProviderControler {
     async remove() {
         let res;
 
-        try {            
-            res = await this.providerDB.remove(parseInt(this.req.params.id));
+        try {  
+            let providerId = this.req.params.id;          
+            res = await this.providerMDB.remove(providerId);
         } catch (e) {
             console.log(e);
         }
@@ -65,7 +65,7 @@ class ProviderControler {
         let res;
 
         try {
-            res = await this.providerDB.add(this.req.body);
+            res = await this.providerMDB.add(this.req.body);
         } catch (e) {
             console.log(e);
         }
@@ -79,14 +79,14 @@ class ProviderControler {
     async update() {
         let res;
 
-        let providerId = parseInt(this.req.params.id);
+        let providerId = this.req.params.id;
 
         try {
 
             let data = this.req.body;          
             data['id'] = providerId;
 
-            res = await this.providerDB.update(data);
+            res = await this.providerMDB.update(data);
            
         } catch (e) {
             console.log(e);

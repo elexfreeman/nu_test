@@ -9290,7 +9290,7 @@ function baseIsTypedArray(value) {
  * The base implementation of `_.iteratee`.
  *
  * @private
- * @param {*} [value=_.identity] The value to convert to an iteratee.
+ * @param {*} [value=_._identity] The value to convert to an iteratee.
  * @returns {Function} Returns the iteratee.
  */
 
@@ -10033,7 +10033,7 @@ function toSource(func) {
  * @since 0.1.0
  * @category Collection
  * @param {Array|Object} collection The collection to iterate over.
- * @param {Function} [predicate=_.identity]
+ * @param {Function} [predicate=_._identity]
  *  The function invoked per iteration.
  * @returns {Array} Returns the new filtered array.
  * @see _.reject
@@ -10573,7 +10573,7 @@ function keys(object) {
  *
  * var object = { 'a': 1 };
  *
- * console.log(_.identity(object) === object);
+ * console.log(_._identity(object) === object);
  * // => true
  */
 
@@ -10908,7 +10908,7 @@ function isPrototype(value) {
  * @alias each
  * @category Collection
  * @param {Array|Object} collection The collection to iterate over.
- * @param {Function} [iteratee=_.identity] The function invoked per iteration.
+ * @param {Function} [iteratee=_._identity] The function invoked per iteration.
  * @returns {Array|Object} Returns `collection`.
  * @see _.forEachRight
  * @example
@@ -11201,7 +11201,7 @@ function keys(object) {
  *
  * var object = { 'a': 1 };
  *
- * console.log(_.identity(object) === object);
+ * console.log(_._identity(object) === object);
  * // => true
  */
 
@@ -14620,7 +14620,7 @@ module.exports = function(list, options) {
 
 		for (var i = 0; i < styles.length; i++) {
 			var item = styles[i];
-			var domStyle = stylesInDom[item.id];
+			var domStyle = stylesInDom[item._id];
 
 			domStyle.refs--;
 			mayRemove.push(domStyle);
@@ -14637,7 +14637,7 @@ module.exports = function(list, options) {
 			if(domStyle.refs === 0) {
 				for (var j = 0; j < domStyle.parts.length; j++) domStyle.parts[j]();
 
-				delete stylesInDom[domStyle.id];
+				delete stylesInDom[domStyle._id];
 			}
 		}
 	};
@@ -14646,7 +14646,7 @@ module.exports = function(list, options) {
 function addStylesToDom (styles, options) {
 	for (var i = 0; i < styles.length; i++) {
 		var item = styles[i];
-		var domStyle = stylesInDom[item.id];
+		var domStyle = stylesInDom[item._id];
 
 		if(domStyle) {
 			domStyle.refs++;
@@ -14665,7 +14665,7 @@ function addStylesToDom (styles, options) {
 				parts.push(addStyle(item.parts[j], options));
 			}
 
-			stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
+			stylesInDom[item._id] = {id: item._id, refs: 1, parts: parts};
 		}
 	}
 }
@@ -15801,7 +15801,7 @@ var uid = 0;
  */
 
 var Dep = function Dep() {
-  this.id = uid++;
+  this._id = uid++;
   this.subs = [];
 };
 
@@ -17117,7 +17117,7 @@ function _traverse(val, seen) {
   }
 
   if (val.__ob__) {
-    var depId = val.__ob__.dep.id;
+    var depId = val.__ob__.dep._id;
 
     if (seen.has(depId)) {
       return;
@@ -18116,13 +18116,13 @@ function flushSchedulerQueue() {
   //    its watchers can be skipped.
 
   queue.sort(function (a, b) {
-    return a.id - b.id;
+    return a._id - b._id;
   }); // do not cache length because more watchers might be pushed
   // as we run existing watchers
 
   for (index = 0; index < queue.length; index++) {
     watcher = queue[index];
-    id = watcher.id;
+    id = watcher._id;
     has[id] = null;
     watcher.run(); // in dev build, check and stop circular updates.
 
@@ -18192,7 +18192,7 @@ function callActivatedHooks(queue) {
 
 
 function queueWatcher(watcher) {
-  var id = watcher.id;
+  var id = watcher._id;
 
   if (has[id] == null) {
     has[id] = true;
@@ -18204,7 +18204,7 @@ function queueWatcher(watcher) {
       // if already past its id, it will be run next immediately.
       var i = queue.length - 1;
 
-      while (i > index && queue[i].id > watcher.id) {
+      while (i > index && queue[i]._id > watcher._id) {
         i--;
       }
 
@@ -18248,7 +18248,7 @@ var Watcher = function Watcher(vm, expOrFn, cb, options, isRenderWatcher) {
   }
 
   this.cb = cb;
-  this.id = ++uid$1; // uid for batching
+  this._id = ++uid$1; // uid for batching
 
   this.active = true;
   this.dirty = this.lazy; // for lazy watchers
@@ -18310,7 +18310,7 @@ Watcher.prototype.get = function get() {
 
 
 Watcher.prototype.addDep = function addDep(dep) {
-  var id = dep.id;
+  var id = dep._id;
 
   if (!this.newDepIds.has(id)) {
     this.newDepIds.add(id);
@@ -18333,7 +18333,7 @@ Watcher.prototype.cleanupDeps = function cleanupDeps() {
   while (i--) {
     var dep = this$1.deps[i];
 
-    if (!this$1.newDepIds.has(dep.id)) {
+    if (!this$1.newDepIds.has(dep._id)) {
       dep.removeSub(this$1);
     }
   }
@@ -38306,7 +38306,7 @@ function () {
     _classCallCheck(this, Client);
 
     this.prepareProvider = this.prepareProvider.bind(this);
-    this.id = null;
+    this._id = null;
     this.name = '';
     this.email = '';
     this.phone = '';
@@ -38323,8 +38323,8 @@ function () {
       this.providerList = providerList;
     }
 
-    if (client.id) {
-      this.id = client.id;
+    if (client._id) {
+      this._id = client._id;
     }
 
     if (client.name) {
@@ -38361,7 +38361,7 @@ function () {
         var check = false;
 
         for (var k = 0; k < this.providers.length; k++) {
-          if (this.providerList[i].id == this.providers[k].id) {
+          if (this.providerList[i]._id == this.providers[k]._id) {
             tmp.push(this.providerList[i].name);
             check = true;
           }
@@ -38371,7 +38371,7 @@ function () {
 
 
         this.providerListListData.push({
-          id: this.providerList[i].id,
+          id: this.providerList[i]._id,
           name: this.providerList[i].name,
           check: check
         });
