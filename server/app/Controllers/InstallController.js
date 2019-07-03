@@ -1,13 +1,9 @@
-const express = require('express');
-const router = express.Router();
-
 import ClientMDB from '../DB/mongoDB/ClientMDB';
-import ProviderMDB from '../DB/mongoDB/ClientMDB';
+import ProviderMDB from '../DB/mongoDB/ProviderMDB';
 
-class InstallController {
+export default class InstallController {
 
-    constructor(req) {
-        this.req = req;
+    constructor() {      
 
         this.clientMDB = new ClientMDB();
         this.providerMDB = new ProviderMDB();
@@ -15,21 +11,7 @@ class InstallController {
     };
 
     /**
-     * async constructor
-     * @param {*} req  - express reques fnc
-     */
-    static async init(req) {
-        let self = new ClientControler(req);
-
-        /* important place */
-        /* here we can insert some async code */
-
-        return self;
-    }
-
-
-    /**
-     * list route
+     * install testDB data
      */
     async install() {
 
@@ -88,8 +70,8 @@ class InstallController {
             ];
 
              /* add clients */
-             for (let i = 0; i < res.client.length; i++) {
-                res.client[i]['_id'] = await this.clientMDB.add(res.client[i]);
+             for (let i = 0; i < res.clients.length; i++) {
+                res.clients[i]['_id'] = await this.clientMDB.add(res.clients[i]);
             }
 
 
@@ -101,16 +83,3 @@ class InstallController {
     }
 
 }
-
-
-/**
- * add new client
- */
-router.put('/api/v1/install', async (req, res, next) => {
-    const self = await InstallController.init(req);
-    res.json({ data: await self.install() });
-});
-
-
-
-export { router };
