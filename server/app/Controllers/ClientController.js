@@ -77,18 +77,20 @@ class ClientControler {
      */
     async get() {
         let res;
+        let clientId;
 
         try {
+
+            clientId = parseInt(this.req.params.id);
             /* check params */
-            if (!this.req.params.id) {
+            if (!clientId) {
                 throw 'empty id';
-            }
+            }           
 
-            res = await this.clientDB.get(parseInt(this.req.params.id));
+            res = await this.clientDB.get(clientId);
             if (res) {
-                res['providers'] = await this.clientProvidersDB.get(parseInt(this.req.params.id));
+                res['providers'] = await this.clientProvidersDB.get(clientId);
             }
-
 
         } catch (e) {
             console.log(e);
@@ -114,19 +116,6 @@ class ClientControler {
 
             res = await this.clientDB.add(this.req.body);
 
-            /* add providers */
-            if (this.req.body.providers) {
-
-                for (let i = 0; i < this.req.body.providers.length; i++) {
-
-                    await this.clientProvidersDB.add({
-                        client_id: res,
-                        provider_id: this.req.body.providers[i].id
-                    })
-
-                }
-            }
-
         } catch (e) {
             console.log(e);
         }
@@ -138,6 +127,7 @@ class ClientControler {
      */
     async update() {
         let res;
+        let data;
 
         let clientId = parseInt(this.req.params.id);
         try {
@@ -146,27 +136,11 @@ class ClientControler {
                 throw 'empty body';
             }
 
-            let data = this.req.body;
-
+            data = this.req.body;
             data['id'] = clientId;
 
-            res = await this.clientDB.update(this.req.body);
-
-            /* add providers */
-            if (this.req.body.providers) {
-                /* dellete all client providers */
-                await this.clientProvidersDB.removeByClientId(clientId);
-
-                for (let i = 0; i < this.req.body.providers.length; i++) {
-
-                    await this.clientProvidersDB.add({
-                        client_id: clientId,
-                        provider_id: this.req.body.providers[i].id
-                    })
-
-                }
-            }
-
+            res = await this.clientDB.update(data);
+         
         } catch (e) {
             console.log(e);
         }
@@ -182,10 +156,13 @@ class ClientControler {
         try {
 
             let clientId = parseInt(this.req.params.id);
-            /* dellete all client providers */
-            await this.clientProvidersDB.removeByClientId(clientId);
+            if(!clientId){
+                throw 'empty client id';
+            }
+            
             /* delete client */
             res = await this.clientDB.remove(clientId);
+            
         } catch (e) {
             console.log(e);
         }

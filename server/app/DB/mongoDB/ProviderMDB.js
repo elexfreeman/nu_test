@@ -1,8 +1,8 @@
 import BaseMDB from './BaseMDB';
 
-import ClientModel from './models/ClientModel';
+import ProviderModel from './models/ProviderModel';
 
-export default class ClientMDB extends BaseMDB {
+export default class ProviderMDB extends BaseMDB {
 
     constructor() {
         super();
@@ -11,7 +11,7 @@ export default class ClientMDB extends BaseMDB {
     list(offset, limit, search) {
         return new Promise((resolve, reject) => {
             try {
-                ClientModel.find({}).exec((err, data) => {
+                ProviderModel.find({}).exec((err, data) => {
                     if (err) {
                         reject(err);
                     }
@@ -25,10 +25,10 @@ export default class ClientMDB extends BaseMDB {
         })
     }
 
-    get(clientId) {
+    get(providerId) {
         return new Promise((resolve, reject) => {
             try {
-                ClientModel.findOne({ _id: clientId }).exec((err, data) => {
+                ProviderModel.findOne({ _id: providerId }).exec((err, data) => {
                     if (err) {
                         reject(err);
                     }
@@ -43,19 +43,19 @@ export default class ClientMDB extends BaseMDB {
     }
 
     /**
-     * add client to db
-     * @param {*} client 
+     * add provider to db
+     * @param {*} provider 
      */
     add(data) {
         return new Promise((resolve, reject) => {
             try {
-                let client = new ClientModel(data);
+                let provider = new ProviderModel(data);
 
-                client.save(err => {
+                provider.save(err => {
                     if (err) {
                         reject(err);
                     } else {
-                        resolve(client._id);
+                        resolve(provider._id);
                     }
                 });
             } catch (e) {
@@ -67,42 +67,30 @@ export default class ClientMDB extends BaseMDB {
 
 
     /**
-     * update client data
-     * requre client.id
-     * @param {*} client 
+     * update provider data
+     * requre provider.id
+     * @param {*} provider 
      */
-    update(client) {
+    update(provider) {
         return new Promise((resolve, reject) => {
             let updateData = {};
-            let clientId;
+            let providerId;
             try {
-                if (!client) {
-                    throw 'empty client';
+                if (!provider) {
+                    throw 'empty provider';
                 }
 
-                if (!client.id) {
+                if (!provider.id) {
                     throw 'empty id';
                 }
 
-                clientId = client.id
+                providerId = provider.id
 
-                if (client.name) {
-                    updateData['name'] = client.name;
+                if (provider.name) {
+                    updateData['name'] = provider.name;
                 }
 
-                if (client.email) {
-                    updateData['email'] = client.email;
-                }
-
-                if (client.phone) {
-                    updateData['phone'] = client.phone;
-                }
-
-                if (client.providers) {
-                    updateData['providers'] = client.providers;
-                }
-
-                ClientModel.findByIdAndUpdate(clientId,
+                ProviderModel.findByIdAndUpdate(providerId,
                     { $set: updateData },
                     { new: true }, (err, data) => {
                         if (err) {
@@ -122,13 +110,13 @@ export default class ClientMDB extends BaseMDB {
     }
 
     /**
-     * Delete client from DB
-     * @param {number} clientId 
+     * Delete provider from DB
+     * @param {number} providerId 
      */
-    remove(clientId) {
+    remove(providerId) {
         return new Promise((resolve, reject) => {
             try {
-                ClientModel.remove({ _id: clientId }, function (err) {
+                ProviderModel.remove({ _id: providerId }, function (err) {
                     if (err) {
                         reject(err);
                     }
