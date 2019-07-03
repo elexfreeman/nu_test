@@ -1,17 +1,15 @@
 const express = require('express');
 const router = express.Router();
 
-import ClientDB from '../DB/ClientDB';
-import ClientProvidersDB from '../DB/ClientProvidersDB';
+import ClientMDB from '../DB/mongoDB/ClientMDB';
 
 class ClientControler {
 
     constructor(req) {
         this.req = req;
 
-        this.clientDB = new ClientDB();
-        this.clientProvidersDB = new ClientProvidersDB();
-
+        this.clientMDB = new ClientMDB();
+        
     };
 
     /**
@@ -58,12 +56,8 @@ class ClientControler {
             }
 
             /* get clients */
-            res = await this.clientDB.list(offset, limit, search);
-
-            /* get providers for clients */
-            for (let i = 0; i < res.length; i++) {
-                res[i]['providers'] = await this.clientProvidersDB.get(res[i].id);
-            }
+            res = await this.clientMDB.list(offset, limit, search);
+           
 
         } catch (e) {
             console.log(e);
@@ -81,16 +75,13 @@ class ClientControler {
 
         try {
 
-            clientId = parseInt(this.req.params.id);
+            clientId = this.req.params.id;
             /* check params */
             if (!clientId) {
                 throw 'empty id';
             }           
 
-            res = await this.clientDB.get(clientId);
-            if (res) {
-                res['providers'] = await this.clientProvidersDB.get(clientId);
-            }
+            res = await this.clientMDB.get(clientId);           
 
         } catch (e) {
             console.log(e);
@@ -114,7 +105,7 @@ class ClientControler {
                 throw 'empty name';
             }
 
-            res = await this.clientDB.add(this.req.body);
+            res = await this.clientMDB.add(this.req.body);
 
         } catch (e) {
             console.log(e);
@@ -129,7 +120,7 @@ class ClientControler {
         let res;
         let data;
 
-        let clientId = parseInt(this.req.params.id);
+        let clientId = this.req.params.id;
         try {
 
             if (!this.req.body) {
@@ -139,7 +130,7 @@ class ClientControler {
             data = this.req.body;
             data['id'] = clientId;
 
-            res = await this.clientDB.update(data);
+            res = await this.clientMDB.update(data);
          
         } catch (e) {
             console.log(e);
@@ -155,14 +146,14 @@ class ClientControler {
 
         try {
 
-            let clientId = parseInt(this.req.params.id);
+            let clientId = this.req.params.id;
             if(!clientId){
                 throw 'empty client id';
             }
             
             /* delete client */
-            res = await this.clientDB.remove(clientId);
-            
+            res = await this.clientMDB.remove(clientId);
+
         } catch (e) {
             console.log(e);
         }

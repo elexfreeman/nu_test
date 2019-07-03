@@ -25,20 +25,20 @@
           </button>
         </div>
         <div v-if="!isEdit" class="column col-1">
-          <button v-on:click="remove" v-bind:provider_id="item.id" type="button" class="btn">
-            <i v-bind:provider_id="item.id" class="icon icon-delete"></i>
+          <button v-on:click="remove" v-bind:provider_id="item._id" type="button" class="btn">
+            <i v-bind:provider_id="item._id" class="icon icon-delete"></i>
           </button>
         </div>
 
         <!-- isEdit -->
         <div v-if="isEdit" class="column col-1">
           <button v-on:click="editDone" type="button" class="btn">
-            <i v-bind:provider_id="item.id" class="icon icon-check"></i>
+            <i v-bind:provider_id="item._id" class="icon icon-check"></i>
           </button>
         </div>
         <div v-if="isEdit" class="column col-1">
-          <button v-on:click="editCansel" v-bind:provider_id="item.id" type="button" class="btn">
-            <i v-bind:provider_id="item.id" class="icon icon-stop"></i>
+          <button v-on:click="editCansel" v-bind:provider_id="item._id" type="button" class="btn">
+            <i v-bind:provider_id="item._id" class="icon icon-stop"></i>
           </button>
         </div>
       </div>

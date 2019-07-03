@@ -79,6 +79,7 @@ export default {
       ClientController.hideNewClientDialog();
     },
     saveClient(event) {
+      console.log(this.$store.state.client);
       if (this.$store.state.client.name.length < 3) {
         this.clientNameError = true;
       } else {

@@ -44,9 +44,9 @@ export default class ClientDB {
         let res;
         try {
 
-            if (client.id) {
+            if (client._id) {
                 /* update */
-                res = await axios.put(window.server_url + '/client/' + client.id, client);
+                res = await axios.put(window.server_url + '/client/' + client._id, client);
             } else {
                 /* insert */
                 res = await axios.post(window.server_url + '/client', client);
@@ -64,11 +64,11 @@ export default class ClientDB {
 
     static async remove(client) {
         try {
-            if (!client.id) {
+            if (!client._id) {
                 throw 'empty client';
             }
 
-            res = await axios.delete(window.server_url + '/client/' + client.id);
+            res = await axios.delete(window.server_url + '/client/' + client._id);
 
         } catch (e) {
             console.log(e);

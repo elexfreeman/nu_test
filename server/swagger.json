@@ -468,7 +468,7 @@
         "name"
       ],
       "properties": {
-        "id": {
+        "_id": {
           "type": "integer"
         },
         "name": {
@@ -485,7 +485,7 @@
           "items": {
             "type": "object",
             "properties": {
-              "id": {
+              "_id": {
                 "type": "integer"
               }
             }
@@ -499,7 +499,7 @@
         "name"
       ],
       "properties": {
-        "id": {
+        "_id": {
           "type": "integer"
         },
         "name": {

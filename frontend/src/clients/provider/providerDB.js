@@ -30,9 +30,9 @@ export default class ProviderDB {
         let res;
         try {
 
-            if (provider.id) {
+            if (provider._id) {
                 /* update */
-                res = await axios.put(window.server_url + '/provider/' + provider.id, provider);
+                res = await axios.put(window.server_url + '/provider/' + provider._id, provider);
             } else {
                 /* insert */
                 res = await axios.post(window.server_url + '/provider', provider);

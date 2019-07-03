@@ -21,10 +21,10 @@
       <div slot="emptystate">...</div>
       <template slot="table-row" slot-scope="props">
 
-        <div v-if="props.column.field!='id'">{{props.formattedRow[props.column.field]}}</div>
+        <div v-if="props.column.field!='_id'">{{props.formattedRow[props.column.field]}}</div>
 
-        <div class="text-center" v-if="props.column.field=='id'">
-          <span v-on:click="onShowEditDialog" :client_id="props.formattedRow['id']" class="edit_client_link">Edit</span>
+        <div class="text-center" v-if="props.column.field=='_id'">
+          <span v-on:click="onShowEditDialog" :client_id="props.formattedRow['_id']" class="edit_client_link">Edit</span>
         </div>
         
       </template>
@@ -79,7 +79,7 @@ export default {
         },
         {
           label: "",
-          field: "id"
+          field: "_id"
         }
       ];
     }
