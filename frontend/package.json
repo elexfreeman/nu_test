@@ -28,7 +28,7 @@
     "mocha": "^5.2.0",
     "mock-local-storage": "^1.1.8",
     "moment": "^2.23.0",
-    "papaparse": "^4.6.3",
+    "papaparse": "^5.2.0",
     "source-map-support": "^0.5.10",
     "spectre.css": "^0.5.8",
     "ts-node-dev": "^1.0.0-pre.32",
